@@ -1,0 +1,55 @@
+version: "3.9"
+services:
+  reverse-proxy:
+    image: traefik:v2.4
+    container_name: traefik
+    command:
+      - "--log.level=ERROR"
+      - "--api.dashboard=true"
+      #- "--accesslog=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--providers.docker.network=main-network"
+      - "--entrypoints.web.address=:80"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.api.rule=Host(`dashboard.localhost`)"
+      - "traefik.http.routers.api.service=api@internal"
+    restart: always
+    ports:
+      - 80:80
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - main-network
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.dev
+    container_name: 
+      backend-adonis
+    volumes:
+      - ./backend/:/home/node/app
+      - backend-node-modules:/home/node/app/node_modules
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.stellarium-backend.rule=Host(`localhost`) && PathPrefix(`/api`)"
+      - "traefik.http.routers.stellarium-backend.middlewares=stellarium-backend-stripprefix"
+      - "traefik.http.middlewares.stellarium-backend-stripprefix.stripprefix.prefixes=/api"
+      - "traefik.http.routers.stellarium-backend.entrypoints=web"
+    environment:
+      - PORT=3333
+      - HOST=0.0.0.0
+      - APP_NAME=stellarium
+      - NODE_ENV=development
+      - APP_URL=http://0.0.0.0:3333
+    depends_on:
+      - traefik
+    restart: always
+    networks: 
+      - main-network
+networks: 
+  main-network:
+    driver: bridge
+volumes:
+  backend-node-modules:
