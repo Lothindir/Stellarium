@@ -7,10 +7,12 @@
 
 import proxyAddr from 'proxy-addr'
 import Env from '@ioc:Adonis/Core/Env'
+import Application from '@ioc:Adonis/Core/Application'
 import { ServerConfig } from '@ioc:Adonis/Core/Server'
 import { LoggerConfig } from '@ioc:Adonis/Core/Logger'
 import { ProfilerConfig } from '@ioc:Adonis/Core/Profiler'
 import { ValidatorConfig } from '@ioc:Adonis/Core/Validator'
+import { AssetsManagerConfig } from '@ioc:Adonis/Core/AssetsManager'
 
 /*
 |--------------------------------------------------------------------------
@@ -109,24 +111,6 @@ export const http: ServerConfig = {
     secure: false,
     sameSite: false,
   },
-
-  /*
-  |--------------------------------------------------------------------------
-  | Force Content Negotiation
-  |--------------------------------------------------------------------------
-  |
-  | The internals of the framework relies on the content negotiation to
-  | detect the best possible response type for a given HTTP request.
-  |
-  | However, it is a very common these days that API servers always wants to
-  | make response in JSON regardless of the existence of the `Accept` header.
-  |
-  | By setting `forceContentNegotiationTo = 'application/json'`, you negotiate
-  | with the server in advance to always return JSON without relying on the
-  | client to set the header explicitly.
-  |
-  */
-  forceContentNegotiationTo: 'application/json',
 }
 
 /*
@@ -232,3 +216,61 @@ export const profiler: ProfilerConfig = {
 |
 */
 export const validator: ValidatorConfig = {}
+
+/*
+|--------------------------------------------------------------------------
+| Assets
+|--------------------------------------------------------------------------
+|
+| Configure the asset manager you are using to compile the frontend assets
+|
+*/
+export const assets: AssetsManagerConfig = {
+  /*
+  |--------------------------------------------------------------------------
+  | Driver
+  |--------------------------------------------------------------------------
+  |
+  | Currently we only support webpack encore and may introduce more drivers
+  | in the future
+  |
+  */
+  driver: 'encore',
+
+  /*
+  |--------------------------------------------------------------------------
+  | Public path
+  |--------------------------------------------------------------------------
+  |
+  | Directory to search for the "manifest.json" and the "entrypoints.json"
+  | files
+  |
+  */
+  publicPath: Application.publicPath('assets'),
+
+  /*
+  |--------------------------------------------------------------------------
+  | Script tag
+  |--------------------------------------------------------------------------
+  |
+  | Define attributes for the entryPointScripts tags
+  |
+  */
+  script: {
+    attributes: {
+      defer: true,
+    },
+  },
+
+  /*
+  |--------------------------------------------------------------------------
+  | Style tag
+  |--------------------------------------------------------------------------
+  |
+  | Define attributes for the entryPointStyles tags
+  |
+  */
+  style: {
+    attributes: {},
+  },
+}
