@@ -19,7 +19,6 @@ export default class Neo4JProvider {
 
     this.app.container.singleton('Adonis/Addons/Neo4j', () => this.driver);
     console.log('Created Neo4j driver');
-    
   }
 
   public async boot() {
