@@ -29,6 +29,7 @@
     "@adonisjs/session": "^6.1.1",
     "@adonisjs/shield": "^7.0.5",
     "@adonisjs/view": "^6.0.8",
+    "neo4j-driver": "^4.3.2",
     "proxy-addr": "^2.0.7",
     "reflect-metadata": "^0.1.13",
     "source-map-support": "^0.5.19"
