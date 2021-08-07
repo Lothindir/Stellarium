@@ -9,6 +9,15 @@ export default class AppProvider {
 
   public async boot() {
     // IoC container is ready
+    const Auth = this.app.container.resolveBinding('Adonis/Addons/Auth')
+    const Hash = this.app.container.resolveBinding('Adonis/Core/Hash')
+
+    const { Neo4JAuthProvider } = await import('./Neo4JAuthProvider')
+
+    Auth.extend('provider', 'neo4j', (_, __, config) => {
+      return new Neo4JAuthProvider(config, Hash)
+    })
+
   }
 
   public async ready() {
