@@ -55,7 +55,7 @@ services:
     networks: 
       - main-network
   neo4j:
-    image: neo4j:4.3
+    image: neo4j:4.2
     container_name: graph-db
     restart: always
     depends_on: 
