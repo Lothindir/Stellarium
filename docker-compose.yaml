@@ -14,6 +14,8 @@ services:
       #- "--entrypoints.websecure.address=:443"
       - "--entrypoints.bolt.address=:7687"
       - "--entrypoints.neo4j.address=:7474"
+      - "--entrypoints.mongo.address=:27017"
+      - "--entrypoints.mongo-express.address=:8081"
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.api.rule=Host(`traefik.localhost`)"
@@ -29,10 +31,11 @@ services:
     build:
       context: ./web
       dockerfile: Dockerfile.dev
-    container_name: 
-      web-adonis
-    ports:
-      - 8080:8080
+    container_name: web-adonis
+    depends_on:
+      - traefik
+      - graph-db
+      - mongo-db
     volumes:
       - ./web/:/home/node/app
       - web-node-modules:/home/node/app/node_modules
@@ -48,21 +51,17 @@ services:
       - APP_URL=http://0.0.0.0:3333
       - CACHE_VIEWS=false
       - SESSION_DRIVER=cookie
-    depends_on:
-      - traefik
-      - graph-db
-    restart: always
+    restart: unless-stopped
     networks: 
       - main-network
   neo4j:
     image: neo4j:4.2
     container_name: graph-db
-    restart: always
+    restart: unless-stopped
     depends_on: 
       - traefik
     ports:
       - 7474:7474
-      - 7687:7687
     labels: 
       - "traefik.enable=true"
       - "traefik.http.routers.neo4j.rule=Host(`localhost`)"
@@ -70,8 +69,8 @@ services:
       - "traefik.tcp.routers.neo4j.rule=HostSNI(`localhost`)"
       - "traefik.tcp.routers.neo4j.entrypoints=bolt"
     volumes:
+      - neo4j-data:/data
       - ./neo4j/conf:/conf
-      - ./neo4j/data:/data
       - ./neo4j/import:/import
       - ./neo4j/logs:/logs
       - ./neo4j/plugins:/plugins
@@ -82,8 +81,46 @@ services:
       - NEO4J_dbms_memory_heap_max__size=1G
     networks: 
       - main-network
+  mongo:
+    image: mongo:latest
+    container_name: mongo-db
+    depends_on: 
+      - traefik
+    volumes: 
+      - mongo-data:/data/db
+      - ./mongo/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js
+    environment: 
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: rootpassword
+      MONGO_INITDB_ROOT_DATABASE: stellarium
+    labels: 
+      - "traefik.enable=true"
+      - "traefik.tcp.routers.mongo.rule=HostSNI(`localhost`)"
+      - "traefik.tcp.routers.mongo.entrypoints=mongo"
+    networks: 
+      - main-network
+  mongo-express:
+    container_name: mongo-express
+    image: mongo-express
+    restart: unless-stopped
+    depends_on: 
+      - mongo-db
+    ports:
+      - 8081:8081
+    labels: 
+      - "traefik.enable=true"
+      - "traefik.http.routers.mongo.rule=Host(`localhost`)"
+      - "traefik.http.routers.mongo.entrypoints=mongo-express"
+    environment: 
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: rootpassword
+      ME_CONFIG_MONGODB_SERVER: mongo-db
+    networks: 
+      - main-network
 networks: 
   main-network:
     driver: bridge
 volumes:
   web-node-modules:
+  mongo-data:
+  neo4j-data:

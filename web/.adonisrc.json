@@ -3,7 +3,7 @@
     "commands": [
         "./commands",
         "@adonisjs/core/commands",
-        "@adonisjs/repl/build/commands"
+        "@adonisjs/repl/build/commands",
     ],
     "exceptionHandlerNamespace": "App/Exceptions/Handler",
     "aliases": {
@@ -23,9 +23,11 @@
         "@adonisjs/view",
         "@adonisjs/shield",
         "./providers/Neo4JProvider",
-        "@adonisjs/auth"
+        "@adonisjs/auth",
+        "./providers/MongoProvider"
     ],
-    "metaFiles": [{
+    "metaFiles": [
+        {
             "pattern": "public/**",
             "reloadServer": false
         },

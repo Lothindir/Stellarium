@@ -7,12 +7,12 @@ export default class AuthController {
         const rememberMe = !!request.input('rememberMe');
 
         try {
-            await auth.attempt(email, password);
+            await auth.attempt(email, password, rememberMe);
         } catch (error) {
             console.error(error);
             return response.unauthorized(error.code)
         }
 
-        return response.ok(auth.user);
+        return response.redirect('/');
     }
 }

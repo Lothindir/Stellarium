@@ -25,4 +25,5 @@ export default Env.rules({
   NEO4J_HOST: Env.schema.string(),
   NEO4J_USER: Env.schema.string(),
   NEO4J_PASSWORD: Env.schema.string(),
+  MONGO_DB: Env.schema.string(),
 })
