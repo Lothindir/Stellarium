@@ -36,6 +36,8 @@ services:
       - traefik
       - graph-db
       - mongo-db
+    ports: 
+      - 8080:8080
     volumes:
       - ./web/:/home/node/app
       - web-node-modules:/home/node/app/node_modules
@@ -62,6 +64,7 @@ services:
       - traefik
     ports:
       - 7474:7474
+      - 7687:7687
     labels: 
       - "traefik.enable=true"
       - "traefik.http.routers.neo4j.rule=Host(`localhost`)"

@@ -118,7 +118,7 @@ export class Neo4JAuthProvider implements UserProviderContract<User> {
     let session = neo4jDriver.session({ defaultAccessMode: neo4j.session.READ });
     await session
       .readTransaction((txc) => {
-        return txc.run('MATCH (p:Player {rememberMe: $remember, uuid: $uuid}) RETURN p', {
+        return txc.run('MATCH (p:Player {rememberMe: $rememberMe, uuid: $uuid}) RETURN p', {
           uuid: userId,
           rememberMe: token,
         });
