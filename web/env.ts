@@ -22,4 +22,8 @@ export default Env.rules({
   CACHE_VIEWS: Env.schema.boolean(),
   SESSION_DRIVER: Env.schema.string(),
   NODE_ENV: Env.schema.enum(['development', 'production', 'testing'] as const),
+  NEO4J_HOST: Env.schema.string(),
+  NEO4J_USER: Env.schema.string(),
+  NEO4J_PASSWORD: Env.schema.string(),
+  MONGO_DB: Env.schema.string(),
 })
