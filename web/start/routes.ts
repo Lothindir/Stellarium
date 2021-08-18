@@ -20,12 +20,12 @@
 
 import Route from '@ioc:Adonis/Core/Route'
 
-Route.get('/', async ({ view }) => {
+Route.get('/api', async ({ view }) => {
   return view.render('welcome')
 }).middleware('auth');
 
-Route.get('/login', async ({ view }) => {
+Route.get('/api/login', async ({ view }) => {
   return view.render('login')
 });
 
-Route.post('/login', 'AuthController.login');
+Route.post('/api/login', 'AuthController.login');

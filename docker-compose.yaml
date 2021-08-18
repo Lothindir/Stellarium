@@ -43,7 +43,7 @@ services:
       - web-node-modules:/home/node/app/node_modules
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.stellarium-web.rule=Host(`localhost`)"
+      - "traefik.http.routers.stellarium-web.rule=Host(`localhost`) && (PathPrefix(`/api`) || PathPrefix(`/admin`))"
       - "traefik.http.routers.stellarium-web.entrypoints=web"
     environment:
       - PORT=3333
@@ -53,6 +53,26 @@ services:
       - APP_URL=http://0.0.0.0:3333
       - CACHE_VIEWS=false
       - SESSION_DRIVER=cookie
+    restart: unless-stopped
+    networks: 
+      - main-network
+  frontend:
+    build: 
+      context: ./frontend
+      dockerfile: Dockerfile.dev
+    container_name: frontend
+    depends_on: 
+      - traefik
+    volumes: 
+      - ./frontend:/home/node/app
+      - frontend-node-modules:/home/node/app/node_modules
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.stellarium-frontend.rule=Host(`localhost`)"
+      - "traefik.http.routers.stellarium-frontend.entrypoints=web"
+    environment: 
+      - NUXT_HOST=0.0.0.0
+      - NUXT_PORT=3000
     restart: unless-stopped
     networks: 
       - main-network
@@ -126,5 +146,6 @@ networks:
     driver: bridge
 volumes:
   web-node-modules:
+  frontend-node-modules:
   mongo-data:
   neo4j-data:

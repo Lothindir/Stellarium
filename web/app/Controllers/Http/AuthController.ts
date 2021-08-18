@@ -13,6 +13,6 @@ export default class AuthController {
             return response.unauthorized(error.code)
         }
 
-        return response.redirect('/');
+        return response.redirect('/api');
     }
 }
