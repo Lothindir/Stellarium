@@ -43,7 +43,7 @@ services:
       - web-node-modules:/home/node/app/node_modules
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.stellarium-web.rule=Host(`localhost`) && (PathPrefix(`/api`) || PathPrefix(`/admin`))"
+      - "traefik.http.routers.stellarium-web.rule=Host(`localhost`) && PathPrefix(`/api`)"
       - "traefik.http.routers.stellarium-web.entrypoints=web"
     environment:
       - PORT=3333
@@ -73,6 +73,27 @@ services:
     environment: 
       - NUXT_HOST=0.0.0.0
       - NUXT_PORT=3000
+    restart: unless-stopped
+    networks: 
+      - main-network
+  admin-dashboard:
+    build:
+      context: ./admin
+      dockerfile: Dockerfile.dev
+    container_name: admin-dashboard
+    depends_on:
+      - traefik
+      - web
+    volumes: 
+      - ./admin:/home/node/app
+      - admin-node-modules:/home/node/app/node_modules
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.stellarium_admin.rule=Host(`admin.localhost`)"
+      - "traefik.http.routers.stellarium_admin.entrypoints=web"
+    environment: 
+      - BASE_URL=0.0.0.0
+      - NODE_ENV=development
     restart: unless-stopped
     networks: 
       - main-network
@@ -147,5 +168,6 @@ networks:
 volumes:
   web-node-modules:
   frontend-node-modules:
+  admin-node-modules:
   mongo-data:
   neo4j-data:

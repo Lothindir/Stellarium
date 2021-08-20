@@ -57,10 +57,10 @@ Encore.addEntry('app', './resources/js/app.js')
 | we must copy them manually.
 |
 */
-// Encore.copyFiles({
-//   from: './resources/images',
-//   to: 'images/[path][name].[hash:8].[ext]',
-// })
+ Encore.copyFiles({
+   from: './resources/img',
+   to: 'img/[path][name].[hash:8].[ext]',
+ })
 
 /*
 |--------------------------------------------------------------------------
@@ -187,11 +187,10 @@ Encore.configureDevServerOptions((options) => {
 | sure to install the required dependencies.
 |
 */
-// Encore.enableVueLoader(() => {}, {
-//   version: 3,
-//   runtimeCompilerBuild: false,
-//   useJsx: false
-// })
+Encore.enableVueLoader(() => {}, {
+  version: 2
+})
+
 
 /*
 |--------------------------------------------------------------------------
