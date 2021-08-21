@@ -1,4 +1,4 @@
 <template>
-    <h1>Vaisseau</h1>
+    <h1>[Contenu de la page Vaisseau]</h1>
 </template>
 
