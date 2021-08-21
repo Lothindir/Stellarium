@@ -39,7 +39,7 @@ export default Vue.extend({
    },
    computed: {
        tree() {
-           return this.trees.find(tree => tree.type === this.type)
+           return this.trees.find(tree => tree.type === this.type) // TODO: add a default value
        }
    }
    })
