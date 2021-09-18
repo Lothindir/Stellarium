@@ -24,16 +24,16 @@ module.exports = {
       },
     },
   },
-  chainWebpack: (config) => {
+  chainWebpack: config => {
     config.module
       .rule('vue')
       .use('vue-loader')
       .loader('vue-loader')
-      .tap((options) => {
+      .tap(options => {
         // eslint-disable-next-line no-param-reassign
         options.transformAssetUrls = {
-          'img': 'src',
-          'image': 'xlink:href',
+          img: 'src',
+          image: 'xlink:href',
           'b-avatar': 'src',
           'b-img': 'src',
           'b-img-lazy': ['src', 'blank-src'],
