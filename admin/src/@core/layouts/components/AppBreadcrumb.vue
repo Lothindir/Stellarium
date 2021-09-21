@@ -100,8 +100,8 @@
 <script>
 import {
   BBreadcrumb, BBreadcrumbItem, BRow, BCol, BDropdown, BDropdownItem, BButton,
-} from 'bootstrap-vue'
-import Ripple from 'vue-ripple-directive'
+} from 'bootstrap-vue';
+import Ripple from 'vue-ripple-directive';
 
 export default {
   directives: {
@@ -116,5 +116,5 @@ export default {
     BDropdownItem,
     BButton,
   },
-}
+};
 </script>

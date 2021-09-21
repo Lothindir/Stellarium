@@ -81,14 +81,14 @@
 </template>
 
 <script>
-import VuePerfectScrollbar from 'vue-perfect-scrollbar'
-import { BLink, BImg } from 'bootstrap-vue'
-import { provide, computed, ref } from '@vue/composition-api'
-import useAppConfig from '@core/app-config/useAppConfig'
-import { $themeConfig } from '@themeConfig'
-import navMenuItems from '@/navigation/vertical'
-import VerticalNavMenuItems from './components/vertical-nav-menu-items/VerticalNavMenuItems.vue'
-import useVerticalNavMenu from './useVerticalNavMenu'
+import VuePerfectScrollbar from 'vue-perfect-scrollbar';
+import { BLink, BImg } from 'bootstrap-vue';
+import { provide, computed, ref } from '@vue/composition-api';
+import useAppConfig from '@core/app-config/useAppConfig';
+import { $themeConfig } from '@themeConfig';
+import navMenuItems from '@/navigation/vertical';
+import VerticalNavMenuItems from './components/vertical-nav-menu-items/VerticalNavMenuItems.vue';
+import useVerticalNavMenu from './useVerticalNavMenu';
 
 export default {
   components: {
@@ -114,24 +114,24 @@ export default {
       collapseTogglerIcon,
       toggleCollapsed,
       updateMouseHovered,
-    } = useVerticalNavMenu(props)
+    } = useVerticalNavMenu(props);
 
-    const { skin } = useAppConfig()
+    const { skin } = useAppConfig();
 
     // Shadow bottom is UI specific and can be removed by user => It's not in `useVerticalNavMenu`
-    const shallShadowBottom = ref(false)
+    const shallShadowBottom = ref(false);
 
-    provide('isMouseHovered', isMouseHovered)
+    provide('isMouseHovered', isMouseHovered);
 
     const perfectScrollbarSettings = {
       maxScrollbarLength: 60,
       wheelPropagation: false,
-    }
+    };
 
-    const collapseTogglerIconFeather = computed(() => (collapseTogglerIcon.value === 'unpinned' ? 'CircleIcon' : 'DiscIcon'))
+    const collapseTogglerIconFeather = computed(() => (collapseTogglerIcon.value === 'unpinned' ? 'CircleIcon' : 'DiscIcon'));
 
     // App Name
-    const { appName, appLogoImage } = $themeConfig.app
+    const { appName, appLogoImage } = $themeConfig.app;
 
     return {
       navMenuItems,
@@ -152,9 +152,9 @@ export default {
       // App Name
       appName,
       appLogoImage,
-    }
+    };
   },
-}
+};
 </script>
 
 <style lang="scss">

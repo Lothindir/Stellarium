@@ -1,5 +1,5 @@
-import { ref, computed } from '@vue/composition-api'
-import store from '@/store'
+import { ref, computed } from '@vue/composition-api';
+import store from '@/store';
 
 export default function useVerticalNavMenu(props) {
   // ------------------------------------------------
@@ -8,29 +8,29 @@ export default function useVerticalNavMenu(props) {
   const isVerticalMenuCollapsed = computed({
     get: () => store.state.verticalMenu.isVerticalMenuCollapsed,
     set: val => {
-      store.commit('verticalMenu/UPDATE_VERTICAL_MENU_COLLAPSED', val)
+      store.commit('verticalMenu/UPDATE_VERTICAL_MENU_COLLAPSED', val);
     },
-  })
+  });
 
   // ------------------------------------------------
   // collapseTogglerIcon
   // ------------------------------------------------
   const collapseTogglerIcon = computed(() => {
     if (props.isVerticalMenuActive) {
-      return isVerticalMenuCollapsed.value ? 'unpinned' : 'pinned'
+      return isVerticalMenuCollapsed.value ? 'unpinned' : 'pinned';
     }
-    return 'close'
-  })
+    return 'close';
+  });
 
-  const isMouseHovered = ref(false)
+  const isMouseHovered = ref(false);
 
   const updateMouseHovered = val => {
-    isMouseHovered.value = val
-  }
+    isMouseHovered.value = val;
+  };
 
   const toggleCollapsed = () => {
-    isVerticalMenuCollapsed.value = !isVerticalMenuCollapsed.value
-  }
+    isVerticalMenuCollapsed.value = !isVerticalMenuCollapsed.value;
+  };
 
   return {
     isMouseHovered,
@@ -38,5 +38,5 @@ export default function useVerticalNavMenu(props) {
     collapseTogglerIcon,
     toggleCollapsed,
     updateMouseHovered,
-  }
+  };
 }

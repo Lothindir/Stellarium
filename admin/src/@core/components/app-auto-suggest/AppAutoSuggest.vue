@@ -58,7 +58,7 @@
 </template>
 
 <script>
-import useAutoSuggest from './useAutoSuggest'
+import useAutoSuggest from './useAutoSuggest';
 
 export default {
   props: {
@@ -77,20 +77,20 @@ export default {
   },
   setup(props, { emit }) {
     // eslint-disable-next-line no-console
-    console.warn('This component is still in Development. Please do not use it.')
+    console.warn('This component is still in Development. Please do not use it.');
 
-    const { searchQuery, filteredData, resetsearchQuery } = useAutoSuggest(props)
+    const { searchQuery, filteredData, resetsearchQuery } = useAutoSuggest(props);
 
     const suggestionSelected = suggestion => {
-      resetsearchQuery()
-      emit('suggestion-selected', suggestion)
-    }
+      resetsearchQuery();
+      emit('suggestion-selected', suggestion);
+    };
 
     return {
       searchQuery, filteredData, suggestionSelected,
-    }
+    };
   },
-}
+};
 </script>
 
 <style scoped>

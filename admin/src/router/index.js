@@ -1,13 +1,13 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
+import Vue from 'vue';
+import VueRouter from 'vue-router';
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   scrollBehavior() {
-    return { x: 0, y: 0 }
+    return { x: 0, y: 0 };
   },
   routes: [
     {
@@ -25,14 +25,14 @@ const router = new VueRouter({
       },
     },
     {
-      path: '/second-page',
-      name: 'second-page',
-      component: () => import('@/views/SecondPage.vue'),
+      path: '/federations',
+      name: 'federations-list',
+      component: () => import('@/views/Federations.vue'),
       meta: {
-        pageTitle: 'Second Page',
+        pageTitle: 'Federations',
         breadcrumb: [
           {
-            text: 'Second Page',
+            text: 'Federations',
             active: true,
           },
         ],
@@ -59,16 +59,16 @@ const router = new VueRouter({
       redirect: 'error-404',
     },
   ],
-})
+});
 
 // ? For splash screen
 // Remove afterEach hook if you are not using splash screen
 router.afterEach(() => {
   // Remove initial loading
-  const appLoading = document.getElementById('loading-bg')
+  const appLoading = document.getElementById('loading-bg');
   if (appLoading) {
-    appLoading.style.display = 'none'
+    appLoading.style.display = 'none';
   }
-})
+});
 
-export default router
+export default router;

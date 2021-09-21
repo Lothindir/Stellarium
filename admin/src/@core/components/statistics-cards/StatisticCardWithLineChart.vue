@@ -30,10 +30,10 @@
 </template>
 
 <script>
-import { BCard, BCardBody, BAvatar } from 'bootstrap-vue'
-import VueApexCharts from 'vue-apexcharts'
-import { $themeColors } from '@themeConfig'
-import { lineChartOptions } from './chartOptions'
+import { BCard, BCardBody, BAvatar } from 'bootstrap-vue';
+import VueApexCharts from 'vue-apexcharts';
+import { $themeColors } from '@themeConfig';
+import { lineChartOptions } from './chartOptions';
 
 export default {
   components: {
@@ -71,14 +71,14 @@ export default {
   computed: {
     chartOptionsComputed() {
       if (this.chartOptions === null) {
-        const options = JSON.parse(JSON.stringify(lineChartOptions))
+        const options = JSON.parse(JSON.stringify(lineChartOptions));
 
-        options.fill.gradient.gradientToColors = [this.gradientToColor(this.color)]
-        options.colors = [$themeColors[this.color]]
+        options.fill.gradient.gradientToColors = [this.gradientToColor(this.color)];
+        options.colors = [$themeColors[this.color]];
 
-        return options
+        return options;
       }
-      return this.chartOptions
+      return this.chartOptions;
     },
   },
   methods: {
@@ -92,10 +92,10 @@ export default {
         secondary: '#B4B9BF',
         light: '#D0D4DB',
         dark: '#919191',
-      }
+      };
 
-      return gradientToColors[color]
+      return gradientToColors[color];
     },
   },
-}
+};
 </script>
