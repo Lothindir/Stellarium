@@ -1,8 +1,6 @@
 {
   "assets/app.css": "http://localhost:8080/assets/app.css",
   "assets/app.js": "http://localhost:8080/assets/app.js",
-  "assets/admin.css": "http://localhost:8080/assets/admin.css",
-  "assets/admin.js": "http://localhost:8080/assets/admin.js",
   "assets/img/forgot-password-office.jpeg": "http://localhost:8080/assets/img/forgot-password-office.6075fc44.jpeg",
   "assets/img/create-account-office.jpeg": "http://localhost:8080/assets/img/create-account-office.be2281a3.jpeg",
   "assets/img/create-account-office-dark.jpeg": "http://localhost:8080/assets/img/create-account-office-dark.63064297.jpeg",

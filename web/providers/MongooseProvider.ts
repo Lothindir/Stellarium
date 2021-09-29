@@ -28,12 +28,11 @@ export default class MongoProvider {
     const mongoose = new Mongoose();
     const Env = this.app.container.resolveBinding('Adonis/Core/Env');
 
-    mongoose.connect('mongodb://localhost/' + Env.get('MONGO_DB'), {
+    mongoose.connect('mongodb://localhost/' + Env.get('MONGO_DB')/* , {
       useNewUrlParser: true,
       useUnifiedTopology: true,
-      useFindAndModify: false,
-      useCreateIndex: true
-    });
+      useFindAndModify: false
+    } */);
 
     this.app.container.singleton('Adonis/Addons/Mongoose', () => mongoose);
     console.log('Created Mongoose driver');

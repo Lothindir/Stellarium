@@ -187,9 +187,9 @@ Encore.configureDevServerOptions((options) => {
 | sure to install the required dependencies.
 |
 */
-Encore.enableVueLoader(() => {}, {
-  version: 2
-})
+// Encore.enableVueLoader(() => {}, {
+//   version: 2
+// })
 
 
 /*

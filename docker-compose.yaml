@@ -44,6 +44,8 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.stellarium-web.rule=Host(`localhost`) && PathPrefix(`/api`)"
+      - "traefik.http.middlewares.stellarium-web-stripprefix.stripprefix.prefixes=/api"
+      - "traefik.http.routers.stellarium-web.middlewares=stellarium-web-stripprefix"
       - "traefik.http.routers.stellarium-web.entrypoints=web"
     environment:
       - PORT=3333
