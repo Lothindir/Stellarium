@@ -7,9 +7,6 @@
         <NuxtLink to="/results" tag="img" :src="require('~/static/results.svg')"></NuxtLink>
     </footer>
 </template>
-<script>
-export default {};
-</script>
 <style scoped>
     footer {
         position: absolute;
@@ -21,8 +18,14 @@ export default {};
     }
 
     img {
-        min-width: 30px;
+        min-width: 25px;
         width: 10vw;
-        max-width: 50px;
+        max-width: 40px;
+        opacity: 0.6;
+    }
+
+    .nuxt-link-exact-active{
+        opacity: 1;
+        filter: drop-shadow(0 0 1rem rgba(255,106,0,1));
     }
 </style>
