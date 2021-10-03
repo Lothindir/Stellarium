@@ -2,6 +2,7 @@
   <div>
       <h1 class="title">{{tree.title}}</h1>
       <p>{{tree.content}}</p>
+      <p>{{ type }}</p>
   </div>
 </template>
 
@@ -41,6 +42,19 @@ export default Vue.extend({
        tree() {
            return this.trees.find(tree => tree.type === this.type) // TODO: add a default value
        }
-   }
+   },
+   /*methods: {
+       async getDatas(){
+
+           try {
+               
+                let data = await fetch('http://st/planets')
+           } catch (e) {
+            e.erro
+           }
+           data.json
+           this.trees = data.planets
+       }
+   }*/
    })
 </script>
