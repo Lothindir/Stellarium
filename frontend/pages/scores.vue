@@ -87,13 +87,3 @@ export default {
   },
 };
 </script>
-<style scoped>
-    .content {
-        width: 30%;
-        margin: auto;
-    }
-    table {
-      border-spacing: 30px;
-      text-align: start;
-    }
-</style>

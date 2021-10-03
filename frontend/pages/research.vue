@@ -1,5 +1,5 @@
 <template>
-  <center>
+  <div class="content">
     <table class="table table-striped table-bordered">
       <tbody>
           <tr>
@@ -11,7 +11,7 @@
       </tbody>
     </table>
     <img height="600px" :src="require('~/static/'+currentTree+'.png')"/>
-  </center>
+  </div>
 </template>
 
 <script>
@@ -34,8 +34,3 @@ export default {
   }
 };
 </script>
-<style scoped>
-    table {
-      border-spacing: 50px;
-    }
-</style>

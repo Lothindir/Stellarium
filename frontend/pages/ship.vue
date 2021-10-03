@@ -1,5 +1,5 @@
 <template>
-  <center>
+  <div class="content">
     <table class="table table-striped table-bordered">
       <tbody>
           <tr>
@@ -31,7 +31,7 @@
     </table>
     <NuxtLink to="/" tag="button">Explorer</NuxtLink>
     <NuxtLink to="/" tag="button">Attaquer / Coloniser</NuxtLink>
-  </center>
+  </div>
 </template>
 
 <script>
@@ -53,15 +53,3 @@ export default {
   }
 };
 </script>
-<style scoped>
-    table {
-      border-spacing: 50px;
-      text-align: center;
-    }
-    button {
-      margin: 10px;
-    }
-    img {
-      max-width: 33%;
-    }
-</style>
