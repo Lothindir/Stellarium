@@ -42,8 +42,8 @@ export default Vue.extend({
        tree() {
            return this.trees.find(tree => tree.type === this.type) // TODO: add a default value
        }
-   },
-   /*methods: {
+   }/*,
+   methods: {
        async getDatas(){
 
            try {
