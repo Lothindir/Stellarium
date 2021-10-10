@@ -9,9 +9,9 @@
 </template>
 <style scoped>
     img {
-        min-width: 25px;
-        width: 10vw;
-        max-width: 40px;
+        min-width: 30px;
+        width: 14vw;
+        max-width: 60px;
         opacity: 0.6;
     }
 

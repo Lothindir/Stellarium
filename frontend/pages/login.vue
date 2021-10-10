@@ -1,21 +1,82 @@
 <template>
-<div>
-  <h1>[Login page content]</h1>
-  <div v-if="isAuthenticated">
-    <h1>Connected</h1>
-  </div>
-  <div v-else>
-    <h1>Not connected</h1>
-  </div>
-</div>
+  <section class="content">
+    <h2>SALUTATIONS SPACIONAUTE</h2>
+    <form id="login_form" method="post" @submit.prevent="login">
+      <div class="field">
+        <input
+          type="email"
+          class="input"
+          name="email"
+          v-model="email"
+        />
+      </div>
+      <div class="field">
+        <input
+          type="password"
+          class="input"
+          name="password"
+          v-model="password"
+        />
+      </div>
+    </form>
+    <button type="submit" form="login_form" class="button is-dark is-fullwidth">ACCEDER AU COCKPIT</button>
+  </section>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-
 export default {
-  computed: {
-    ...mapGetters(['isAuthenticated', 'loggedInUser'])
+
+  data() {
+    return {
+      email: '',
+      password: '',
+      error: null
+    }
+  },
+
+  methods: {
+    async login() {
+      try {
+        await this.$auth.loginWith('local', {
+          data: {
+          email: this.email,
+          password: this.password
+          }
+        })
+
+        this.$router.push('/')
+      } catch (e) {
+        this.error = e.response.data.message
+      }
+    }
   }
 }
 </script>
+
+<style>
+  .content{
+    display:grid;
+    align-content: center;
+    row-gap: 3rem;
+    justify-items: center;
+  }
+  h2{
+    font-weight: 600;
+    font-size: 2rem;
+    text-align: center;
+  }
+  form{
+    display: grid;
+    justify-content:stretch;
+    row-gap: 1.5em;
+    width: 100%;
+  }
+
+  .field{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 3rem;
+  }
+
+</style>

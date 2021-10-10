@@ -1,6 +1,7 @@
 export default {
 
   router: {
+    //base: '/',
     middleware: ['auth']
   },
 
@@ -51,6 +52,12 @@ export default {
     '@nuxtjs/pwa',
     '@nuxtjs/auth-next',
   ],
+
+  // Axios module configuration: https://go.nuxtjs.dev/config-axios
+  axios: {
+    baseURL: 'http://localhost:8080/api'
+  },
+
   auth: {
     // Options
     strategies: {
@@ -66,17 +73,20 @@ export default {
           }
         }
       },
+      local: {
+        endpoints: {
+          login: { url: 'login', method: 'post', propertyName: 'data.token' },
+          logout: false
+        }
+      }
     },
     redirect: {
       login: '/login',
-      logout: '/',
+      logout: '/logout',
       callback: '/login',
       home: '/'
     }
   },
-
-  // Axios module configuration: https://go.nuxtjs.dev/config-axios
-  axios: {},
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa
   pwa: {
