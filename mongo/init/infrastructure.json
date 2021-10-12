@@ -1,0 +1,106 @@
+[
+  {
+    "type": "waterProduction",
+    "description": "Permet de produire de l'eau en exploitant les ressources disponibles",
+    "levels": [
+      {
+        "level": 1,
+        "production": 1
+      },
+      {
+        "level": 2,
+        "production": 2
+      },
+      {
+        "level": 3,
+        "production": 3
+      },
+      {
+        "level": 4,
+        "production": 4
+      },
+      {
+        "level": 5,
+        "production": 5
+      }
+    ]
+  },
+  {
+    "type": "energyProduction",
+    "description": "Permet de produire de l'énergie en exploitant les ressources disponibles",
+    "levels": [
+      {
+        "level": 1,
+        "production": 1
+      },
+      {
+        "level": 2,
+        "production": 2
+      },
+      {
+        "level": 3,
+        "production": 3
+      },
+      {
+        "level": 4,
+        "production": 4
+      },
+      {
+        "level": 5,
+        "production": 5
+      }
+    ]
+  },
+  {
+    "type": "metalProduction",
+    "description": "Permet de produire du metal en exploitant les ressources disponibles",
+    "levels": [
+      {
+        "level": 1,
+        "production": 1
+      },
+      {
+        "level": 2,
+        "production": 2
+      },
+      {
+        "level": 3,
+        "production": 3
+      },
+      {
+        "level": 4,
+        "production": 4
+      },
+      {
+        "level": 5,
+        "production": 5
+      }
+    ]
+  },
+  {
+    "type": "biomassProduction",
+    "description": "Permet de produire de la biomasse en exploitant les ressources disponibles",
+    "levels": [
+      {
+        "level": 1,
+        "production": 1
+      },
+      {
+        "level": 2,
+        "production": 2
+      },
+      {
+        "level": 3,
+        "production": 3
+      },
+      {
+        "level": 4,
+        "production": 4
+      },
+      {
+        "level": 5,
+        "production": 5
+      }
+    ]
+  }
+]
