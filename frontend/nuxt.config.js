@@ -55,7 +55,7 @@ export default {
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    baseURL: 'http://localhost:8080/api'
+    baseURL: 'http://localhost/api'
   },
 
   auth: {
@@ -63,15 +63,11 @@ export default {
     strategies: {
       cookie: {
         cookie: {
-          // (optional) If set, we check this cookie existence for loggedIn check
-          name: 'XSRF-TOKEN',
+          name: 'adonis-session',
         },
-        endpoints: {
-          // (optional) If set, we send a get request to this endpoint before login
-          csrf: {
-            url: ''
-          }
-        }
+        user: {
+          autoFetch: false
+      },
       },
       local: {
         endpoints: {

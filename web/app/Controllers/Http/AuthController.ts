@@ -1,18 +1,23 @@
-import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext';
 
 export default class AuthController {
-    public async login({request, auth, response}: HttpContextContract){
-        const email = request.input('email');
-        const password = request.input('password');
-        const rememberMe = !!request.input('rememberMe');
+  public async login({ request, auth, response }: HttpContextContract) {
+    const email = request.input('email');
+    const password = request.input('password');
+    const rememberMe = !!request.input('rememberMe');
 
-        try {
-            await auth.attempt(email, password, rememberMe);
-        } catch (error) {
-            console.error(error);
-            return response.unauthorized(error.code)
-        }
-
-        return response.redirect('/api');
+    try {
+      await auth.attempt(email, password, rememberMe);
+    } catch (error) {
+      console.error(error);
+      return response.unauthorized(error.code);
     }
+
+    return response.json(auth.user);
+  }
+
+  public async logout({ auth, response }: HttpContextContract) {
+    await auth.logout();
+    response.ok('Disconnected');
+  }
 }
