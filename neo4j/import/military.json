@@ -1,0 +1,29 @@
+{"type":"node","id":"0","labels":["Military","TechTree"],"properties":{"effect":"defense: 4","name":"Energie violette","description":"Augmente la défense de 4","id":"M13"}}
+{"type":"node","id":"1","labels":["Military","TechTree"],"properties":{"effect":"defense: 3","name":"Energie rouge","description":"Augmente la défense de 3","id":"M9"}}
+{"type":"node","id":"2","labels":["Military","TechTree"],"properties":{"effect":"defense: 2","name":"Energie bleue","description":"Augmente la défense de 2","id":"M5"}}
+{"type":"node","id":"3","labels":["Military","TechTree"],"properties":{"effect":"defense: 1","name":"Boucliers énergétiques","description":"Augmente la défense de 1","id":"M2"}}
+{"type":"node","id":"4","labels":["Military","TechStart","TechTree"],"properties":{"name":"Armement","description":"Débloque la suite de l'arbre","id":"M0"}}
+{"type":"node","id":"5","labels":["Military","TechTree"],"properties":{"effect":"attack: 1","name":"Canon laser","description":"Augmente l'attaque de 1","id":"M1"}}
+{"type":"node","id":"6","labels":["Military","TechTree"],"properties":{"effect":"victoryIfDraw: true","name":"Célérisation laser","description":"Accorde la victoire en cas d'égalité","id":"M3"}}
+{"type":"node","id":"7","labels":["Military","TechTree"],"properties":{"effect":"retreatFuelCost: 0.75","name":"Rétro-propulseurs","description":"Réduit la consommation de carburant en cas de retraite de 25%","id":"M7"}}
+{"type":"node","id":"8","labels":["Military","TechTree"],"properties":{"effect":"useStealth: true","name":"Furtivité","description":"Permet d'être furtif. Si pas détécté l'attaque est doublée.","id":"M11"}}
+{"type":"node","id":"9","labels":["Military","TechTree"],"properties":{"effect":"attack: 2","name":"Puissance laser","description":"Augmente l'attaque de 2","id":"M4"}}
+{"type":"node","id":"10","labels":["Military","TechTree"],"properties":{"effect":"attack: 3","name":"Puissance laser II","description":"Augmente l'attaque de 3","id":"M8"}}
+{"type":"node","id":"11","labels":["Military","TechTree"],"properties":{"effect":"attack: 4","name":"Puissance laser III","description":"Augmente l'attaque de 4","id":"M12"}}
+{"type":"node","id":"12","labels":["Military","TechTree"],"properties":{"effect":"defenseConstructionCost: 0.9","name":"Robotisation","description":"Réduit les coûts de construction des défenses de 10%","id":"M6"}}
+{"type":"node","id":"13","labels":["Military","TechTree"],"properties":{"effect":"detectStealth: true","name":"Radar ultrasonique","description":"Permet de détecter les vaisseaux furtifs","id":"M10"}}
+{"type":"node","id":"14","labels":["Military","TechTree"],"properties":{"effect":"salvageRessourcesInCaseOfDefeat: 0.2","name":"Autodestruction","description":"Permet de récupérer une partie des ressources en cas de défaite","id":"M14"}}
+{"id":"0","type":"relationship","label":"LEADS_TO","properties":{"challenge":"CM13","id":""},"start":{"id":"1","labels":["Military","TechTree"]},"end":{"id":"0","labels":["Military","TechTree"]}}
+{"id":"1","type":"relationship","label":"LEADS_TO","properties":{"challenge":"CM9","id":""},"start":{"id":"2","labels":["Military","TechTree"]},"end":{"id":"1","labels":["Military","TechTree"]}}
+{"id":"2","type":"relationship","label":"LEADS_TO","properties":{"challenge":"CM5","id":""},"start":{"id":"3","labels":["Military","TechTree"]},"end":{"id":"2","labels":["Military","TechTree"]}}
+{"id":"3","type":"relationship","label":"LEADS_TO","properties":{"challenge":"CM2","id":""},"start":{"id":"4","labels":["Military","TechStart","TechTree"]},"end":{"id":"3","labels":["Military","TechTree"]}}
+{"id":"4","type":"relationship","label":"LEADS_TO","properties":{"challenge":"CM1","id":""},"start":{"id":"4","labels":["Military","TechStart","TechTree"]},"end":{"id":"5","labels":["Military","TechTree"]}}
+{"id":"5","type":"relationship","label":"LEADS_TO","properties":{"challenge":"CM3","id":""},"start":{"id":"5","labels":["Military","TechTree"]},"end":{"id":"6","labels":["Military","TechTree"]}}
+{"id":"6","type":"relationship","label":"LEADS_TO","properties":{"challenge":"CM7","id":""},"start":{"id":"6","labels":["Military","TechTree"]},"end":{"id":"7","labels":["Military","TechTree"]}}
+{"id":"7","type":"relationship","label":"LEADS_TO","properties":{"challenge":"CM11","id":""},"start":{"id":"7","labels":["Military","TechTree"]},"end":{"id":"8","labels":["Military","TechTree"]}}
+{"id":"8","type":"relationship","label":"LEADS_TO","properties":{"challenge":"CM4","id":""},"start":{"id":"5","labels":["Military","TechTree"]},"end":{"id":"9","labels":["Military","TechTree"]}}
+{"id":"9","type":"relationship","label":"LEADS_TO","properties":{"challenge":"CM8","id":""},"start":{"id":"9","labels":["Military","TechTree"]},"end":{"id":"10","labels":["Military","TechTree"]}}
+{"id":"10","type":"relationship","label":"LEADS_TO","properties":{"challenge":"CM12","id":""},"start":{"id":"10","labels":["Military","TechTree"]},"end":{"id":"11","labels":["Military","TechTree"]}}
+{"id":"11","type":"relationship","label":"LEADS_TO","properties":{"challenge":"CM6","id":""},"start":{"id":"3","labels":["Military","TechTree"]},"end":{"id":"12","labels":["Military","TechTree"]}}
+{"id":"12","type":"relationship","label":"LEADS_TO","properties":{"challenge":"CM10","id":""},"start":{"id":"12","labels":["Military","TechTree"]},"end":{"id":"13","labels":["Military","TechTree"]}}
+{"id":"13","type":"relationship","label":"LEADS_TO","properties":{"challenge":"CM14","id":""},"start":{"id":"13","labels":["Military","TechTree"]},"end":{"id":"14","labels":["Military","TechTree"]}}
