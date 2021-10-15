@@ -56,23 +56,15 @@ export default {
 
   auth: {
     // Options
-    /*localStorage: false,
-    cookie: {
-      prefix: 'auth.',
-      options: {
-        path: '/',
-        maxAge: 10800
-      }
-    },*/
     strategies: {
       local: {
         token: {
           required: false,
           type: false
         },
-        /*user: {
-          property: 'data', // the name of your object in your backend response payload
-        },*/
+        cookie: {
+          name: 'adonis-session',
+        },
         endpoints: {
           login: { url: 'login', method: 'post' },
           user: false, // We get the data directly in the login request

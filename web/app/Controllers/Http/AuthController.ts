@@ -7,7 +7,7 @@ export default class AuthController {
         const rememberMe = !!request.input('rememberMe');
 
         try {
-            const token = await auth.attempt(email, password, rememberMe);
+            await auth.attempt(email, password, rememberMe);
             return response.json(auth.user)
         } catch (error) {
             console.error(error);
