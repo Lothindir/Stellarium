@@ -134,7 +134,7 @@ services:
       - traefik
     volumes: 
       - mongo-data:/data/db
-      - ./mongo/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js
+      - ./mongo/init:/docker-entrypoint-initdb.d/
     environment: 
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: rootpassword

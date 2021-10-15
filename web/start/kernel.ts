@@ -9,7 +9,7 @@
 |
 */
 
-import Server from '@ioc:Adonis/Core/Server'
+import Server from '@ioc:Adonis/Core/Server';
 
 /*
 |--------------------------------------------------------------------------
@@ -20,7 +20,7 @@ import Server from '@ioc:Adonis/Core/Server'
 | are defined for every HTTP requests.
 |
 */
-Server.middleware.register([() => import('@ioc:Adonis/Core/BodyParser')])
+Server.middleware.register([() => import('@ioc:Adonis/Core/BodyParser')]);
 
 /*
 |--------------------------------------------------------------------------
@@ -39,6 +39,6 @@ Server.middleware.register([() => import('@ioc:Adonis/Core/BodyParser')])
 |
 */
 Server.middleware.registerNamed({
-    auth: () => import('App/Middleware/Auth')
-  })
-  
+  auth: () => import('App/Middleware/Auth'),
+  adminAuth: () => import('App/Middleware/AdminAuth'),
+});

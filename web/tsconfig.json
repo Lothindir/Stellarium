@@ -32,8 +32,7 @@
       "@adonisjs/view",
       "@adonisjs/shield",
       "@adonisjs/auth",
-      "@adonisjs/lucid",
-      "@zakodium/adonis-mongodb"
+      "@adonisjs/lucid"
     ]
   }
 }

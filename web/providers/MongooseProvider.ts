@@ -20,7 +20,7 @@ import { Mongoose } from 'mongoose'
 | }
 |
 */
-export default class MongoProvider {
+export default class MongooseProvider {
   constructor (protected app: ApplicationContract) {
   }
 

@@ -18,16 +18,31 @@
 |
 */
 
-import Route from '@ioc:Adonis/Core/Route'
+import Route from '@ioc:Adonis/Core/Route';
 
-Route.get('/', async ({ view }) => {
+/* Route.get('/', async ({ view }) => {
   return view.render('welcome')
 }).middleware('auth');
 
 Route.get('/login', async ({ view }) => {
   return view.render('login')
-});
+}); */
 
 Route.post('/login', 'AuthController.login');
+Route.get('/logout', 'AuthController.logout').middleware('auth');
 
-Route.get('/federations', 'FederationsController.list');
+Route.resource('federations', 'FederationsController')
+  .apiOnly()
+  .middleware({
+    store: ['adminAuth'],
+    update: ['adminAuth'],
+    destroy: ['adminAuth'],
+  });
+
+Route.resource('crews', 'CrewsController')
+  .apiOnly()
+  .middleware({
+    store: ['adminAuth'],
+    update: ['adminAuth'],
+    destroy: ['adminAuth'],
+  });
