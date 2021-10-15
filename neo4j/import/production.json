@@ -1,0 +1,43 @@
+{"type":"node","id":"3","labels":["Production","TechTree"],"properties":{"uid":"P2","level":1,"name":"Pile nucléaire","type":"energyProduction"}}
+{"type":"node","id":"4","labels":["Production","TechTree"],"properties":{"uid":"P0","name":"Usine","description":"Débloque l'infrastructure de base permettant de spécialiser l'industrie"}}
+{"type":"node","id":"5","labels":["Production","TechTree"],"properties":{"uid":"P1","level":1,"name":"Source de H2O","type":"waterProduction"}}
+{"type":"node","id":"6","labels":["Production","TechTree"],"properties":{"uid":"P5","level":2,"name":"Bisse sans fin","type":"waterProduction"}}
+{"type":"node","id":"7","labels":["Production","TechTree"],"properties":{"uid":"P9","level":3,"name":"Puit stellaire","type":"waterProduction"}}
+{"type":"node","id":"8","labels":["Production","TechTree"],"properties":{"uid":"P13","level":4,"name":"Pompe à energie solaire","type":"waterProduction"}}
+{"type":"node","id":"9","labels":["Production","TechTree"],"properties":{"uid":"P6","level":2,"name":"Batterie lunaire","type":"energyProduction"}}
+{"type":"node","id":"10","labels":["Production","TechTree"],"properties":{"uid":"P10","level":3,"name":"Batterie solaire","type":"energyProduction"}}
+{"type":"node","id":"11","labels":["Production","TechTree"],"properties":{"uid":"P14","level":4,"name":"Réservoir éléctrique","type":"energyProduction"}}
+{"type":"node","id":"12","labels":["Production","TechTree"],"properties":{"uid":"P4","level":1,"name":"Filon de thurgonium","type":"metalProduction"}}
+{"type":"node","id":"13","labels":["Production","TechTree"],"properties":{"uid":"P3","level":1,"name":"Charrue à air comprimé","type":"biomassProduction"}}
+{"type":"node","id":"14","labels":["Production","TechTree"],"properties":{"uid":"P7","level":2,"name":"Terreau stellaire","type":"biomassProduction"}}
+{"type":"node","id":"15","labels":["Production","TechTree"],"properties":{"uid":"P11","level":3,"name":"Engrais de lune","type":"biomassProduction"}}
+{"type":"node","id":"16","labels":["Production","TechTree"],"properties":{"uid":"P15","level":4,"name":"Serre photovoltaïque","type":"biomassProduction"}}
+{"type":"node","id":"17","labels":["Production","TechTree"],"properties":{"uid":"P8","level":2,"name":"Gisement vertical","type":"metalProduction"}}
+{"type":"node","id":"18","labels":["Production","TechTree"],"properties":{"uid":"P12","level":3,"name":"Mine avec chariot motorisé","type":"metalProduction"}}
+{"type":"node","id":"19","labels":["Production","TechTree"],"properties":{"uid":"P16","level":4,"name":"Marteau piquer laser","type":"metalProduction"}}
+{"type":"node","id":"20","labels":["Production","TechStart"],"properties":{"uid":"P"}}
+{"type":"node","id":"21","labels":["Production","TechTree"],"properties":{"uid":"P17","level":5,"name":"Barrage de l'Hongrin","type":"waterProduction"}}
+{"type":"node","id":"22","labels":["Production","TechTree"],"properties":{"uid":"P18","level":5,"name":"Réservoir sans fond","type":"energyProduction"}}
+{"type":"node","id":"23","labels":["Production","TechTree"],"properties":{"uid":"P19","level":5,"name":"Serre à gaz solaire","type":"biomassProduction"}}
+{"type":"node","id":"24","labels":["Production","TechTree"],"properties":{"uid":"P20","level":5,"name":"Carrière stellaire","type":"metalProduction"}}
+{"id":"166","type":"relationship","label":"LEADS_TO","properties":{"challenge":"CP2"},"start":{"id":"4","labels":["Production","TechTree"]},"end":{"id":"3","labels":["Production","TechTree"]}}
+{"id":"167","type":"relationship","label":"LEADS_TO","properties":{"challenge":"CP1"},"start":{"id":"4","labels":["Production","TechTree"]},"end":{"id":"5","labels":["Production","TechTree"]}}
+{"id":"168","type":"relationship","label":"LEADS_TO","properties":{"challenge":"CP5"},"start":{"id":"5","labels":["Production","TechTree"]},"end":{"id":"6","labels":["Production","TechTree"]}}
+{"id":"169","type":"relationship","label":"LEADS_TO","properties":{"challenge":"CP9"},"start":{"id":"6","labels":["Production","TechTree"]},"end":{"id":"7","labels":["Production","TechTree"]}}
+{"id":"170","type":"relationship","label":"LEADS_TO","properties":{"challenge":"CP13"},"start":{"id":"7","labels":["Production","TechTree"]},"end":{"id":"8","labels":["Production","TechTree"]}}
+{"id":"171","type":"relationship","label":"LEADS_TO","properties":{"challenge":"CP6"},"start":{"id":"3","labels":["Production","TechTree"]},"end":{"id":"9","labels":["Production","TechTree"]}}
+{"id":"172","type":"relationship","label":"LEADS_TO","properties":{"challenge":"CP10"},"start":{"id":"9","labels":["Production","TechTree"]},"end":{"id":"10","labels":["Production","TechTree"]}}
+{"id":"173","type":"relationship","label":"LEADS_TO","properties":{"challenge":"CP14"},"start":{"id":"10","labels":["Production","TechTree"]},"end":{"id":"11","labels":["Production","TechTree"]}}
+{"id":"174","type":"relationship","label":"LEADS_TO","properties":{"challenge":"CP4"},"start":{"id":"4","labels":["Production","TechTree"]},"end":{"id":"12","labels":["Production","TechTree"]}}
+{"id":"175","type":"relationship","label":"LEADS_TO","properties":{"challenge":"CP3"},"start":{"id":"4","labels":["Production","TechTree"]},"end":{"id":"13","labels":["Production","TechTree"]}}
+{"id":"176","type":"relationship","label":"LEADS_TO","properties":{"challenge":"CP7"},"start":{"id":"13","labels":["Production","TechTree"]},"end":{"id":"14","labels":["Production","TechTree"]}}
+{"id":"177","type":"relationship","label":"LEADS_TO","properties":{"challenge":"CP11"},"start":{"id":"14","labels":["Production","TechTree"]},"end":{"id":"15","labels":["Production","TechTree"]}}
+{"id":"178","type":"relationship","label":"LEADS_TO","properties":{"challenge":"CP15"},"start":{"id":"15","labels":["Production","TechTree"]},"end":{"id":"16","labels":["Production","TechTree"]}}
+{"id":"179","type":"relationship","label":"LEADS_TO","properties":{"challenge":"CP8"},"start":{"id":"12","labels":["Production","TechTree"]},"end":{"id":"17","labels":["Production","TechTree"]}}
+{"id":"180","type":"relationship","label":"LEADS_TO","properties":{"challenge":"CP12"},"start":{"id":"17","labels":["Production","TechTree"]},"end":{"id":"18","labels":["Production","TechTree"]}}
+{"id":"181","type":"relationship","label":"LEADS_TO","properties":{"challenge":"CP16"},"start":{"id":"18","labels":["Production","TechTree"]},"end":{"id":"19","labels":["Production","TechTree"]}}
+{"id":"182","type":"relationship","label":"LEADS_TO","properties":{"challenge":"CP0"},"start":{"id":"20","labels":["Production","TechStart"]},"end":{"id":"4","labels":["Production","TechTree"]}}
+{"id":"183","type":"relationship","label":"LEADS_TO","properties":{"challenge":"CP17"},"start":{"id":"8","labels":["Production","TechTree"]},"end":{"id":"21","labels":["Production","TechTree"]}}
+{"id":"184","type":"relationship","label":"LEADS_TO","properties":{"challenge":"CP17"},"start":{"id":"11","labels":["Production","TechTree"]},"end":{"id":"22","labels":["Production","TechTree"]}}
+{"id":"185","type":"relationship","label":"LEADS_TO","properties":{"challenge":"CP19"},"start":{"id":"16","labels":["Production","TechTree"]},"end":{"id":"23","labels":["Production","TechTree"]}}
+{"id":"186","type":"relationship","label":"LEADS_TO","properties":{"challenge":"CP20"},"start":{"id":"19","labels":["Production","TechTree"]},"end":{"id":"24","labels":["Production","TechTree"]}}

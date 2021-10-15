@@ -1,23 +1,15 @@
 {"type":"node","id":"0","labels":["Player"],"properties":{"password":"$argon2id$v=19$t=3,m=4096,p=1$am25lVWFm0BL2WnJ82zSQg$FiiBgmB7hfah0uR8Pbuiq1J/D+YJbB/wW9EBiKb/LpY","uuid":"5f81aaee-ee95-44e2-90d0-a50a246b4e62","email":"test@mail.com","username":"Test"}}
 {"type":"node","id":"1","labels":["Crew"],"properties":{"name":"Crew1"}}
 {"type":"node","id":"2","labels":["Player"],"properties":{"password":"$argon2id$v=19$t=3,m=4096,p=1$am25lVWFm0BL2WnJ82zSQg$FiiBgmB7hfah0uR8Pbuiq1J/D+YJbB/wW9EBiKb/LpY","uuid":"a4f4dba4-b449-46d6-a112-c103ced22182","email":"test2@mail.com","username":"Test2"}}
-{"type":"node","id":"3","labels":["Colony"],"properties":{"pruduction":"<JSON>","planet_id":1,"defense":"<JSON>","infrastructure":"<JSON>"}}
+{"type":"node","id":"3","labels":["Colony"],"properties":{"production":"<JSON>","planet_id":1,"defense":"<JSON>","infrastructure":"<JSON>"}}
 {"type":"node","id":"4","labels":["Federation"],"properties":{"name":"Federation1"}}
 {"type":"node","id":"5","labels":["Crew"],"properties":{"name":"Crew2"}}
-{"type":"node","id":"6","labels":["Colony"],"properties":{"pruduction":"<JSON>","planet_id":521,"defense":"<JSON>","infrastructure":"<JSON>"}}
+{"type":"node","id":"6","labels":["Colony"],"properties":{"production":"<JSON>","planet_id":521,"defense":"<JSON>","infrastructure":"<JSON>"}}
 {"type":"node","id":"7","labels":["Player"],"properties":{"password":"$argon2id$v=19$t=3,m=4096,p=1$am25lVWFm0BL2WnJ82zSQg$FiiBgmB7hfah0uR8Pbuiq1J/D+YJbB/wW9EBiKb/LpY","uuid":"25cc55a4-1ba1-409a-84f7-1c3a1563694a","email":"test3@mail.com","username":"Test3"}}
 {"type":"node","id":"8","labels":["Player"],"properties":{"password":"$argon2id$v=19$t=3,m=4096,p=1$am25lVWFm0BL2WnJ82zSQg$FiiBgmB7hfah0uR8Pbuiq1J/D+YJbB/wW9EBiKb/LpY","uuid":"82d97584-ae27-4370-8d56-f748955f7fb0","email":"test4@mail.com","username":"Test4"}}
-{"type":"node","id":"9","labels":["Military","TechTree"],"properties":{"effect":"+ attaque","challenge":"Épreuve 3","title":"Canons Laser"}}
-{"type":"node","id":"10","labels":["Colony"],"properties":{"pruduction":"<JSON>","planet_id":56,"defense":"<JSON>","infrastructure":"<JSON>"}}
-{"type":"node","id":"11","labels":["Colony"],"properties":{"pruduction":"<JSON>","planet_id":887,"defense":"<JSON>","infrastructure":"<JSON>"}}
-{"type":"node","id":"12","labels":["Colony"],"properties":{"pruduction":"<JSON>","planet_id":8,"defense":"<JSON>","infrastructure":"<JSON>"}}
-{"type":"node","id":"13","labels":["Military","TechTree"],"properties":{"effect":"+ défense","challenge":"Épreuve 7","title":"Energie bleue"}}
-{"type":"node","id":"14","labels":["Military","TechTree"],"properties":{"effect":"+ défense","challenge":"Épreuve 2","title":"Boucliers énérgétiques"}}
-{"type":"node","id":"15","labels":["Military","TechTree"],"properties":{"effect":"Aucun","challenge":"Épreuve 1","title":"Armement"}}
-{"type":"node","id":"16","labels":["Military","TechTree"],"properties":{"effect":"Victoire en cas d'égalité","challenge":"Épreuve 5","title":"Celerisation Laser"}}
-{"type":"node","id":"17","labels":["Military","TechTree"],"properties":{"effect":"+ attaque","challenge":"Épreuve 4","title":"Puissance Laser I"}}
-{"type":"node","id":"18","labels":["Military","TechTree"],"properties":{"effect":"- coûts construction défense","challenge":"Épreuve 6","title":"Robotisation"}}
-{"type":"node","id":"19","labels":["Military","TechTree"],"properties":{"effect":"Détection des vaisseaux furtifs","challenge":"Épreuve 8","title":"Radar ultrasonique"}}
+{"type":"node","id":"9","labels":["Colony"],"properties":{"production":"<JSON>","planet_id":56,"defense":"<JSON>","infrastructure":"<JSON>"}}
+{"type":"node","id":"10","labels":["Colony"],"properties":{"production":"<JSON>","planet_id":887,"defense":"<JSON>","infrastructure":"<JSON>"}}
+{"type":"node","id":"11","labels":["Colony"],"properties":{"production":"<JSON>","planet_id":8,"defense":"<JSON>","infrastructure":"<JSON>"}}
 {"id":"0","type":"relationship","label":"PART_OF","start":{"id":"0","labels":["Player"]},"end":{"id":"1","labels":["Crew"]}}
 {"id":"1","type":"relationship","label":"PART_OF","start":{"id":"2","labels":["Player"]},"end":{"id":"1","labels":["Crew"]}}
 {"id":"2","type":"relationship","label":"OWNS","start":{"id":"1","labels":["Crew"]},"end":{"id":"3","labels":["Colony"]}}
@@ -26,15 +18,6 @@
 {"id":"5","type":"relationship","label":"OWNS","start":{"id":"5","labels":["Crew"]},"end":{"id":"6","labels":["Colony"]}}
 {"id":"6","type":"relationship","label":"PART_OF","start":{"id":"7","labels":["Player"]},"end":{"id":"5","labels":["Crew"]}}
 {"id":"7","type":"relationship","label":"PART_OF","start":{"id":"8","labels":["Player"]},"end":{"id":"5","labels":["Crew"]}}
-{"id":"8","type":"relationship","label":"CAN_RESEARCH","start":{"id":"1","labels":["Crew"]},"end":{"id":"9","labels":["Military","TechTree"]}}
-{"id":"9","type":"relationship","label":"OWNS","start":{"id":"1","labels":["Crew"]},"end":{"id":"10","labels":["Colony"]}}
-{"id":"10","type":"relationship","label":"OWNS","start":{"id":"5","labels":["Crew"]},"end":{"id":"11","labels":["Colony"]}}
-{"id":"11","type":"relationship","label":"OWNS","start":{"id":"5","labels":["Crew"]},"end":{"id":"12","labels":["Colony"]}}
-{"id":"12","type":"relationship","label":"LEADS_TO","properties":{"challenge":"Épreuve"},"start":{"id":"14","labels":["Military","TechTree"]},"end":{"id":"13","labels":["Military","TechTree"]}}
-{"id":"13","type":"relationship","label":"LEADS_TO","properties":{"challenge":"Épreuve"},"start":{"id":"15","labels":["Military","TechTree"]},"end":{"id":"14","labels":["Military","TechTree"]}}
-{"id":"14","type":"relationship","label":"LEADS_TO","properties":{"challenge":"Épreuve"},"start":{"id":"15","labels":["Military","TechTree"]},"end":{"id":"9","labels":["Military","TechTree"]}}
-{"id":"15","type":"relationship","label":"LEADS_TO","properties":{"challenge":"Épreuve"},"start":{"id":"9","labels":["Military","TechTree"]},"end":{"id":"16","labels":["Military","TechTree"]}}
-{"id":"16","type":"relationship","label":"LEADS_TO","properties":{"challenge":"Épreuve"},"start":{"id":"9","labels":["Military","TechTree"]},"end":{"id":"17","labels":["Military","TechTree"]}}
-{"id":"17","type":"relationship","label":"CAN_RESEARCH","start":{"id":"1","labels":["Crew"]},"end":{"id":"14","labels":["Military","TechTree"]}}
-{"id":"18","type":"relationship","label":"LEADS_TO","properties":{"challenge":"Épreuve"},"start":{"id":"14","labels":["Military","TechTree"]},"end":{"id":"18","labels":["Military","TechTree"]}}
-{"id":"19","type":"relationship","label":"LEADS_TO","properties":{"challenge":"Épreuve"},"start":{"id":"18","labels":["Military","TechTree"]},"end":{"id":"19","labels":["Military","TechTree"]}}
+{"id":"9","type":"relationship","label":"OWNS","start":{"id":"1","labels":["Crew"]},"end":{"id":"9","labels":["Colony"]}}
+{"id":"10","type":"relationship","label":"OWNS","start":{"id":"5","labels":["Crew"]},"end":{"id":"10","labels":["Colony"]}}
+{"id":"11","type":"relationship","label":"OWNS","start":{"id":"5","labels":["Crew"]},"end":{"id":"11","labels":["Colony"]}}
