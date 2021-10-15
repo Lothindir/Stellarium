@@ -5,23 +5,23 @@
     "levels": [
       {
         "level": 1,
-        "production": 1
+        "productionPerHour": 1
       },
       {
         "level": 2,
-        "production": 2
+        "productionPerHour": 2
       },
       {
         "level": 3,
-        "production": 3
+        "productionPerHour": 3
       },
       {
         "level": 4,
-        "production": 4
+        "productionPerHour": 4
       },
       {
         "level": 5,
-        "production": 5
+        "productionPerHour": 5
       }
     ]
   },
@@ -31,23 +31,23 @@
     "levels": [
       {
         "level": 1,
-        "production": 1
+        "productionPerHour": 1
       },
       {
         "level": 2,
-        "production": 2
+        "productionPerHour": 2
       },
       {
         "level": 3,
-        "production": 3
+        "productionPerHour": 3
       },
       {
         "level": 4,
-        "production": 4
+        "productionPerHour": 4
       },
       {
         "level": 5,
-        "production": 5
+        "productionPerHour": 5
       }
     ]
   },
@@ -57,23 +57,23 @@
     "levels": [
       {
         "level": 1,
-        "production": 1
+        "productionPerHour": 1
       },
       {
         "level": 2,
-        "production": 2
+        "productionPerHour": 2
       },
       {
         "level": 3,
-        "production": 3
+        "productionPerHour": 3
       },
       {
         "level": 4,
-        "production": 4
+        "productionPerHour": 4
       },
       {
         "level": 5,
-        "production": 5
+        "productionPerHour": 5
       }
     ]
   },
@@ -83,23 +83,23 @@
     "levels": [
       {
         "level": 1,
-        "production": 1
+        "productionPerHour": 1
       },
       {
         "level": 2,
-        "production": 2
+        "productionPerHour": 2
       },
       {
         "level": 3,
-        "production": 3
+        "productionPerHour": 3
       },
       {
         "level": 4,
-        "production": 4
+        "productionPerHour": 4
       },
       {
         "level": 5,
-        "production": 5
+        "productionPerHour": 5
       }
     ]
   }
