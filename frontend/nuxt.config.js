@@ -1,7 +1,7 @@
 export default {
 
   router: {
-    //base: '/',
+    base: '/',
     middleware: ['auth']
   },
 
@@ -13,7 +13,7 @@ export default {
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'frontend',
+    title: 'Stellarium',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -53,39 +53,45 @@ export default {
     '@nuxtjs/auth-next',
   ],
 
-  // Axios module configuration: https://go.nuxtjs.dev/config-axios
-  axios: {
-    baseURL: 'http://localhost:8080/api'
-  },
 
   auth: {
     // Options
+    /*localStorage: false,
+    cookie: {
+      prefix: 'auth.',
+      options: {
+        path: '/',
+        maxAge: 10800
+      }
+    },*/
     strategies: {
-      cookie: {
-        cookie: {
-          // (optional) If set, we check this cookie existence for loggedIn check
-          name: 'XSRF-TOKEN',
-        },
-        endpoints: {
-          // (optional) If set, we send a get request to this endpoint before login
-          csrf: {
-            url: ''
-          }
-        }
-      },
       local: {
+        token: {
+          required: false,
+          type: false
+        },
+        /*user: {
+          property: 'data', // the name of your object in your backend response payload
+        },*/
         endpoints: {
-          login: { url: 'login', method: 'post', propertyName: 'data.token' },
+          login: { url: 'login', method: 'post' },
+          user: false, // We get the data directly in the login request
           logout: false
-        }
+        },
+        autoFetchUser: false
       }
     },
-    redirect: {
-      login: '/login',
-      logout: '/logout',
-      callback: '/login',
+    /*redirect: {
+      login: '/api/login',
+      logout: '/',
+      callback: '/api/login',
       home: '/'
-    }
+    }*/
+  },
+
+  // Axios module configuration: https://go.nuxtjs.dev/config-axios
+  axios: {
+    baseURL: '/api'
   },
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa

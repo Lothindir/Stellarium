@@ -5,5 +5,9 @@ export const getters = {
   
     loggedInUser(state) {
       return state.auth.user
+    },
+
+    loggedInUsername(state) {
+      return state.auth.user.username
     }
   }

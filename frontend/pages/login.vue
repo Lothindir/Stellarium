@@ -24,13 +24,21 @@
 </template>
 
 <script>
+import Notification from '~/components/Notification'
+import { mapGetters } from 'vuex'
+
 export default {
+  //middleware: 'guest',
+  components: {
+    Notification,
+  },
 
   data() {
     return {
       email: '',
       password: '',
-      error: null
+      error: null,
+      status: ''
     }
   },
 
@@ -39,16 +47,23 @@ export default {
       try {
         await this.$auth.loginWith('local', {
           data: {
-          email: this.email,
-          password: this.password
+            email: this.email,
+            password: this.password
           }
+        }).then(response => {
+          this.$auth.setUser(response.data)
         })
-
+        this.status = "Connection successful!"
         this.$router.push('/')
       } catch (e) {
-        this.error = e.response.data.message
+        this.error = "error" //e.response.data.message
+        this.status = "Connection failed"
       }
     }
+  },
+
+  computed: {
+    ...mapGetters(['isAuthenticated', 'loggedInUser'])
   }
 }
 </script>

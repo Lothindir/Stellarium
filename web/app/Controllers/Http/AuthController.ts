@@ -7,12 +7,14 @@ export default class AuthController {
         const rememberMe = !!request.input('rememberMe');
 
         try {
-            await auth.attempt(email, password, rememberMe);
+            const token = await auth.attempt(email, password, rememberMe);
+            return response.json(auth.user)
         } catch (error) {
             console.error(error);
-            return response.unauthorized(error.code)
+            return response.status(400).json({
+                status: 'error',
+                message: 'Identifiants invalides'
+            })
         }
-
-        return response.redirect('/api');
     }
 }
