@@ -9,6 +9,8 @@
               <th>Distance</th>
           </tr>
       </thead>
+      <p v-if="$fetchState.pending">Fetching posts...</p>
+      <p v-else-if="$fetchState.error">Error while fetching posts</p>
       <tbody>
           <tr v-for="(galaxy, index) in galaxies" :key="index">
               <td>{{galaxy.name}}</td>
@@ -25,82 +27,24 @@
 export default {
   data() {
     return {
-        galaxies: [
-            { name: 'Theotar', prod: '2 2 5 2', def: '53', dist: '324' },
-            { name: 'Mutune', prod: '1 3 2 1', def: '33', dist: '498' },
-            { name: 'Xolmilia', prod: '2 2 1 4', def: '23', dist: '3389' },
-            { name: 'Bulezuno', prod: '3 2 1 2', def: '12', dist: '0' },
-            { name: 'Lamoahiri', prod: '2 2 2 2', def: '42', dist: '39' },
-            { name: 'Mutune', prod: '1 3 2 1', def: '33', dist: '498' },
-            { name: 'Xolmilia', prod: '2 2 1 4', def: '23', dist: '3389' },
-            { name: 'Bulezuno', prod: '3 2 1 2', def: '12', dist: '0' },
-            { name: 'Lamoahiri', prod: '2 2 2 2', def: '42', dist: '39' },
-            { name: 'Mutune', prod: '1 3 2 1', def: '33', dist: '498' },
-            { name: 'Xolmilia', prod: '2 2 1 4', def: '23', dist: '3389' },
-            { name: 'Bulezuno', prod: '3 2 1 2', def: '12', dist: '0' },
-            { name: 'Lamoahiri', prod: '2 2 2 2', def: '42', dist: '39' },
-            { name: 'Mutune', prod: '1 3 2 1', def: '33', dist: '498' },
-            { name: 'Xolmilia', prod: '2 2 1 4', def: '23', dist: '3389' },
-            { name: 'Bulezuno', prod: '3 2 1 2', def: '12', dist: '0' },
-            { name: 'Lamoahiri', prod: '2 2 2 2', def: '42', dist: '39' },
-            { name: 'Mutune', prod: '1 3 2 1', def: '33', dist: '498' },
-            { name: 'Xolmilia', prod: '2 2 1 4', def: '23', dist: '3389' },
-            { name: 'Bulezuno', prod: '3 2 1 2', def: '12', dist: '0' },
-            { name: 'Lamoahiri', prod: '2 2 2 2', def: '42', dist: '39' },
-            { name: 'Mutune', prod: '1 3 2 1', def: '33', dist: '498' },
-            { name: 'Xolmilia', prod: '2 2 1 4', def: '23', dist: '3389' },
-            { name: 'Bulezuno', prod: '3 2 1 2', def: '12', dist: '0' },
-            { name: 'Lamoahiri', prod: '2 2 2 2', def: '42', dist: '39' },
-            { name: 'Mutune', prod: '1 3 2 1', def: '33', dist: '498' },
-            { name: 'Xolmilia', prod: '2 2 1 4', def: '23', dist: '3389' },
-            { name: 'Bulezuno', prod: '3 2 1 2', def: '12', dist: '0' },
-            { name: 'Lamoahiri', prod: '2 2 2 2', def: '42', dist: '39' },
-            { name: 'Mutune', prod: '1 3 2 1', def: '33', dist: '498' },
-            { name: 'Xolmilia', prod: '2 2 1 4', def: '23', dist: '3389' },
-            { name: 'Bulezuno', prod: '3 2 1 2', def: '12', dist: '0' },
-            { name: 'Lamoahiri', prod: '2 2 2 2', def: '42', dist: '39' },
-            { name: 'Mutune', prod: '1 3 2 1', def: '33', dist: '498' },
-            { name: 'Xolmilia', prod: '2 2 1 4', def: '23', dist: '3389' },
-            { name: 'Bulezuno', prod: '3 2 1 2', def: '12', dist: '0' },
-            { name: 'Lamoahiri', prod: '2 2 2 2', def: '42', dist: '39' },
-            { name: 'Mutune', prod: '1 3 2 1', def: '33', dist: '498' },
-            { name: 'Xolmilia', prod: '2 2 1 4', def: '23', dist: '3389' },
-            { name: 'Bulezuno', prod: '3 2 1 2', def: '12', dist: '0' },
-            { name: 'Lamoahiri', prod: '2 2 2 2', def: '42', dist: '39' },
-            { name: 'Mutune', prod: '1 3 2 1', def: '33', dist: '498' },
-            { name: 'Xolmilia', prod: '2 2 1 4', def: '23', dist: '3389' },
-            { name: 'Bulezuno', prod: '3 2 1 2', def: '12', dist: '0' },
-            { name: 'Lamoahiri', prod: '2 2 2 2', def: '42', dist: '39' },
-            { name: 'Mutune', prod: '1 3 2 1', def: '33', dist: '498' },
-            { name: 'Xolmilia', prod: '2 2 1 4', def: '23', dist: '3389' },
-            { name: 'Bulezuno', prod: '3 2 1 2', def: '12', dist: '0' },
-            { name: 'Lamoahiri', prod: '2 2 2 2', def: '42', dist: '39' },
-            { name: 'Mutune', prod: '1 3 2 1', def: '33', dist: '498' },
-            { name: 'Xolmilia', prod: '2 2 1 4', def: '23', dist: '3389' },
-            { name: 'Bulezuno', prod: '3 2 1 2', def: '12', dist: '0' },
-            { name: 'Lamoahiri', prod: '2 2 2 2', def: '42', dist: '39' },
-            { name: 'Mutune', prod: '1 3 2 1', def: '33', dist: '498' },
-            { name: 'Xolmilia', prod: '2 2 1 4', def: '23', dist: '3389' },
-            { name: 'Bulezuno', prod: '3 2 1 2', def: '12', dist: '0' },
-            { name: 'Lamoahiri', prod: '2 2 2 2', def: '42', dist: '39' },
-            { name: 'Mutune', prod: '1 3 2 1', def: '33', dist: '498' },
-            { name: 'Xolmilia', prod: '2 2 1 4', def: '23', dist: '3389' },
-            { name: 'Bulezuno', prod: '3 2 1 2', def: '12', dist: '0' },
-            { name: 'Lamoahiri', prod: '2 2 2 2', def: '42', dist: '39' },
-            { name: 'Mutune', prod: '1 3 2 1', def: '33', dist: '498' },
-            { name: 'Xolmilia', prod: '2 2 1 4', def: '23', dist: '3389' },
-            { name: 'Bulezuno', prod: '3 2 1 2', def: '12', dist: '0' },
-            { name: 'Lamoahiri', prod: '2 2 2 2', def: '42', dist: '39' },
-            { name: 'Mutune', prod: '1 3 2 1', def: '33', dist: '498' },
-            { name: 'Xolmilia', prod: '2 2 1 4', def: '23', dist: '3389' },
-            { name: 'Bulezuno', prod: '3 2 1 2', def: '12', dist: '0' },
-            { name: 'Lamoahiri', prod: '2 2 2 2', def: '42', dist: '39' },
-            { name: 'Mutune', prod: '1 3 2 1', def: '33', dist: '498' },
-            { name: 'Xolmilia', prod: '2 2 1 4', def: '23', dist: '3389' },
-            { name: 'Bulezuno', prod: '3 2 1 2', def: '12', dist: '0' },
-            { name: 'Lamoahiri', prod: '2 2 2 2', def: '42', dist: '39' }
-        ]
+        galaxies: []
     };
-  }
+  },
+  /*async fetch() {
+    alert("Before")
+    galaxies = await fetch(
+      'https://freespot.ch/fakeAPI.php?api=GetVisiblePlanets'
+    ).then(res => res.json())
+    /*const { data } = await axios.get(
+      'https://freespot.ch/fakeAPI.php?api=GetVisiblePlanets'
+    )
+    alert("After")
+  },*/
+  /*async asyncData([ $axios ]) {
+    alert("Before")
+    const galaxies = await $axios.$post('/fakeAPI', {api:"GetVisiblePlanets"})
+    alert("After")
+    return { galaxies }
+  }*/
 };
 </script>
