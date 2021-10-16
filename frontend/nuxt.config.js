@@ -67,7 +67,7 @@ export default {
         endpoints: {
           login: { url: 'login', method: 'post' },
           user: false, // We get the data directly in the login request
-          logout: false
+          logout: { url: 'logout', method: 'post' }
         },
         autoFetchUser: false
       }

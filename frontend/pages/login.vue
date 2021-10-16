@@ -1,6 +1,7 @@
 <template>
   <section class="content">
     <h2>SALUTATIONS SPACIONAUTE</h2>
+    <Notification :message="error" v-if="error"/>
     <form id="login_form" method="post" @submit.prevent="login">
       <div class="field">
         <input type="email" class="input" name="email" v-model="email" />
@@ -53,7 +54,7 @@ export default {
         this.status = "Connection successful!"
         this.$router.push('/')
       } catch (e) {
-        this.error = "error" //e.response.data.message
+        this.error = e.response.data.message
         this.status = "Connection failed"
       }
     }
