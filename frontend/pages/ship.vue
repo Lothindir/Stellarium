@@ -40,6 +40,7 @@
 <script>
 export default {
   methods: {
+    // Make a post request
     async UpgradeShip(anUpgradeType) {
       const shipUpgrade = await this.$axios.post('/fakeAPI', { api: 'UpgradeShip', upgradeType: anUpgradeType }).then((res) => res.data.shipUpgrade)
       console.log(shipUpgrade)
@@ -50,6 +51,7 @@ export default {
       }
     }
   },
+  // Fetch data (post) before rendering the page. No need of placeholder in the code, then.
   async asyncData({ params, $axios }) {
     const ship = await $axios.post('/fakeAPI', { api: 'GetShip' }).then((res) => res.data.ship)
     return { ship }

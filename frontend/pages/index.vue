@@ -38,6 +38,7 @@ export default {
     }
   },
   methods: {
+    // Make a get request
     async move(planetID) {
       const move = await fetch('/api/fakeAPI?api=Move&planetID=' + planetID)
         .then((res) => res.json())
@@ -51,7 +52,7 @@ export default {
       }
     },
   },
-  async fetch() { // Fetch when loading page
+  async fetch() { // Fetch (here: get) when loading page -> place holders are needed in the code
     this.galaxies = await fetch('/api/fakeAPI?api=GetVisiblePlanets')
       .then((res) => res.json())
       .then((data) => data.galaxies)
