@@ -26,6 +26,86 @@ export default class FakeAPI {
                             ]
                           }
                     };
+                case "AttackOrColonize": {
+                    const planetID = request.input('planetID');
+                    // Different types of response depending on planet ID
+                    switch(planetID)
+                    {
+                        case "1":
+                            return {
+                                result: {
+                                    type: 'combat',
+                                    actionSuccessful: true,
+                                    outcome: 'victory'
+                                }
+                            }
+                        case "2":
+                            return {
+                                result: {
+                                    type: 'combat',
+                                    actionSuccessful: true,
+                                    outcome: 'defeat'
+                                }
+                            }
+                        case "3":
+                            return {
+                                result: {
+                                    type: 'colonization',
+                                    actionSuccessful: true,
+                                    outcome: 'colonized'
+                                }
+                            }
+                        default:
+                            return {
+                                type: 'error',
+                                actionSuccessful: false,
+                                outcome: 'fuel'
+                            }
+                    }
+                }
+                case "Move": {
+                    const planetID = request.input('planetID');
+                    // Different types of response depending on planet ID
+                    switch(planetID)
+                    {
+                        case "1":
+                            return {
+                                move: {
+                                    actionSuccessful: true,
+                                    outcome: 'moved'
+                                }
+                            }
+                        default:
+                            return {
+                                move: {
+                                    actionSuccessful: false,
+                                    outcome: 'fuel'
+                                }
+                            }
+                    }
+                }
+                case "Improve": {
+                    const planetID = request.input('planetID');
+                    const buildingType = request.input('buildingType');
+                    switch(planetID) {
+                        case 1:
+                            return {
+                                building: {
+                                    actionSuccessful: true,
+                                    buildingType: buildingType,
+                                    outcome: 'built'
+                                }
+                            }   
+                        default:
+                            return {
+                                building: {
+                                    actionSuccessful: false,
+                                    buildingType: buildingType,
+                                    outcome: 'resources'
+                                }
+                            }    
+                    }
+                }
                 default:
                     return {
                         Error: [
