@@ -11,6 +11,7 @@
       </thead>
       <p v-if="$fetchState.pending">Recherche des planètes...</p>
       <p v-else-if="$fetchState.error">Impossible de scanner la planète actuellement</p>
+      <p v-else>Carburant: {{this.ship.carb.curr}}/{{this.ship.carb.max}}</p>
       <tbody>
         <tr v-for="(galaxy, index) in this.galaxies" :key="index">
           <td>{{ galaxy.name }}</td>
@@ -28,13 +29,16 @@ export default {
   data() {
     return {
       galaxies: [],
+      ship: []
     }
   },
   async fetch() {
     this.galaxies = await fetch('/api/fakeAPI?api=GetVisiblePlanets')
       .then((res) => res.json())
-      .then((data) => data.galaxies)
-    //alert("After")
+      .then((data) => data.galaxies);
+    this.ship = await fetch('/api/fakeAPI?api=GetShip')
+      .then((res) => res.json())
+      .then((data) => data.ship);
   }
 }
 </script>
