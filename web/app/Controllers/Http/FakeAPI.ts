@@ -56,9 +56,11 @@ export default class FakeAPI {
                             }
                         default:
                             return {
-                                type: 'error',
-                                actionSuccessful: false,
-                                outcome: 'fuel'
+                                result: {
+                                    type: 'error',
+                                    actionSuccessful: false,
+                                    error: 'fuel'
+                                }
                             }
                     }
                 }
@@ -86,7 +88,7 @@ export default class FakeAPI {
                     const planetID = request.input('planetID');
                     const buildingType = request.input('buildingType');
                     switch (planetID) {
-                        case 1:
+                        case "1":
                             return {
                                 building: {
                                     actionSuccessful: true,
