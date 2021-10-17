@@ -4,7 +4,7 @@ export default class FakeAPI {
     public async genericCall({ request, auth, response }: HttpContextContract) {
         try {
             const api = request.input('api');
-            switch(api) {
+            switch (api) {
                 case "GetVisiblePlanets":
                     return {
                         galaxies: [
@@ -16,21 +16,20 @@ export default class FakeAPI {
                     return {
                         ship: {
                             pa: 55,
-                            carb: {curr: 625, max: 1000},
+                            carb: { curr: 625, max: 1000 },
                             recharge: 100,
                             equipements: [
-                              {name: 'Blaster', effect: 'Attaque +6', cost: 'Equipé'},
-                              {name: 'Canon ionic', effect: 'Attaque +33', cost: 'Equipé'},
-                              {name: 'Pompe à proton', effect: 'Carburant +26', cost: '8 2 6'},
-                              {name: 'Panneau stellaire', effect: 'Recharge +12', cost: '2 3 4'},
+                                { name: 'Blaster', effect: 'Attaque +6', cost: 'Equipé' },
+                                { name: 'Canon ionic', effect: 'Attaque +33', cost: 'Equipé' },
+                                { name: 'Pompe à proton', effect: 'Carburant +26', cost: '8 2 6' },
+                                { name: 'Panneau stellaire', effect: 'Recharge +12', cost: '2 3 4' },
                             ]
-                          }
+                        }
                     };
                 case "AttackOrColonize": {
                     const planetID = request.input('planetID');
                     // Different types of response depending on planet ID
-                    switch(planetID)
-                    {
+                    switch (planetID) {
                         case "1":
                             return {
                                 result: {
@@ -66,8 +65,7 @@ export default class FakeAPI {
                 case "Move": {
                     const planetID = request.input('planetID');
                     // Different types of response depending on planet ID
-                    switch(planetID)
-                    {
+                    switch (planetID) {
                         case "1":
                             return {
                                 move: {
@@ -87,7 +85,7 @@ export default class FakeAPI {
                 case "Improve": {
                     const planetID = request.input('planetID');
                     const buildingType = request.input('buildingType');
-                    switch(planetID) {
+                    switch (planetID) {
                         case 1:
                             return {
                                 building: {
@@ -95,7 +93,7 @@ export default class FakeAPI {
                                     buildingType: buildingType,
                                     outcome: 'built'
                                 }
-                            }   
+                            }
                         default:
                             return {
                                 building: {
@@ -103,7 +101,44 @@ export default class FakeAPI {
                                     buildingType: buildingType,
                                     outcome: 'resources'
                                 }
-                            }    
+                            }
+                    }
+                }
+                case "UpgradeShip": {
+                    const upgradeType = request.input('upgradeType');
+                    switch (upgradeType) {
+                        case "weapons":
+                            return {
+                                shipUpgrade: {
+                                    actionSuccessful: true,
+                                    upgradeType: upgradeType,
+                                    upgradeName: 'Canon à rotation'
+                                }
+                            }
+                        case "maxFuel":
+                            return {
+                                shipUpgrade: {
+                                    actionSuccessful: true,
+                                    upgradeType: upgradeType,
+                                    upgradeName: 'Truc pour mettre du carburant'
+                                }
+                            }
+                        case "fuelRecharge":
+                            return {
+                                shipUpgrade: {
+                                    actionSuccessful: false,
+                                    upgradeType: upgradeType,
+                                    error: 'Ressources insuffisantes'
+                                }
+                            }
+                        default:
+                            return {
+                                shipUpgrade: {
+                                    actionSuccessful: false,
+                                    upgradeType: upgradeType,
+                                    error: 'unknown'
+                                }
+                            }
                     }
                 }
                 default:
