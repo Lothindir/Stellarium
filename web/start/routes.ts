@@ -30,4 +30,4 @@ Route.get('/api/login', async ({ view }) => {
 
 Route.post('/api/login', 'AuthController.login');
 Route.post('/api/logout', 'AuthController.logout');
-Route.post('/api/fakeAPI', 'FakeAPI.genericCall');
+Route.get('/api/fakeAPI', 'FakeAPI.genericCall');
