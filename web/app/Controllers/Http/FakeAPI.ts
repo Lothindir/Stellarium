@@ -141,6 +141,22 @@ export default class FakeAPI {
                             }
                     }
                 }
+                case "ValidateChallenge": {
+                    const challengeNumber = request.input('challengeNumber');
+                    const challengeResponse = request.input('challengeResponse');
+                    const SECRET = "test"
+                    var crypto = require('crypto')
+                    var shasum = crypto.createHash('sha1')
+                    var challengeIDString = challengeNumber.toString().padStart(3, '0')
+                    shasum.update(challengeIDString + SECRET)
+                    var computedResponse = shasum.digest('hex').slice(-6).toUpperCase()
+                    var result = (computedResponse === challengeResponse)
+                    return {
+                        challengeValidation: {
+                            actionSuccessful: result
+                        }
+                    }
+                }
                 default:
                     return {
                         Error: [
@@ -152,7 +168,7 @@ export default class FakeAPI {
             console.error(error);
             return response.status(400).json({
                 status: 'error',
-                message: 'Identifiants invalides'
+                message: 'Mauvais paramètres !'
             })
         }
 
