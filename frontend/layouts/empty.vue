@@ -1,6 +1,5 @@
 <template>
-    <div>
-        <h1>Erreur !</h1>
+    <div id="layout">
         <Nuxt />
     </div>
 </template>

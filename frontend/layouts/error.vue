@@ -1,8 +1,9 @@
 <template>
-  <div>
+  <div class="content">
+    <h1>ERREUR !</h1>
     <h1 v-if="error.statusCode === 404">Votre tentative d'escapade a été reportée au Conseil Impérial.</h1>
-    <h1 v-else>Votre tentative d'escapade a été reportée au Conseil Impérial.</h1>
-    <NuxtLink to="/">Home page</NuxtLink>
+    <h1 v-else>Une erreur s'est produite et a été reportée au Conseil Impérial.</h1>
+    <NuxtLink tag="button" class="sf" to="/">retourner au cockpit</NuxtLink>
   </div>
 </template>
 
@@ -11,6 +12,6 @@
 
   export default Vue.extend({
     props: ['error'],
-    layout: 'empty' // Custom layout for the error page
+    layout: 'empty'
   })
 </script>
