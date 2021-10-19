@@ -3,16 +3,40 @@
     <table class="table table-striped table-bordered">
       <thead>
           <tr>
-              <th>Férédration<br>Equipage</th>
-              <th>Score</th>
-              <th>Rang</th>
+              <th>Classement<br>Féderation</th>
+              <th>Militaire</th>
+              <th>Production</th>
+              <th>Economie</th>
+              <th>Culture</th>
           </tr>
       </thead>
       <tbody>
-          <tr v-for="(score, index) in scores" :key="index">
-              <td>{{score.team}}</td>
-              <td>{{score.points}}</td>
-              <td>{{score.rank}}</td>
+          <tr v-for="(score, index) in scoreBoard" :key="index">
+              <td>{{score.federationName}}</td>
+              <td>{{score.federationMilitary.score}} ({{score.federationMilitary.rank}})</td>
+              <td>{{score.federationProduction.score}} ({{score.federationProduction.rank}})</td>
+              <td>{{score.federationEconomics.score}} ({{score.federationEconomics.rank}})</td>
+              <td>{{score.federationCulture.score}} ({{score.federationCulture.rank}})</td>
+          </tr>
+      </tbody>
+    </table>
+    <table class="table table-striped table-bordered">
+      <thead>
+          <tr>
+              <th>Fédération<br>Equipage</th>
+              <th>Militaire</th>
+              <th>Production</th>
+              <th>Economie</th>
+              <th>Culture</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr v-for="(score, index) in crewScores" :key="index">
+              <td>{{score.crewID}}</td>
+              <td>{{score.military.score}} ({{score.military.rank}})</td>
+              <td>{{score.production.score}} ({{score.production.rank}})</td>
+              <td>{{score.economics.score}} ({{score.economics.rank}})</td>
+              <td>{{score.culture.score}} ({{score.culture.rank}})</td>
           </tr>
       </tbody>
     </table>
@@ -23,12 +47,12 @@
               <td><img width="32px" src="~/static/challenges.svg"/></td>
           </tr>
           <tr>
-              <td>Epreuves gagnées</td>
-              <td>{{rewards.trials}}</td>
+              <td>Défis relevés</td>
+              <td>{{crewInfos.activities.trials.done}}/{{crewInfos.activities.trials.max}}</td>
           </tr>
           <tr>
-              <td>Défis relevés</td>
-              <td>{{rewards.challenges}}</td>
+              <td>Epreuves effectuées</td>
+              <td>{{crewInfos.activities.challenges.done}}/{{crewInfos.activities.challenges.max}}</td>
           </tr>
       </tbody>
     </table>
@@ -40,7 +64,7 @@
               <td>Recherche</td>
           </tr>
           <tr>
-              <td v-for="(skill, index) in skills" :key="index"><img width="32px" :src="require('~/static/'+skill.name+'.svg')"/> {{skill.count}}</td>
+              <td v-for="(skill, index) in crewInfos.research" :key="index"><img width="32px" :src="require('~/static/'+skill.name+'.svg')"/> {{skill.numberDone}}/{{skill.max}}</td>
           </tr>
       </tbody>
     </table>
@@ -52,7 +76,7 @@
               <td>Ressources</td>
           </tr>
           <tr>
-              <td v-for="(resource, index) in resources" :key="index"> {{resource.count}}</td>
+              <td v-for="(resource, index) in crewInfos.resources" :key="index">{{resource.name}}: {{resource.amount}}</td>
           </tr>
       </tbody>
     </table>
@@ -61,29 +85,15 @@
 
 <script>
 export default {
-  data() {
-    return {
-        scores: [
-          {team: 'Grayephus', points: 1589, rank: 5},
-          {team: 'Theoter', points: 348, rank: 14}
-        ],
-        skills: [
-          {name: 'culture', count: 4},
-          {name: 'war', count: 12},
-          {name: 'exploration', count: 7},
-          {name: 'production', count: 6},
-        ],
-        rewards: {
-          trials: 4,
-          challenges: 12,
-        },
-        resources: [
-          {name: 'water', count: 1234},
-          {name: 'energy', count: 324},
-          {name: 'plant', count: 78},
-          {name: 'ruby', count: 225},
-        ]
-    };
+  // Fetch data in parallel (post) before rendering the page. No need of placeholder in the code, then.
+  async asyncData({ params, $axios }) {
+    const [scoreBoard, crewScores, crewInfos] = await Promise.all([
+      $axios.post('/fakeAPI', { api: 'GetScoreBoard' }).then((res) => res.data.scoreBoard),
+      $axios.post('/fakeAPI', { api: 'GetCrewScores' }).then((res) => res.data.crewScores),
+      $axios.post('/fakeAPI', { api: 'GetCrewInfos' }).then((res) => res.data.crewInfos)
+    ]
+    )
+    return { scoreBoard, crewScores, crewInfos }
   },
 };
 </script>

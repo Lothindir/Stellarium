@@ -159,6 +159,51 @@ export default class FakeAPI {
                         }
                     }
                 }
+                // Get the scoreboard -> all federations score for each "jauge"
+                case "GetScoreBoard": {
+                    return {
+                        scoreBoard: [
+                            { federationID: 1, federationName: "Arystar", federationMilitary: { score: 435, rank: 1 }, federationCulture: { score: 435, rank: 1 }, federationProduction: { score: 435, rank: 1 }, federationEconomics: { score: 435, rank: 1 } },
+                            { federationID: 2, federationName: "Bugtar", federationMilitary: { score: 435, rank: 1 }, federationCulture: { score: 435, rank: 1 }, federationProduction: { score: 435, rank: 1 }, federationEconomics: { score: 435, rank: 1 } },
+                            { federationID: 3, federationName: "Conmar", federationMilitary: { score: 435, rank: 1 }, federationCulture: { score: 435, rank: 1 }, federationProduction: { score: 435, rank: 1 }, federationEconomics: { score: 435, rank: 1 } },
+                            { federationID: 4, federationName: "D", federationMilitary: { score: 435, rank: 1 }, federationCulture: { score: 435, rank: 1 }, federationProduction: { score: 435, rank: 1 }, federationEconomics: { score: 435, rank: 1 } },
+                            { federationID: 5, federationName: "E", federationMilitary: { score: 435, rank: 1 }, federationCulture: { score: 435, rank: 1 }, federationProduction: { score: 435, rank: 1 }, federationEconomics: { score: 435, rank: 1 } },
+                            { federationID: 6, federationName: "F", federationMilitary: { score: 435, rank: 1 }, federationCulture: { score: 435, rank: 1 }, federationProduction: { score: 435, rank: 1 }, federationEconomics: { score: 435, rank: 1 } },
+                            { federationID: 7, federationName: "G", federationMilitary: { score: 435, rank: 1 }, federationCulture: { score: 435, rank: 1 }, federationProduction: { score: 435, rank: 1 }, federationEconomics: { score: 435, rank: 1 } },
+                            { federationID: 8, federationName: "H", federationMilitary: { score: 435, rank: 1 }, federationCulture: { score: 435, rank: 1 }, federationProduction: { score: 435, rank: 1 }, federationEconomics: { score: 435, rank: 1 } },
+                            { federationID: 9, federationName: "I", federationMilitary: { score: 435, rank: 1 }, federationCulture: { score: 435, rank: 1 }, federationProduction: { score: 435, rank: 1 }, federationEconomics: { score: 435, rank: 1 } },
+                            { federationID: 10, federationName: "J", federationMilitary: { score: 435, rank: 1 }, federationCulture: { score: 435, rank: 1 }, federationProduction: { score: 435, rank: 1 }, federationEconomics: { score: 435, rank: 1 } }
+                        ]
+                    }
+                }
+                // Get the scores of the crews in a federation
+                case "GetCrewScores": {
+                    const federationID = 1;
+                    return {
+                        crewScores: [
+                            { crewID: 1, federationID: federationID, military: { score: 435, rank: 1 }, culture: { score: 435, rank: 1 }, production: { score: 435, rank: 1 }, economics: { score: 435, rank: 1 } },
+                            { crewID: 2, federationID: federationID, military: { score: 435, rank: 3 }, culture: { score: 435, rank: 3 }, production: { score: 435, rank: 45 }, economics: { score: 435, rank: 7 } },
+                            { crewID: 3, federationID: federationID, military: { score: 435, rank: 2 }, culture: { score: 435, rank: 5 }, production: { score: 435, rank: 34 }, economics: { score: 435, rank: 6 } },
+                        ]
+                    }
+                }
+                case "GetCrewInfos": { // Add ID to resources and research domains?
+                    const crewID = 1;
+                    const maxChallenges = 455;
+                    const maxTrials = 200; // Changing when they are disclosed
+                    const maxCulture = 21;
+                    const maxMilitary = 9;
+                    const maxProduction = 21;
+                    const maxExploration = 9;
+                    return {
+                        crewInfos: {
+                            crewID: crewID,
+                            resources: [{ name: "Biomasse", amount: 45 }, { name: "Energie:", amount: 57 }, { name: "Métal", amount: 78 }, { name: "Eau", amount: 99 }],
+                            activities: { challenges: { done: 2, max: maxChallenges }, trials: { done: 43, max: maxTrials } },
+                            research: [{ name: "military", displayName: "Militaire", numberDone: 4, max: maxMilitary }, { name: "exploration", displayName: "Exploration", numberDone: 3, max: maxExploration }, { name: "production", displayName: "Production", numberDone: 4, max: maxProduction }, { name: "culture", displayName: "Culture", numberDone: 4, max: maxCulture }]
+                        }
+                    }
+                }
                 default:
                     return {
                         Error: [
