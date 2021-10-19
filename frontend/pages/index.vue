@@ -91,8 +91,6 @@ export default {
         .then((res) => res.data.galaxies),
       $axios.post('/fakeAPI', { api: 'GetShip' }).then((res) => res.data.ship),
     ])
-    console.log(galaxies)
-    console.log(ship)
     return { galaxies, ship }
   },
 }

@@ -2,15 +2,19 @@
   <div class="content">
     <table class="table table-striped table-bordered">
       <tbody>
-          <tr>
-              <td><img width="32px" src="~/static/culture.svg" v-on:click="showTree('tree1')"/> {{research.book}}</td>
-              <td><img width="32px" src="~/static/war.svg" v-on:click="showTree('tree2')"/> {{research.bomb}}</td>
-              <td><img width="32px" src="~/static/exploration.svg" v-on:click="showTree('tree2')"/> {{research.telescope}}</td>
-              <td><img width="32px" src="~/static/production.svg" v-on:click="showTree('tree1')"/> {{research.factory}}</td>
-          </tr>
+        <tr>
+          <td v-for="(skill, index) in crewInfos.research" :key="index">
+            <img
+              width="32px"
+              :src="require('~/static/' + skill.name + '.svg')"
+              v-on:click="showTree(skill.name)"
+            />
+            {{ skill.numberDone }}/{{ skill.max }}
+          </td>
+        </tr>
       </tbody>
     </table>
-    <img height="600px" :src="require('~/static/'+currentTree+'.png')"/>
+    <img height="600px" :src="require('~/static/' + currentTree + '.png')" />
   </div>
 </template>
 
@@ -18,19 +22,30 @@
 export default {
   data() {
     return {
-        currentTree: "tree1",
-        research: {
-          book: 4,
-          bomb: 12,
-          telescope: 7,
-          factory: 6,
-        }
-    };
+      currentTree: 'tree2',
+    }
   },
   methods: {
     showTree: function (tree) {
-      this.currentTree = tree;
-    }
-  }
-};
+      switch (tree) {
+        case 'military': {
+        }
+        case 'production': {
+          this.currentTree = 'tree2'
+          break
+        }
+        default: {
+          this.currentTree = 'tree1'
+        }
+      }
+    },
+  },
+  // Fetch data (post) before rendering the page. No need of placeholder in the code, then.
+  async asyncData({ params, $axios }) {
+    const crewInfos = await $axios
+      .post('/fakeAPI', { api: 'GetCrewInfos' })
+      .then((res) => res.data.crewInfos)
+    return { crewInfos }
+  },
+}
 </script>
