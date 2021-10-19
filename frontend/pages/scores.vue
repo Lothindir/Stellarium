@@ -93,7 +93,8 @@ export default {
       $axios.post('/fakeAPI', { api: 'GetCrewInfos' }).then((res) => res.data.crewInfos)
     ]
     )
+    console.log(scoreBoard)
     return { scoreBoard, crewScores, crewInfos }
-  },
+  }
 };
 </script>

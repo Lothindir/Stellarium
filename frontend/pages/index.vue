@@ -9,15 +9,11 @@
           <th>Distance</th>
         </tr>
       </thead>
-      <p v-if="$fetchState.pending">Recherche des planètes...</p>
-      <p v-else-if="$fetchState.error">
-        Impossible de scanner la planète actuellement
-      </p>
-      <p v-else>
+      <p>
         Carburant: {{ this.ship.carb.curr }}/{{ this.ship.carb.max }}
       </p>
       <tbody>
-        <tr v-for="(galaxy, index) in this.galaxies" :key="index">
+        <tr v-for="(galaxy, index) in galaxies" :key="index">
           <td>{{ galaxy.name }}</td>
           <td>{{ galaxy.prod }}</td>
           <td>{{ galaxy.def }}</td>
@@ -33,12 +29,6 @@
 
 <script>
 export default {
-  data() {
-    return {
-      galaxies: [],
-      ship: [],
-    }
-  },
   methods: {
     // Make a get request
     async move(planetID) {
@@ -87,20 +77,23 @@ export default {
         .then((res) => res.data.building)
       console.log(building)
       if (building.actionSuccessful) {
-        alert("Bâtiment construit !")
+        alert('Bâtiment construit !')
       } else {
         alert('Pas assez de ressources pour construire ce bâtiment.')
       }
     },
   },
-  async fetch() {
-    // Fetch (here: get) when loading page -> place holders are needed in the code
-    this.galaxies = await fetch('/api/fakeAPI?api=GetVisiblePlanets')
-      .then((res) => res.json())
-      .then((data) => data.galaxies)
-    this.ship = await fetch('/api/fakeAPI?api=GetShip')
-      .then((res) => res.json())
-      .then((data) => data.ship)
+  // Fetch data in parallel (post) before rendering the page. No need of placeholder in the code, then.
+  async asyncData({ params, $axios }) {
+    const [galaxies, ship] = await Promise.all([
+      $axios
+        .post('/fakeAPI', { api: 'GetVisiblePlanets' })
+        .then((res) => res.data.galaxies),
+      $axios.post('/fakeAPI', { api: 'GetShip' }).then((res) => res.data.ship),
+    ])
+    console.log(galaxies)
+    console.log(ship)
+    return { galaxies, ship }
   },
 }
 </script>
