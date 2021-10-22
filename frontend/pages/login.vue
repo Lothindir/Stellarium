@@ -66,29 +66,29 @@ export default {
 }
 </script>
 
-<style>
-.content {
-  display: grid;
-  align-content: center;
-  row-gap: 3rem;
-  justify-items: center;
-}
-h2 {
-  font-weight: 600;
-  font-size: 2rem;
-  text-align: center;
-}
-form {
-  display: grid;
-  justify-content: stretch;
-  row-gap: 1.5em;
-  width: 100%;
-}
+<style scoped>
+  .content {
+    display: grid;
+    align-content: center;
+    row-gap: 3rem;
+    justify-items: center;
+  }
+  h2 {
+    font-weight: 600;
+    font-size: 2rem;
+    text-align: center;
+  }
+  form {
+    display: grid;
+    justify-content: stretch;
+    row-gap: 1.5em;
+    width: 100%;
+  }
 
-.field {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  height: 3rem;
-}
+  .field {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 3rem;
+  }
 </style>

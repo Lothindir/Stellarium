@@ -96,4 +96,6 @@
   .research { grid-area: research; }
   .challenges { grid-area: challenges; }
   .scores { grid-area: scores; }
+
+
 </style>
