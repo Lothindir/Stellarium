@@ -33,15 +33,21 @@
                 $('#menu-container').toggleClass('on off');
                 $('#menu-burger').toggleClass('on off');
             },
+            turnOffMenu(){
+                if($('#menu-burger').hasClass('on')){$('#menu-burger').removeClass('on')};
+                $('#menu-burger').addClass('off');
+                if($('#menu-container').hasClass('on')){$('#menu-container').removeClass('on')};
+                $('#menu-container').addClass('off');
+            },
             async logout(){
                 try {
                     let user = await this.$auth.logout()
                     this.status = "Logout successful!"
-                    this.$router.push('/')
                 } catch (e) {
                     this.error = e.response.data.message
                     this.status = "Logout failed"
                 }
+                this.$router.push('/login')
             }
         }
     } 
