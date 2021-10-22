@@ -8,7 +8,8 @@
 
 <style>
 
-  @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;600;700&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;600;700;900&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,900&display=swap');
 
   html {
     background: rgb(2,0,36);
@@ -61,6 +62,38 @@
 
   .content::-webkit-scrollbar {
     display: none;
+  }
+
+  h1{
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+    margin-bottom: 0.4rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    color: rgb(32, 19, 107);
+    font-weight: 900;
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    font-family:'Source Sans Pro', sans-serif;
+    width:fit-content;
+    background: white;
+    text-rendering: geometricPrecision;
+    transform: skewX(-20deg);
+  }
+
+  h2{
+    margin-left: 0.4rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    color: white;
+    font-weight: 400;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    font-family:'Source Sans Pro', sans-serif;
+    width:fit-content;
+    border:white solid 1px;
+    text-rendering: geometricPrecision;
+    transform: skewX(-20deg);
   }
 
   input{

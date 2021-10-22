@@ -1,6 +1,6 @@
 <template>
   <section class="content">
-    <h2>SALUTATIONS SPACIONAUTE</h2>
+    <h1 class="title"><span class="bracket">[</span>SALUTATIONS SPACIONAUTE<span class="bracket">]</span></h1>
     <Notification :message="error" v-if="error"/>
     <form id="login_form" method="post" @submit.prevent="login">
       <div class="field">
@@ -74,11 +74,25 @@ export default {
     row-gap: 3rem;
     justify-items: center;
   }
-  h2 {
-    font-weight: 600;
-    font-size: 2rem;
-    text-align: center;
+
+  .bracket{
+    font-size: 3rem;
+    position:relative;
+    top:0.4rem;
   }
+
+  .title {
+    min-width: 80%;
+    padding: 0;
+    margin: 0;
+    color:white;
+    transform: none;
+    background: none;
+    font-weight: 100;
+    text-align: center;
+    font-size: 1.5rem;
+  }
+
   form {
     display: grid;
     justify-content: stretch;
