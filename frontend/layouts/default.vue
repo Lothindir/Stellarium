@@ -5,6 +5,7 @@
     <Footer />
   </div>
 </template>
+
 <style>
 
   @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;600;700&display=swap');
