@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <h1>Erreur !</h1>
+    <div id="layout">
+        <Header2 />
         <Nuxt />
     </div>
 </template>

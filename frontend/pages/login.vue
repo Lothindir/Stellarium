@@ -15,7 +15,7 @@
         />
       </div>
     </form>
-    <button type="submit" form="login_form" class="button is-dark is-fullwidth">
+    <button type="submit" form="login_form" class="button sf">
       ACCEDER AU COCKPIT
     </button>
   </section>
@@ -26,6 +26,7 @@ import Notification from '~/components/Notification'
 import { mapGetters } from 'vuex'
 
 export default {
+  layout: "empty",
   //middleware: 'guest',
   components: {
     Notification,
