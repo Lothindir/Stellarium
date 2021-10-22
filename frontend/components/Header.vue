@@ -21,7 +21,7 @@
             class="menu-element" 
             to="/profil">Profil
             </nuxt-link>
-            <div class="menu-element" @click="">Déconnexion</div>
+            <div class="menu-element" @click="logout">Déconnexion</div>
         </div>
     </header>
 </template>
@@ -32,6 +32,16 @@
             toggleMenu(){
                 $('#menu-container').toggleClass('on off');
                 $('#menu-burger').toggleClass('on off');
+            },
+            async logout(){
+                try {
+                    let user = await this.$auth.logout()
+                    this.status = "Logout successful!"
+                    this.$router.push('/')
+                } catch (e) {
+                    this.error = e.response.data.message
+                    this.status = "Logout failed"
+                }
             }
         }
     } 
