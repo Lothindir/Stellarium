@@ -4,41 +4,22 @@ export default class FakeAPI {
     public async genericCall({ request, auth, response }: HttpContextContract) {
         try {
             const api = request.input('api');
+            const planets = [
+                { id: 0, name: 'Theotar', planetOwnerID: 21, production: { metal: 2, energy: 3, biomass: 2, water: 5 }, defenseLevel: 2, distance: 324, accessible: false, isAttackable: true, isColonizable: false, isAlly: false},
+                { id: 1, name: 'Mutune', planetOwnerID: 13, production: { metal: 1, energy: 3, biomass: 2, water: 1 }, defenseLevel: 1, distance: 10, accessible: true, isAttackable: true, isColonizable: false, isAlly: false },
+                { id: 2, name: 'Xolmilia', planetOwnerID: 0, production: { metal: 1, energy: 2, biomass: 0, water: 2 }, defenseLevel: 0, distance: 3389, accessible: false, isAttackable: true, isColonizable: true, isAlly: false },
+                { id: 3, name: 'Bulezuno', planetOwnerID: 1, production: { metal: 2, energy: 2, biomass: 2, water: 2 }, defenseLevel: 3, distance: 0, accessible: true, isAttackable: false, isColonizable: false, isAlly: true },
+                { id: 4, name: 'Lamoahiri', planetOwnerID: 14, production: { metal: 1, energy: 3, biomass: 2, water: 1 }, defenseLevel: 4, distance: 39, accessible: true, isAttackable: false, isColonizable: false, isAlly: false }
+            ]
             switch (api) {
+                case "GetVisiblePlanetsNew":
+                    return {
+                        galaxies: planets.concat(planets).concat(planets).concat(planets).concat(planets)
+                    };
                 case "GetVisiblePlanets":
                     return {
                         galaxies: [
                             { name: 'Theotar', prod: '2 2 5 2', def: '53', dist: '324' },
-                            { name: 'Mutune', prod: '1 3 2 1', def: '33', dist: '498' },
-                            { name: 'Xolmilia', prod: '2 2 1 4', def: '23', dist: '3389' },
-                            { name: 'Bulezuno', prod: '3 2 1 2', def: '12', dist: '0' },
-                            { name: 'Lamoahiri', prod: '2 2 2 2', def: '42', dist: '39' },
-                            { name: 'Mutune', prod: '1 3 2 1', def: '33', dist: '498' },
-                            { name: 'Xolmilia', prod: '2 2 1 4', def: '23', dist: '3389' },
-                            { name: 'Mutune', prod: '1 3 2 1', def: '33', dist: '498' },
-                            { name: 'Xolmilia', prod: '2 2 1 4', def: '23', dist: '3389' },
-                            { name: 'Bulezuno', prod: '3 2 1 2', def: '12', dist: '0' },
-                            { name: 'Lamoahiri', prod: '2 2 2 2', def: '42', dist: '39' },
-                            { name: 'Mutune', prod: '1 3 2 1', def: '33', dist: '498' },
-                            { name: 'Xolmilia', prod: '2 2 1 4', def: '23', dist: '3389' },
-                            { name: 'Mutune', prod: '1 3 2 1', def: '33', dist: '498' },
-                            { name: 'Xolmilia', prod: '2 2 1 4', def: '23', dist: '3389' },
-                            { name: 'Bulezuno', prod: '3 2 1 2', def: '12', dist: '0' },
-                            { name: 'Lamoahiri', prod: '2 2 2 2', def: '42', dist: '39' },
-                            { name: 'Mutune', prod: '1 3 2 1', def: '33', dist: '498' },
-                            { name: 'Xolmilia', prod: '2 2 1 4', def: '23', dist: '3389' },
-                            { name: 'Mutune', prod: '1 3 2 1', def: '33', dist: '498' },
-                            { name: 'Xolmilia', prod: '2 2 1 4', def: '23', dist: '3389' },
-                            { name: 'Bulezuno', prod: '3 2 1 2', def: '12', dist: '0' },
-                            { name: 'Lamoahiri', prod: '2 2 2 2', def: '42', dist: '39' },
-                            { name: 'Mutune', prod: '1 3 2 1', def: '33', dist: '498' },
-                            { name: 'Xolmilia', prod: '2 2 1 4', def: '23', dist: '3389' },
-                            { name: 'Mutune', prod: '1 3 2 1', def: '33', dist: '498' },
-                            { name: 'Xolmilia', prod: '2 2 1 4', def: '23', dist: '3389' },
-                            { name: 'Bulezuno', prod: '3 2 1 2', def: '12', dist: '0' },
-                            { name: 'Lamoahiri', prod: '2 2 2 2', def: '42', dist: '39' },
-                            { name: 'Mutune', prod: '1 3 2 1', def: '33', dist: '498' },
-                            { name: 'Xolmilia', prod: '2 2 1 4', def: '23', dist: '3389' },
                             { name: 'Mutune', prod: '1 3 2 1', def: '33', dist: '498' },
                             { name: 'Xolmilia', prod: '2 2 1 4', def: '23', dist: '3389' },
                             { name: 'Bulezuno', prod: '3 2 1 2', def: '12', dist: '0' },
@@ -239,6 +220,32 @@ export default class FakeAPI {
                             activities: { challenges: { done: 2, max: maxChallenges }, trials: { done: 43, max: maxTrials } },
                             research: [{ name: "military", displayName: "Militaire", numberDone: 4, max: maxMilitary }, { name: "exploration", displayName: "Exploration", numberDone: 3, max: maxExploration }, { name: "production", displayName: "Production", numberDone: 4, max: maxProduction }, { name: "culture", displayName: "Culture", numberDone: 4, max: maxCulture }]
                         }
+                    }
+                }
+                case "GetCrewInfos": { // Add ID to resources and research domains?
+                    const crewID = 1;
+                    const maxChallenges = 455;
+                    const maxTrials = 200; // Changing when they are disclosed
+                    const maxCulture = 21;
+                    const maxMilitary = 9;
+                    const maxProduction = 21;
+                    const maxExploration = 9;
+                    return {
+                        crewInfos: {
+                            crewID: crewID,
+                            resources: [{ name: "Biomasse", amount: 45 }, { name: "Energie:", amount: 57 }, { name: "Métal", amount: 78 }, { name: "Eau", amount: 99 }],
+                            activities: { challenges: { done: 2, max: maxChallenges }, trials: { done: 43, max: maxTrials } },
+                            research: [{ name: "military", displayName: "Militaire", numberDone: 4, max: maxMilitary }, { name: "exploration", displayName: "Exploration", numberDone: 3, max: maxExploration }, { name: "production", displayName: "Production", numberDone: 4, max: maxProduction }, { name: "culture", displayName: "Culture", numberDone: 4, max: maxCulture }]
+                        }
+                    }
+                }
+                case "GetPlanet": { // Add ID to resources and research domains?
+                    var planetID = Number(request.input('planetID'));
+                    if (planetID > 4) {
+                        planetID = 0
+                    }
+                    return {
+                        planet: planets[planetID]
                     }
                 }
                 default:

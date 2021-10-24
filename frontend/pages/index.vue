@@ -19,9 +19,9 @@
       <tbody>
         <tr v-for="(planet, index) in this.galaxies" :key="index" class="planet" @click="coucou(planet)">
           <td>{{ planet.name }}</td>
-          <td>{{ planet.prod }}</td>
-          <td>{{ planet.def }}</td>
-          <td>{{ planet.dist }}</td>
+          <td>{{ planet.production.metal }} {{ planet.production.energy }} {{ planet.production.biomass }} {{ planet.production.water }}</td>
+          <td>{{ planet.defenseLevel }}</td>
+          <td>{{ planet.distance }}</td>
           <!-- <td v-if="planet.dist<400"><button @click="move(planet.dist)">Explorer</button></td> -->
         </tr>
       </tbody>
@@ -60,7 +60,7 @@ export default {
     },
   },
   async fetch() { // Fetch when loading page
-    this.galaxies = await fetch('/api/fakeAPI?api=GetVisiblePlanets')
+    this.galaxies = await fetch('/api/fakeAPI?api=GetVisiblePlanetsNew')
       .then((res) => res.json())
       .then((data) => data.galaxies)
     this.ship = await fetch('/api/fakeAPI?api=GetShip')
