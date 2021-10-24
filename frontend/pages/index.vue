@@ -13,11 +13,11 @@
         Carburant: {{ this.ship.carb.curr }}/{{ this.ship.carb.max }}
       </p>
       <tbody>
-        <tr v-for="(galaxy, index) in galaxies" :key="index">
-          <td>{{ galaxy.name }}</td>
-          <td>{{ galaxy.prod }}</td>
-          <td>{{ galaxy.def }}</td>
-          <td>{{ galaxy.dist }}</td>
+        <tr v-for="(planet, index) in galaxies" :key="index">
+          <td>{{ planet.name }}</td>
+          <td>{{ planet.production.metal }} {{ planet.production.energy }} {{ planet.production.biomass }} {{ planet.production.water }}</td>
+          <td>{{ planet.defenseLevel }}</td>
+          <td>{{ planet.distance }}</td>
         </tr>
       </tbody>
     </table>
@@ -87,10 +87,11 @@ export default {
   async asyncData({ params, $axios }) {
     const [galaxies, ship] = await Promise.all([
       $axios
-        .post('/fakeAPI', { api: 'GetVisiblePlanets' })
+        .post('/fakeAPI', { api: 'GetVisiblePlanetsNew' })
         .then((res) => res.data.galaxies),
       $axios.post('/fakeAPI', { api: 'GetShip' }).then((res) => res.data.ship),
     ])
+    console.log(galaxies)
     return { galaxies, ship }
   },
 }
