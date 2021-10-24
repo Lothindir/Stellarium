@@ -82,7 +82,9 @@
   }
 
   h2{
-    margin-left: 0.4rem;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+    margin-bottom: 0.4rem;
     padding-left: 1rem;
     padding-right: 1rem;
     color: white;
