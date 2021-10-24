@@ -17,7 +17,7 @@
       <tbody>
         <tr v-for="(planet, index) in this.galaxies" :key="index" class="planet" @click="inspect(planet)">
           <td class="name">{{ planet.name }}</td>
-          <td class="defense">{{ planet.def }}</td>
+          <td class="defense">{{ planet.def }} ({{(ship.pa/(parseInt(planet.def)+parseInt(ship.pa))*100).toFixed(0)}}%)</td>
           <td v-if="planet.dist<400" class="distance accessible">{{ planet.dist }}</td>
           <td v-else class="distance inaccessible">{{ planet.dist }}</td>
           <!-- <td v-if="planet.dist<400"><button @click="move(planet.dist)">Explorer</button></td> -->
