@@ -22,11 +22,10 @@
           <td>{{ planet.prod }}</td>
           <td>{{ planet.def }}</td>
           <td>{{ planet.dist }}</td>
-          <td v-if="planet.dist<400"><button @click="move(planet.dist)">Move</button></td>
+          <!-- <td v-if="planet.dist<400"><button @click="move(planet.dist)">Explorer</button></td> -->
         </tr>
       </tbody>
     </table>
-    <button @click="move(2)">Move</button>
   </div>
 </template>
 
