@@ -1,84 +1,78 @@
 <template>
   <div class="content">
-    <h1>Planètes visibles</h1>
-    <h2>Planètes de ma fédération</h2>
-    <div id="table">table</div>
+    <table class="table table-striped table-bordered">
+      <thead>
+        <tr>
+          <th>Propriétaire</th>
+          <th>Production</th>
+          <th>Défense</th>
+          <th>Distance</th>
+        </tr>
+      </thead>
+      <p v-if="$fetchState.pending">Recherche des planètes...</p>
+      <p v-else-if="$fetchState.error">
+        Impossible de scanner la planète actuellement
+      </p>
+      <p v-else>
+        Carburant: {{ this.ship.carb.curr }}/{{ this.ship.carb.max }}
+      </p>
+      <tbody>
+        <tr v-for="(planet, index) in this.galaxies" :key="index" class="planet" @click="coucou(planet)">
+          <td>{{ planet.name }}</td>
+          <td>{{ planet.prod }}</td>
+          <td>{{ planet.def }}</td>
+          <td>{{ planet.dist }}</td>
+          <td v-if="planet.dist<400"><button @click="move(planet.dist)">Move</button></td>
+        </tr>
+      </tbody>
+    </table>
+    <button @click="move(2)">Move</button>
   </div>
 </template>
 
 <script>
 
-function fillTable(galaxy) {
-  	galaxy.forEach(planet => {
-      $('#table').append("<div>planet</div>");
-    });
-}
-
 export default {
-  methods: {
-  //   // Make a get request
-  //   async move(planetID) {
-  //     const move = await fetch('/api/fakeAPI?api=Move&planetID=' + planetID)
-  //       .then((res) => res.json())
-  //       .then((data) => data.move)
-  //     if (move.actionSuccessful) {
-  //       alert('Vous vous êtes déplacés sur la planète ' + planetID)
-  //     } else if (move.outcome == 'fuel') {
-  //       alert(
-  //         "Vous n'avez pas assez de carburant pour effectuer le déplacement."
-  //       )
-  //     } else {
-  //       alert(
-  //         "Vous n'avez pas pu effectuer le déplacement pour une drôle de raison..."
-  //       )
-  //     }
-  //   },
-  //   // Make post requests
-  //   async AttackOrColonize(aPlanetID) {
-  //     const result = await this.$axios
-  //       .post('/fakeAPI', { api: 'AttackOrColonize', planetID: aPlanetID })
-  //       .then((res) => res.data.result)
-  //     console.log(result)
-  //     if (result.actionSuccessful) {
-  //       if (result.type == 'combat') {
-  //         if (result.outcome == 'victory') {
-  //           alert('Combat gagné :)')
-  //         } else {
-  //           alert('Combat perdu :(')
-  //         }
-  //       } else if (result.type == 'colonization') {
-  //         alert('Planète colonisée :)')
-  //       }
-  //     } else {
-  //       alert('Pas assez de carburant.')
-  //     }
-  //   },
-  //   async Improve(aPlanetID, aBuildingType) {
-  //     const building = await this.$axios
-  //       .post('/fakeAPI', {
-  //         api: 'Improve',
-  //         planetID: aPlanetID,
-  //         buildingType: aBuildingType,
-  //       })
-  //       .then((res) => res.data.building)
-  //     console.log(building)
-  //     if (building.actionSuccessful) {
-  //       alert('Bâtiment construit !')
-  //     } else {
-  //       alert('Pas assez de ressources pour construire ce bâtiment.')
-  //     }
-  //   },
+  data() {
+    return {
+      galaxies: [],
+      ship: [],
+    }
   },
-
-  // Fetch data in parallel (post) before rendering the page. No need of placeholder in the code, then.
-  async asyncData({ params, $axios }) {
-    await Promise.all([
-      $axios
-        .post('/fakeAPI', { api: 'GetVisiblePlanets' })
-        .then(function(data){
-          fillTable(data.data.galaxies)
-        })
-    ])
-  }
+  methods: {
+    coucou(planet){
+      console.log(planet.name)
+      this.$router.push({
+        name: 'planet',
+        params: {id : 3, name: planet.name}
+      })
+    },
+    async move(planetID) {
+      const move = await fetch('/api/fakeAPI?api=Move&planetID=' + planetID)
+        .then((res) => res.json())
+        .then((data) => data.move)
+      if (move.actionSuccessful) {
+        alert('Vous vous êtes déplacés sur la planète ', planetID)
+      } else if (move.outcome == "fuel") {
+          alert("Vous n'avez pas assez de carburant pour effectuer le déplacement.")
+      } else {
+        alert("Vous n'avez pas pu effectuer le déplacement pour une drôle de raison...")
+      }
+    },
+  },
+  async fetch() { // Fetch when loading page
+    this.galaxies = await fetch('/api/fakeAPI?api=GetVisiblePlanets')
+      .then((res) => res.json())
+      .then((data) => data.galaxies)
+    this.ship = await fetch('/api/fakeAPI?api=GetShip')
+      .then((res) => res.json())
+      .then((data) => data.ship)
+  },
 }
 </script>
+
+<style>
+  .planet{
+    border-bottom: white solid 1px;
+  }
+</style>
