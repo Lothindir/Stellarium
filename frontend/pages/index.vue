@@ -15,7 +15,7 @@
         Impossible de scanner la planète actuellement
       </p>
       <tbody>
-        <tr v-for="(planet, index) in this.planets" :key="index" class="planet" @click="inspect(planet)">
+        <tr v-for="(planet, index) in this.sortedPlanets" :key="index" class="planet" @click="inspect(planet)">
           <td class="name">{{ planet.name }}</td>
           <td class="defense">{{ planet.defenseLevel }} ({{(ship.pa/(parseInt(planet.defenseLevel)+parseInt(ship.pa))*100).toFixed(0)}}%)</td>
           <td v-if="planet.distance<400" class="distance accessible">{{ planet.distance }}</td>
@@ -55,8 +55,11 @@ export default {
     }
   },
   computed: {
-    alliedPlanets: function () {
+    alliedPlanets: function() {
       return this.planets.filter(planet => planet.isAlly)
+    },
+    sortedPlanets: function() {
+      return this.planets.sort((a, b) => a.distance > b.distance)
     }
   },
   methods: {
