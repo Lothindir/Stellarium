@@ -2,9 +2,9 @@
     <!-- <h1>{{root.params}}</h1> -->
     <section>
         <h1>{{this.$route.params.id}} {{this.$route.params.name}}</h1>
-        <button @click="move(1)">Explorer</button>
-        <button @click="AttackOrColonize('2')">Coloniser / Attaquer</button>
-        <button @click="Improve('1', 'defense')">Constuire</button>
+        <button @click="move(planet.id)">Explorer</button>
+        <button @click="AttackOrColonize(planet.id)">Coloniser / Attaquer</button>
+        <button @click="Improve(planet.id, 'defense')">Constuire</button>
     </section>
 </template>
 
@@ -65,10 +65,9 @@ export default {
       }
     },
   },
-    async fetch() { // Fetch when loading page
-    this.galaxies = await fetch('/api/fakeAPI?api=GetVisiblePlanets')
-      .then((res) => res.json())
-      .then((data) => data.galaxies[0])
+  async asyncData({ params, $axios }) {
+    const planet = await $axios.post('/fakeAPI', { api: 'GetPlanet', planetID: params.id }).then((res) => res.data.planet)
+    return { planet }
   }
 }
 </script>

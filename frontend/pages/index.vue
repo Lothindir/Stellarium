@@ -15,16 +15,33 @@
         Impossible de scanner la planète actuellement
       </p>
       <tbody>
-        <tr v-for="(planet, index) in this.galaxies" :key="index" class="planet" @click="inspect(planet)">
+        <tr v-for="(planet, index) in this.planets" :key="index" class="planet" @click="inspect(planet)">
           <td class="name">{{ planet.name }}</td>
-          <td class="defense">{{ planet.def }} ({{(ship.pa/(parseInt(planet.def)+parseInt(ship.pa))*100).toFixed(0)}}%)</td>
-          <td v-if="planet.dist<400" class="distance accessible">{{ planet.dist }}</td>
-          <td v-else class="distance inaccessible">{{ planet.dist }}</td>
+          <td class="defense">{{ planet.defenseLevel }} ({{(ship.pa/(parseInt(planet.defenseLevel)+parseInt(ship.pa))*100).toFixed(0)}}%)</td>
+          <td v-if="planet.distance<400" class="distance accessible">{{ planet.distance }}</td>
+          <td v-else class="distance inaccessible">{{ planet.distance }}</td>
           <!-- <td v-if="planet.dist<400"><button @click="move(planet.dist)">Explorer</button></td> -->
         </tr>
       </tbody>
     </table>
     <h2>Planètes alliées</h2>
+    <table class="table">
+      <thead>
+        <tr>
+          <th class="name">Propriétaire</th>
+          <th class="defense">Défense</th>
+          <th class="distance">Distance</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="(planet, index) in this.alliedPlanets" :key="index" class="planet" @click="inspect(planet)">
+          <td class="name">{{ planet.name }}</td>
+          <td class="defense">{{ planet.defenseLevel }} ({{(ship.pa/(parseInt(planet.defenseLevel)+parseInt(ship.pa))*100).toFixed(0)}}%)</td>
+          <td v-if="planet.distance<400" class="distance accessible">{{ planet.distance }}</td>
+          <td v-else class="distance inaccessible">{{ planet.distance }}</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </template>
 
@@ -33,22 +50,27 @@
 export default {
   data() {
     return {
-      galaxies: [],
+      planets: [],
       ship: [],
+    }
+  },
+  computed: {
+    alliedPlanets: function () {
+      return this.planets.filter(planet => planet.isAlly)
     }
   },
   methods: {
     inspect(planet){
       this.$router.push({
         name: 'planet',
-        params: {id : 3, name: planet.name}
+        params: {id : planet.id, name: planet.name}
       })
     },
   },
   async fetch() { // Fetch when loading page
-    this.galaxies = await fetch('/api/fakeAPI?api=GetVisiblePlanets')
+    this.planets = await fetch('/api/fakeAPI?api=GetVisiblePlanetsNew')
       .then((res) => res.json())
-      .then((data) => data.galaxies)
+      .then((data) => data.planets)
     this.ship = await fetch('/api/fakeAPI?api=GetShip')
       .then((res) => res.json())
       .then((data) => data.ship)
