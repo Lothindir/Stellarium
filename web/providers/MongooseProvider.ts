@@ -1,5 +1,5 @@
-import { ApplicationContract } from '@ioc:Adonis/Core/Application'
-import { Mongoose } from 'mongoose'
+import { ApplicationContract } from '@ioc:Adonis/Core/Application';
+import { Mongoose } from 'mongoose';
 
 /*
 |--------------------------------------------------------------------------
@@ -21,33 +21,49 @@ import { Mongoose } from 'mongoose'
 |
 */
 export default class MongooseProvider {
-  constructor (protected app: ApplicationContract) {
-  }
+  constructor(protected app: ApplicationContract) {}
 
-  public register () {
-    const mongoose = new Mongoose();
+  public mongoose: Mongoose;
+
+  public register() {
+    this.mongoose = new Mongoose();
+    this.mongoose.set('bufferCommands', false);
     const Env = this.app.container.resolveBinding('Adonis/Core/Env');
 
-    mongoose.connect('mongodb://localhost/' + Env.get('MONGO_DB')/* , {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      useFindAndModify: false
-    } */);
-
-    this.app.container.singleton('Adonis/Addons/Mongoose', () => mongoose);
-    console.log('Created Mongoose driver');
-    
+    this.mongoose
+      .connect(Env.get('MONGO_URI'), {
+        user: Env.get('MONGO_USER'),
+        pass: Env.get('MONGO_PASSWORD'),
+        keepAlive: true,
+      })
+      .then(() => {
+        this.app.container.singleton('Adonis/Addons/Mongoose', () => this.mongoose);
+        console.log('Created Mongoose driver');
+        let namesList: string[] = [];
+        this.mongoose.connection.db.listCollections().toArray(function (err, names) {
+          if (names !== undefined) {
+            for (let i = 0; i < names.length; i++) {
+              // gets only the name and adds it to a list
+              const nameOnly = names[i].name;
+              namesList.push(nameOnly);
+            }
+            console.log('Collections: ', namesList);
+          } else console.log('No collections');
+          if (err) console.log(err);
+        });
+      })
+      .catch((err) => console.error(err));
   }
 
-  public async boot () {
+  public async boot() {
     // All bindings are ready, feel free to use them
   }
 
-  public async ready () {
+  public async ready() {
     // App is ready
   }
 
-  public async shutdown () {
+  public async shutdown() {
     await this.app.container.use('Adonis/Addons/Mongoose').disconnect();
   }
 }

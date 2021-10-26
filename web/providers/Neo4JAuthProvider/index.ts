@@ -49,7 +49,7 @@ class ProviderUser implements ProviderUserContract<User> {
     if (!this.user) {
       throw new Error('Cannot verify password for non-existing user');
     }
-    
+
     return this.hash.verify(this.user.password, plainPassword);
   }
 }

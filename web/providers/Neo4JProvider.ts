@@ -2,7 +2,7 @@ import { ApplicationContract } from '@ioc:Adonis/Core/Application';
 import neo4j, { Driver } from 'neo4j-driver';
 
 export default class Neo4JProvider {
-  driver: Driver;
+  public driver: Driver;
 
   constructor(protected app: ApplicationContract) {}
 
@@ -11,10 +11,7 @@ export default class Neo4JProvider {
 
     this.driver = neo4j.driver(
       'bolt://' + Env.get('NEO4J_HOST') + ':7687',
-      neo4j.auth.basic(
-        Env.get('NEO4J_USER'),
-        Env.get('NEO4J_PASSWORD')
-      )
+      neo4j.auth.basic(Env.get('NEO4J_USER'), Env.get('NEO4J_PASSWORD'))
     );
 
     this.app.container.singleton('Adonis/Addons/Neo4j', () => this.driver);

@@ -20,16 +20,15 @@
 
 import Route from '@ioc:Adonis/Core/Route';
 
-/* Route.get('/', async ({ view }) => {
-  return view.render('welcome')
-}).middleware('auth');
-
-Route.get('/login', async ({ view }) => {
-  return view.render('login')
-}); */
-
 Route.post('/login', 'AuthController.login');
 Route.get('/logout', 'AuthController.logout').middleware('auth');
+
+Route.get('/stellarobjects', 'StellarObjectsController.index');
+Route.get('/stellarobjects/:uuid', 'StellarObjectsController.show');
+Route.post('/stellarobjects', 'StellarObjectsController.store');
+
+Route.get('/challenges', 'ChallengesController.index').as('challenges.index');
+Route.get('/challenges/:id', 'ChallengesController.show').as('challenges.show');
 
 Route.resource('federations', 'FederationsController')
   .apiOnly()
@@ -46,3 +45,7 @@ Route.resource('crews', 'CrewsController')
     update: ['adminAuth'],
     destroy: ['adminAuth'],
   });
+
+Route.resource('players', 'PlayersController')
+  .only(['index', 'show', 'update'])
+  .middleware({ update: ['adminAuth'] });
