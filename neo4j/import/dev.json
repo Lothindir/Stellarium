@@ -13,8 +13,8 @@
 {"id":"0","type":"relationship","label":"PART_OF","start":{"id":"0","labels":["Player"]},"end":{"id":"1","labels":["Crew"]}}
 {"id":"1","type":"relationship","label":"PART_OF","start":{"id":"2","labels":["Player"]},"end":{"id":"1","labels":["Crew"]}}
 {"id":"2","type":"relationship","label":"OWNS","start":{"id":"1","labels":["Crew"]},"end":{"id":"3","labels":["Colony"]}}
-{"id":"3","type":"relationship","label":"PART_OF","start":{"id":"1","labels":["Crew"]},"end":{"id":"4","labels":["Federation"]}}
-{"id":"4","type":"relationship","label":"PART_OF","start":{"id":"5","labels":["Crew"]},"end":{"id":"4","labels":["Federation"]}}
+{"id":"3","type":"relationship","label":"BELONGS_TO","start":{"id":"1","labels":["Crew"]},"end":{"id":"4","labels":["Federation"]}}
+{"id":"4","type":"relationship","label":"BELONGS_TO","start":{"id":"5","labels":["Crew"]},"end":{"id":"4","labels":["Federation"]}}
 {"id":"5","type":"relationship","label":"OWNS","start":{"id":"5","labels":["Crew"]},"end":{"id":"6","labels":["Colony"]}}
 {"id":"6","type":"relationship","label":"PART_OF","start":{"id":"7","labels":["Player"]},"end":{"id":"5","labels":["Crew"]}}
 {"id":"7","type":"relationship","label":"PART_OF","start":{"id":"8","labels":["Player"]},"end":{"id":"5","labels":["Crew"]}}
