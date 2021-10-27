@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "nuxt",
+    "watch": "nodemon --exec npm run dev --ext js,config.js,vue,json --watch components --watch layouts --watch pages --watch ./",
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate",
@@ -11,8 +12,7 @@
     "lint": "npm run lint:js"
   },
   "dependencies": {
-    "@headlessui/vue": "^1.4.0",
-    "@heroicons/vue": "^1.0.4",
+    "@nuxtjs/auth-next": "5.0.0-1624817847.21691f1",
     "@nuxtjs/axios": "^5.13.6",
     "@nuxtjs/pwa": "^3.3.5",
     "core-js": "^3.15.1",
@@ -29,6 +29,7 @@
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-nuxt": "^2.0.0",
     "eslint-plugin-vue": "^7.12.1",
+    "nodemon": "^2.0.13",
     "postcss": "^8.3.5",
     "prettier": "^2.3.2"
   }

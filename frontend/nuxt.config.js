@@ -1,4 +1,10 @@
 export default {
+
+  router: {
+    base: '/',
+    middleware: ['auth']
+  },
+
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,
 
@@ -7,15 +13,21 @@ export default {
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'frontend',
+    title: 'Stellarium',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { hid: 'description', name: 'description', content: '' },
-      { name: 'format-detection', content: 'telephone=no' }
+      { name: 'format-detection', content: 'telephone=yes' }
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+    ],
+    script: [
+      {
+        src: "https://code.jquery.com/jquery-3.3.1.slim.min.js",
+        type: "text/javascript"
+      }
     ]
   },
 
@@ -44,10 +56,40 @@ export default {
     '@nuxtjs/axios',
     // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
+    '@nuxtjs/auth-next',
   ],
 
+  auth: {
+    // Options
+    strategies: {
+      local: {
+        token: {
+          required: false,
+          type: false
+        },
+        cookie: {
+          name: 'adonis-session',
+        },
+        endpoints: {
+          login: { url: 'login', method: 'post' },
+          user: false, // We get the data directly in the login request
+          logout: { url: 'logout', method: 'post' }
+        },
+        autoFetchUser: false
+      }
+    },
+    /*redirect: {
+      login: '/api/login',
+      logout: '/',
+      callback: '/api/login',
+      home: '/'
+    }*/
+  },
+
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
-  axios: {},
+  axios: {
+    baseURL: '/api'
+  },
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa
   pwa: {
@@ -58,5 +100,9 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
+  },
+
+  server: {
+    host: '0' // default: localhost
   }
 }

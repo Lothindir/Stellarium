@@ -52,3 +52,6 @@ Route.resource('players', 'PlayersController')
 
 Route.get('/game/player', 'GameController.player').middleware('auth');
 Route.get('/game/crew', 'GameController.crew').middleware('auth');
+
+Route.get('/api/fakeAPI', 'FakeAPI.genericCall');
+Route.post('/api/fakeAPI', 'FakeAPI.genericCall');
