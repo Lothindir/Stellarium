@@ -1,0 +1,195 @@
+[
+  {
+    "uuid": "",
+    "coordinates": "",
+    "type": "Planète",
+    "resources": {
+      "water": 2,
+      "metal": 2,
+      "energy": 2,
+      "biomass": 2
+    },
+    "planetType": "Gaïa",
+    "colonyUuid": ""
+  },
+  {
+    "uuid": "",
+    "coordinates": "",
+    "type": "Planète",
+    "resources": {
+      "water": 1,
+      "metal": 3,
+      "energy": 3,
+      "biomass": 1
+    },
+    "planetType": "Aride",
+    "colonyUuid": ""
+  },
+  {
+    "uuid": "",
+    "coordinates": "",
+    "type": "Planète",
+    "resources": {
+      "water": 0,
+      "metal": 4,
+      "energy": 4,
+      "biomass": 0
+    },
+    "planetType": "Désertique",
+    "colonyUuid": ""
+  },
+  {
+    "uuid": "",
+    "coordinates": "",
+    "type": "Planète",
+    "resources": {
+      "water": 1,
+      "metal": 2,
+      "energy": 3,
+      "biomass": 2
+    },
+    "planetType": "Savanne",
+    "colonyUuid": ""
+  },
+  {
+    "uuid": "",
+    "coordinates": "",
+    "type": "Planète",
+    "resources": {
+      "water": 3,
+      "metal": 1,
+      "energy": 3,
+      "biomass": 1
+    },
+    "planetType": "Alpine",
+    "colonyUuid": ""
+  },
+  {
+    "uuid": "",
+    "coordinates": "",
+    "type": "Planète",
+    "resources": {
+      "water": 4,
+      "metal": 0,
+      "energy": 4,
+      "biomass": 0
+    },
+    "planetType": "Artique",
+    "colonyUuid": ""
+  },
+  {
+    "uuid": "",
+    "coordinates": "",
+    "type": "Planète",
+    "resources": {
+      "water": 3,
+      "metal": 2,
+      "energy": 2,
+      "biomass": 1
+    },
+    "planetType": "Tundra",
+    "colonyUuid": ""
+  },
+  {
+    "uuid": "",
+    "coordinates": "",
+    "type": "Planète",
+    "resources": {
+      "water": 3,
+      "metal": 1,
+      "energy": 1,
+      "biomass": 3
+    },
+    "planetType": "Continentale",
+    "colonyUuid": ""
+  },
+  {
+    "uuid": "",
+    "coordinates": "",
+    "type": "Planète",
+    "resources": {
+      "water": 2,
+      "metal": 1,
+      "energy": 1,
+      "biomass": 4
+    },
+    "planetType": "Tropicale",
+    "colonyUuid": ""
+  },
+  {
+    "uuid": "",
+    "coordinates": "",
+    "type": "Planète",
+    "resources": {
+      "water": 4,
+      "metal": 0,
+      "energy": 1,
+      "biomass": 3
+    },
+    "planetType": "Océanique",
+    "colonyUuid": ""
+  },
+  {
+    "uuid": "",
+    "coordinates": "",
+    "type": "Planète",
+    "resources": {
+      "water": 2,
+      "metal": 3,
+      "energy": 1,
+      "biomass": 2
+    },
+    "planetType": "Machine",
+    "colonyUuid": ""
+  },
+  {
+    "uuid": "",
+    "coordinates": "",
+    "type": "Planète",
+    "resources": {
+      "water": 0,
+      "metal": 4,
+      "energy": 0,
+      "biomass": 4
+    },
+    "planetType": "Matrix",
+    "colonyUuid": ""
+  },
+  {
+    "uuid": "",
+    "coordinates": "",
+    "type": "Planète",
+    "resources": {
+      "water": 1,
+      "metal": 3,
+      "energy": 1,
+      "biomass": 3
+    },
+    "planetType": "Toxique",
+    "colonyUuid": ""
+  },
+  {
+    "uuid": "",
+    "coordinates": "",
+    "type": "Nuage de gaz",
+    "resources": ""
+  },
+  {
+    "uuid": "",
+    "coordinates": "",
+    "type": "Comète",
+    "resources": ""
+  },
+  {
+    "uuid": "",
+    "coordinates": "",
+    "type": "Astéroïde",
+    "resources": ""
+  },
+  {
+    "uuid": "",
+    "coordinates": "",
+    "type": "Débris",
+    "resources": ""
+  }
+]
