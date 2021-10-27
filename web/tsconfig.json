@@ -7,6 +7,8 @@
     "node_modules",
     "build"
   ],
+  "experimentalDecorators": true,
+  "emitDecoratorMetadata": true,
   "compilerOptions": {
     "outDir": "build",
     "rootDir": "./",
@@ -32,8 +34,7 @@
       "@adonisjs/view",
       "@adonisjs/shield",
       "@adonisjs/auth",
-      "@adonisjs/lucid",
-      "@zakodium/adonis-mongodb"
+      "@adonisjs/lucid"
     ]
   }
 }

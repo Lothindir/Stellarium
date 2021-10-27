@@ -22,9 +22,9 @@
         "@adonisjs/session",
         "@adonisjs/view",
         "@adonisjs/shield",
-        "./providers/Neo4JProvider",
         "@adonisjs/auth",
-        "./providers/MongoProvider"
+        "./providers/Neo4JProvider",
+        "./providers/MongooseProvider"
     ],
     "metaFiles": [{
             "pattern": "public/**",
@@ -32,7 +32,7 @@
         },
         {
             "pattern": "resources/views/**/*.edge",
-            "reloadServer": false
+            "reloadServer": true
         }
     ],
     "aceProviders": [

@@ -6,16 +6,14 @@ export default class AuthController {
     const password = request.input('password');
     const rememberMe = !!request.input('rememberMe');
 
-        try {
-            await auth.attempt(email, password, rememberMe);
-        } catch (error) {
-            console.error(error);
-            return response.status(400).json({
-                status: 'error',
-                message: 'Identifiants invalides'
-            })
-        }
-    return response.json(auth.user);
+    try {
+      await auth.attempt(email, password, rememberMe);
+    } catch (error) {
+      console.error(error);
+      return response.unauthorized(error.code);
+    }
+
+    return response.ok('Connected');
   }
 
   public async logout({ auth, response }: HttpContextContract) {

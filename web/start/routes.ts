@@ -18,17 +18,40 @@
 |
 */
 
-import Route from '@ioc:Adonis/Core/Route'
+import Route from '@ioc:Adonis/Core/Route';
 
-Route.get('/api', async ({ view }) => {
-  return view.render('welcome')
-}).middleware('auth');
+Route.post('/login', 'AuthController.login');
+Route.get('/logout', 'AuthController.logout').middleware('auth');
 
-Route.get('/api/login', async ({ view }) => {
-  return view.render('login')
-});
+Route.get('/stellarobjects', 'StellarObjectsController.index');
+Route.get('/stellarobjects/:uuid', 'StellarObjectsController.show');
+Route.post('/stellarobjects', 'StellarObjectsController.store');
 
-Route.post('/api/login', 'AuthController.login');
-Route.post('/api/logout', 'AuthController.logout');
+Route.get('/challenges', 'ChallengesController.index').as('challenges.index');
+Route.get('/challenges/:id', 'ChallengesController.show').as('challenges.show');
+
+Route.resource('federations', 'FederationsController')
+  .apiOnly()
+  .middleware({
+    store: ['adminAuth'],
+    update: ['adminAuth'],
+    destroy: ['adminAuth'],
+  });
+
+Route.resource('crews', 'CrewsController')
+  .apiOnly()
+  .middleware({
+    store: ['adminAuth'],
+    update: ['adminAuth'],
+    destroy: ['adminAuth'],
+  });
+
+Route.resource('players', 'PlayersController')
+  .only(['index', 'show', 'update'])
+  .middleware({ update: ['adminAuth'] });
+
+Route.get('/game/player', 'GameController.player').middleware('auth');
+Route.get('/game/crew', 'GameController.crew').middleware('auth');
+
 Route.get('/api/fakeAPI', 'FakeAPI.genericCall');
 Route.post('/api/fakeAPI', 'FakeAPI.genericCall');

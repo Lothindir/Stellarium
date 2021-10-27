@@ -12,7 +12,7 @@
 |
 */
 
-import Env from '@ioc:Adonis/Core/Env'
+import Env from '@ioc:Adonis/Core/Env';
 
 export default Env.rules({
   HOST: Env.schema.string({ format: 'host' }),
@@ -26,4 +26,7 @@ export default Env.rules({
   NEO4J_USER: Env.schema.string(),
   NEO4J_PASSWORD: Env.schema.string(),
   MONGO_DB: Env.schema.string(),
-})
+  MONGO_URI: Env.schema.string(),
+  MONGO_USER: Env.schema.string(),
+  MONGO_PASSWORD: Env.schema.string(),
+});
