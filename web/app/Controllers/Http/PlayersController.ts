@@ -38,7 +38,7 @@ export default class PlayersController {
         federation: r.get('federation'),
       };
     });
-    if (records.length !== 0) response.status(200).json(records);
+    if (records.length !== 0) response.status(200).json(records[0]);
     else response.status(404).json({ message: 'Player not found', uuid: uuid });
   }
 }

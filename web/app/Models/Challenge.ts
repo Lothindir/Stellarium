@@ -1,13 +1,13 @@
-import Mongoose, { Schema } from '@ioc:Adonis/Addons/Mongoose';
+import { prop, getModelForClass, modelOptions } from '@typegoose/typegoose';
+import Mongoose from '@ioc:Adonis/Addons/Mongoose';
 
-interface Challenge {
-  id: string;
-  description: string;
+@modelOptions({ existingMongoose: Mongoose, schemaOptions: { collection: 'challenges' } })
+export class Challenge {
+  @prop({ required: true, index: true, unique: true })
+  public id: string;
+
+  @prop({ required: true })
+  public description: string;
 }
 
-const schema = new Schema<Challenge>({
-  id: { type: String, required: true },
-  description: { type: String, required: true },
-});
-
-export default Mongoose.model('Challenge', schema, 'challenges');
+export default getModelForClass(Challenge);

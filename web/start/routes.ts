@@ -49,3 +49,6 @@ Route.resource('crews', 'CrewsController')
 Route.resource('players', 'PlayersController')
   .only(['index', 'show', 'update'])
   .middleware({ update: ['adminAuth'] });
+
+Route.get('/game/player', 'GameController.player').middleware('auth');
+Route.get('/game/crew', 'GameController.crew').middleware('auth');

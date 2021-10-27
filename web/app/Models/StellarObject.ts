@@ -31,6 +31,10 @@ export enum StellarObjectType {
   SPACE_DEBRIS,
 }
 
+/*
+ * Retourne toutes les planètes (dejà visitées) + alliées + possédées + visibles [avec distance]
+ */
+
 @index({ coordinates: '2dsphere' })
 @modelOptions({ existingMongoose: Mongoose, schemaOptions: { collection: 'stellarObjects' } })
 class StellarObject {
@@ -50,14 +54,3 @@ class StellarObject {
 }
 
 export default getModelForClass(StellarObject);
-
-/*export model(
-  'Planet',
-  new Schema({
-    id: Number,
-    planet_type: String,
-    resources_types: PlanetResources,
-    coordinates: { x: Number, y: Number },
-    colony_uuid: String,
-  })
-);*/

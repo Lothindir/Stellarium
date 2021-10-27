@@ -36,6 +36,7 @@
     "@adonisjs/shield": "^7.0.7",
     "@adonisjs/view": "^6.1.1",
     "@typegoose/typegoose": "^9.2.0",
+    "axios": "^0.24.0",
     "luxon": "^2.0.2",
     "mongoose": "^6.0.12",
     "neo4j-driver": "^4.3.4",
