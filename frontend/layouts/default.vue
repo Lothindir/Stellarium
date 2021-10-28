@@ -144,17 +144,4 @@
     border: gold 3px solid;
   }
 
-  #footer {
-    display: flex;
-    justify-content: space-around;
-    align-content: space-around;
-    grid-area: footer;
-  }
-  .galaxy { grid-area: galaxy; }
-  .battleship { grid-area: battleship; }
-  .research { grid-area: research; }
-  .challenges { grid-area: challenges; }
-  .scores { grid-area: scores; }
-
-
 </style>
