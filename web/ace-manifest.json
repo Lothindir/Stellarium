@@ -1,5 +1,27 @@
 {
   "commands": {
+    "generate:stellarobjects": {
+      "settings": {
+        "loadApp": true,
+        "stayAlive": false
+      },
+      "commandPath": "./commands/GenerateStellarObjects",
+      "commandName": "generate:stellarobjects",
+      "description": "Generates and seeds the database with stellar objects",
+      "args": [
+        {
+          "type": "string",
+          "propertyName": "numberOfObjects",
+          "name": "Objects number",
+          "required": true,
+          "description": "The number of objects to generate. Must be greater than 10"
+        }
+      ],
+      "aliases": [
+        "generate:mongo"
+      ],
+      "flags": []
+    },
     "dump:rcfile": {
       "settings": {},
       "commandPath": "@adonisjs/core/build/commands/DumpRc",
@@ -50,5 +72,7 @@
       "flags": []
     }
   },
-  "aliases": {}
+  "aliases": {
+    "generate:mongo": "generate:stellarobjects"
+  }
 }

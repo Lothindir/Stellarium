@@ -27,7 +27,6 @@ export default class MongooseProvider {
 
   public register() {
     this.mongoose = new Mongoose();
-    this.mongoose.set('bufferCommands', false);
     const Env = this.app.container.resolveBinding('Adonis/Core/Env');
 
     this.mongoose
@@ -36,23 +35,24 @@ export default class MongooseProvider {
         pass: Env.get('MONGO_PASSWORD'),
         keepAlive: true,
       })
-      .then(() => {
-        this.app.container.singleton('Adonis/Addons/Mongoose', () => this.mongoose);
-        console.log('Created Mongoose driver');
-        let namesList: string[] = [];
-        this.mongoose.connection.db.listCollections().toArray(function (err, names) {
-          if (names !== undefined) {
-            for (let i = 0; i < names.length; i++) {
-              // gets only the name and adds it to a list
-              const nameOnly = names[i].name;
-              namesList.push(nameOnly);
-            }
-            console.log('Collections: ', namesList);
-          } else console.log('No collections');
-          if (err) console.log(err);
-        });
-      })
+      // .then(() => {
+      //   let namesList: string[] = [];
+      //   this.mongoose.connection.db.listCollections().toArray(function (err, names) {
+      //     if (names !== undefined) {
+      //       for (let i = 0; i < names.length; i++) {
+      //         // gets only the name and adds it to a list
+      //         const nameOnly = names[i].name;
+      //         namesList.push(nameOnly);
+      //       }
+      //       console.log('Collections: ', namesList);
+      //     } else console.log('No collections');
+      //     if (err) console.log(err);
+      //   });
+      // })
       .catch((err) => console.error(err));
+
+    this.app.container.singleton('Adonis/Addons/Mongoose', () => this.mongoose);
+    console.log('Created Mongoose driver');
   }
 
   public async boot() {

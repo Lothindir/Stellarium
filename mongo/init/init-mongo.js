@@ -18,12 +18,12 @@ db.createCollection("stellarObjects", {
   validator: {
     $jsonSchema: {
       bsonType: "object",
-      required: ["uuid", "coordinates", "type"],
+      required: ["id", "coordinates", "type"],
     },
   },
 });
-db.stellarObjects.createIndex({ uuid: 1 }, { unique: true });
-db.stellarObjects.createIndex({ coordinates: "2dsphere" }, { unique: true });
+db.stellarObjects.createIndex({ id: 1 }, { unique: true });
+db.stellarObjects.createIndex({ coordinates: "2d" });
 db.stellarObjects.createIndex({ colony_uuid: 1 });
 
 db.createCollection("infrastructure", { capped: false });

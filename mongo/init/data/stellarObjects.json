@@ -1,7 +1,5 @@
 [
   {
-    "uuid": "",
-    "coordinates": "",
     "type": "Planète",
     "resources": {
       "water": 2,
@@ -9,12 +7,9 @@
       "energy": 2,
       "biomass": 2
     },
-    "planetType": "Gaïa",
-    "colonyUuid": ""
+    "planetType": "Gaïa"
   },
   {
-    "uuid": "",
-    "coordinates": "",
     "type": "Planète",
     "resources": {
       "water": 1,
@@ -22,12 +17,9 @@
       "energy": 3,
       "biomass": 1
     },
-    "planetType": "Aride",
-    "colonyUuid": ""
+    "planetType": "Aride"
   },
   {
-    "uuid": "",
-    "coordinates": "",
     "type": "Planète",
     "resources": {
       "water": 0,
@@ -35,12 +27,9 @@
       "energy": 4,
       "biomass": 0
     },
-    "planetType": "Désertique",
-    "colonyUuid": ""
+    "planetType": "Désertique"
   },
   {
-    "uuid": "",
-    "coordinates": "",
     "type": "Planète",
     "resources": {
       "water": 1,
@@ -48,12 +37,9 @@
       "energy": 3,
       "biomass": 2
     },
-    "planetType": "Savanne",
-    "colonyUuid": ""
+    "planetType": "Savanne"
   },
   {
-    "uuid": "",
-    "coordinates": "",
     "type": "Planète",
     "resources": {
       "water": 3,
@@ -61,12 +47,9 @@
       "energy": 3,
       "biomass": 1
     },
-    "planetType": "Alpine",
-    "colonyUuid": ""
+    "planetType": "Alpine"
   },
   {
-    "uuid": "",
-    "coordinates": "",
     "type": "Planète",
     "resources": {
       "water": 4,
@@ -74,12 +57,9 @@
       "energy": 4,
       "biomass": 0
     },
-    "planetType": "Artique",
-    "colonyUuid": ""
+    "planetType": "Artique"
   },
   {
-    "uuid": "",
-    "coordinates": "",
     "type": "Planète",
     "resources": {
       "water": 3,
@@ -87,12 +67,9 @@
       "energy": 2,
       "biomass": 1
     },
-    "planetType": "Tundra",
-    "colonyUuid": ""
+    "planetType": "Tundra"
   },
   {
-    "uuid": "",
-    "coordinates": "",
     "type": "Planète",
     "resources": {
       "water": 3,
@@ -100,12 +77,9 @@
       "energy": 1,
       "biomass": 3
     },
-    "planetType": "Continentale",
-    "colonyUuid": ""
+    "planetType": "Continentale"
   },
   {
-    "uuid": "",
-    "coordinates": "",
     "type": "Planète",
     "resources": {
       "water": 2,
@@ -113,12 +87,9 @@
       "energy": 1,
       "biomass": 4
     },
-    "planetType": "Tropicale",
-    "colonyUuid": ""
+    "planetType": "Tropicale"
   },
   {
-    "uuid": "",
-    "coordinates": "",
     "type": "Planète",
     "resources": {
       "water": 4,
@@ -126,12 +97,9 @@
       "energy": 1,
       "biomass": 3
     },
-    "planetType": "Océanique",
-    "colonyUuid": ""
+    "planetType": "Océanique"
   },
   {
-    "uuid": "",
-    "coordinates": "",
     "type": "Planète",
     "resources": {
       "water": 2,
@@ -139,12 +107,9 @@
       "energy": 1,
       "biomass": 2
     },
-    "planetType": "Machine",
-    "colonyUuid": ""
+    "planetType": "Machine"
   },
   {
-    "uuid": "",
-    "coordinates": "",
     "type": "Planète",
     "resources": {
       "water": 0,
@@ -152,12 +117,9 @@
       "energy": 0,
       "biomass": 4
     },
-    "planetType": "Matrix",
-    "colonyUuid": ""
+    "planetType": "Matrix"
   },
   {
-    "uuid": "",
-    "coordinates": "",
     "type": "Planète",
     "resources": {
       "water": 1,
@@ -165,31 +127,22 @@
       "energy": 1,
       "biomass": 3
     },
-    "planetType": "Toxique",
-    "colonyUuid": ""
+    "planetType": "Toxique"
   },
   {
-    "uuid": "",
-    "coordinates": "",
     "type": "Nuage de gaz",
-    "resources": ""
+    "resources": 0
   },
   {
-    "uuid": "",
-    "coordinates": "",
     "type": "Comète",
-    "resources": ""
+    "resources": 0
   },
   {
-    "uuid": "",
-    "coordinates": "",
     "type": "Astéroïde",
-    "resources": ""
+    "resources": 0
   },
   {
-    "uuid": "",
-    "coordinates": "",
     "type": "Débris",
-    "resources": ""
+    "resources": 0
   }
 ]
