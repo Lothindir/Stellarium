@@ -5,11 +5,13 @@ db.createUser({
   pwd: "asvd",
   roles: [
     {
-      role: "read",
+      role: "readWrite",
       db: "stellarium",
     },
   ],
 });
+
+db.createCollection("templates", { capped: false });
 
 db.createCollection("stellarObjects", {
   capped: false,

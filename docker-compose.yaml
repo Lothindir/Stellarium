@@ -129,6 +129,7 @@ services:
       - main-network
   mongodb:
     image: mongo:latest
+    restart: unless-stopped
     container_name: mongodb
     depends_on: 
       - traefik
