@@ -55,3 +55,5 @@ Route.get('/game/crew', 'GameController.crew').middleware('auth');
 
 Route.get('/fakeAPI', 'FakeAPI.genericCall');
 Route.post('/fakeAPI', 'FakeAPI.genericCall');
+
+Route.get('/', 'TrialsController.index').domain('defi.localhost'); // TODO change for prod

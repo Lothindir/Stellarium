@@ -43,9 +43,12 @@ services:
       - web-node-modules:/home/node/app/node_modules
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.stellarium-web.rule=Host(`localhost`) && PathPrefix(`/api`)"
+      - "traefik.http.routers.stellarium-web.rule=(Host(`localhost`) && PathPrefix(`/api`)) || Host(`defi.localhost`)"
       - "traefik.http.middlewares.stellarium-web-stripprefix.stripprefix.prefixes=/api"
+      - "traefik.http.middlewares.stellarium-web-redirectregex.redirectregex.regex=^http://defi.localhost/(.*)"
+      - "traefik.http.middlewares.stellarium-web-redirectregex.redirectregex.replacement=http://localhost/api/trial/$${1}"
       - "traefik.http.routers.stellarium-web.middlewares=stellarium-web-stripprefix"
+      - "traefik.thhp.routers.stellarium-web.middlewares=stellarium-web-redirectregex"
       - "traefik.http.routers.stellarium-web.entrypoints=web"
     environment:
       - PORT=3333
