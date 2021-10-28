@@ -1,25 +1,23 @@
 <template>
-  <div class="content">
-    <table class="table table-striped table-bordered">
-      <tbody>
-        <tr>
-          <td v-for="(skill, index) in crewInfos.research" :key="index">
-            <img
-              width="32px"
-              :src="require('~/static/' + skill.name + '.svg')"
-              v-on:click="showTree(skill.name)"
-            />
-            {{ skill.numberDone }}/{{ skill.max }}
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <img height="600px" :src="require('~/static/' + currentTree + '.png')" />
-  </div>
+  <section class="content">
+    <section id="militaryContent" class="researchContent">
+      <img :src="require('~/static/military.svg')"/>
+    </section>
+    <section id="explorationContent" class="researchContent hidden">
+      <img :src="require('~/static/exploration.svg')"/>
+    </section>
+    <section id="productionContent" class="researchContent hidden">
+      <img :src="require('~/static/production.svg')"/>
+    </section>
+    <section id="cultureContent" class="researchContent hidden">
+      <img :src="require('~/static/culture.svg')"/>
+    </section>
+  </section>
 </template>
 
 <script>
 export default {
+  layout: 'research',
   data() {
     return {
       currentTree: 'tree2',
@@ -49,3 +47,12 @@ export default {
   },
 }
 </script>
+<style scoped>
+    section.researchContent{
+        display: grid;
+    }
+
+    .hidden {
+        display: none !important;
+    }
+</style>

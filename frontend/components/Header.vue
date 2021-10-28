@@ -96,6 +96,7 @@
       right: 0;
       width: 100%;
       background: #172e61;
+      z-index: 100;
 
   }
 
