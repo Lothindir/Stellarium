@@ -16,7 +16,7 @@
         Impossible de scanner la galaxie actuellement
       </p>
       <tbody>
-        <tr v-for="(planet, index) in this.visiblePlanets" :key="index" class="planet" @click="inspect(planet)">
+        <tr v-for="(planet, index) in this.visiblePlanets" :key="index" class="planet" @click="inspect(planet, false)">
           <td class="name">{{ planet.name }}</td>
           <td v-if="planet.colony" class="owner_name enemy">{{ planet.colony }}</td>
           <td v-else class="owner_name">Aucun</td>
@@ -37,7 +37,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(planet, index) in this.planets.owned" :key="index" class="planet" @click="inspect(planet)">
+        <tr v-for="(planet, index) in this.planets.owned" :key="index" class="planet" @click="inspect(planet, true)">
           <td class="name">{{ planet.name }}</td>
           <td class="defense">{{ planet.defenseLevel }} ({{(ship.pa/(parseInt(planet.defenseLevel)+parseInt(ship.pa))*100).toFixed(0)}}%)</td>
           <td v-if="planet.distance<400" class="distance accessible">{{ Math.ceil(planet.distance) }}<br>({{ planet.coordinates[0] }}, {{planet.coordinates[1]}})</td>
@@ -55,7 +55,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(planet, index) in this.planets.allied" :key="index" class="planet" @click="inspect(planet)">
+        <tr v-for="(planet, index) in this.planets.allied" :key="index" class="planet" @click="inspect(planet, true)">
           <td class="name">{{ planet.name }}</td>
           <td class="defense">{{ planet.defenseLevel }} ({{(ship.pa/(parseInt(planet.defenseLevel)+parseInt(ship.pa))*100).toFixed(0)}}%)</td>
           <td v-if="planet.distance<400" class="distance accessible">{{ Math.ceil(planet.distance) }}<br>({{ planet.coordinates[0] }}, {{planet.coordinates[1]}})</td>
@@ -73,7 +73,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(planet, index) in this.otherStellarObjects" :key="index" class="planet" @click="inspect(planet)">
+        <tr v-for="(planet, index) in this.otherStellarObjects" :key="index" class="planet" @click="inspect(planet, false)">
           <td class="name">{{ planet.name }}</td>
           <td class="defense">{{ planet.type }}</td>
           <td v-if="planet.distance<400" class="distance accessible">{{ Math.ceil(planet.distance) }}<br>({{ planet.coordinates[0] }}, {{planet.coordinates[1]}})</td>
@@ -100,10 +100,10 @@ export default {
     },
   },
   methods: {
-    inspect(planet){
+    inspect(planet, isAllied){
       this.$router.push({
         name: 'planet',
-        params: {id : planet.id, name: planet.name}
+        params: {planet : planet, isAllied: isAllied, ship: this.ship}
       })
     },
   },

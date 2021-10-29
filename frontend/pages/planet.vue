@@ -8,32 +8,51 @@
           <td>Type de planète: {{planet.planetType}}</td>
         </tr>
         <tr>
-          <td>Niveau de défense: {{planet.defenseLevel}}</td>
+          <td v-if="planet.colony">Niveau de défense: {{planet.colony.infrastructure}}</td>
         </tr>
         <h2>Production</h2>
         <tr>
-          <td>Usine de métal: {{planet.resources.metal }}</td>
+          <td>Production de métal: {{planet.resources.metal }}/h</td>
         </tr>
         <tr>
-          <td>Usine de biomasse: {{planet.resources.biomass }}</td>
+          <td>Production de biomasse: {{planet.resources.biomass }}/h</td>
         </tr>
         <tr>
-          <td>Usine d'eau: {{planet.resources.water }}</td>
+          <td>Production d'eau: {{planet.resources.water }}/h</td>
         </tr>
         <tr>
-          <td>Usine d'énergie: {{planet.resources.energy }}</td>
+          <td>Production d'énergie: {{planet.resources.energy }}/h</td>
         </tr>
       </tbody>
-      <p v-if="planet.type != 'Planète'">Ceci est un objet stellaire.</p>
+      <tbody v-else>
+        <p>Ceci est un objet stellaire.</p>
+        <h2>Ressources à récupérer</h2>
+        <tr>
+          <td>Métal: {{planet.resources.metal }}</td>
+        </tr>
+        <tr>
+          <td>Biomasse: {{planet.resources.biomass }}</td>
+        </tr>
+        <tr>
+          <td>Eau: {{planet.resources.water }}</td>
+        </tr>
+        <tr>
+          <td>Energie: {{planet.resources.energy }}</td>
+        </tr>
+      </tbody>
+      
       <tbody>
-        <tr>
-          <button @click="move(planet.id)">Explorer</button> <!-- add "v-if planet.distance != 0"  -->
+        <tr v-if="planet.distance != 0 && planet.distance <= ship.carb.curr">
+          <button @click="move(planet.id)">Explorer</button>
+        </tr>
+        <tr v-if="planet.type === 'Planète' && (!isAllied) && planet.colony">
+          <button @click="AttackOrColonize(planet.id)">Attaquer</button>
+        </tr>
+        <tr v-else-if="planet.type === 'Planète' && (!isAllied) && !planet.colony">
+          <button  @click="AttackOrColonize(planet.id)">Coloniser</button>
         </tr>
         <tr>
-          <button v-if="planet.type === 'Planète'" @click="AttackOrColonize(planet.id)">Coloniser / Attaquer</button> <!-- add "and planet.owner != user.name"  -->
-        </tr>
-        <tr>
-          <button v-if="planet.type === 'Planète'" @click="Improve(planet.id, 'defense')">Constuire</button> <!-- add "and planet.owner === user.name"  -->
+          <button v-if="planet.colony && planet.colony.owner === ownCrew" @click="Improve(planet.id, 'defense')">Constuire</button>
         </tr>
       </tbody>
     </section>
@@ -97,8 +116,14 @@ export default {
     },
   },
   async asyncData({ params, $axios }) {
-    const planet = await $axios.get('/stellarobjects/' + params.id).then((res) => res.data)
-    return { planet }
+    // Get planet and ship from parameters
+    const planet = params.planet
+    const ship = params.ship
+    const isAllied = params.isAllied
+    console.log(isAllied)
+    // Get crewID
+    const ownCrew = await $axios.get('/game/crew').then((res) => res.data.crew)
+    return { planet, isAllied, ship, ownCrew }
   }
 }
 </script>
