@@ -62,72 +62,95 @@ export default class GameController {
       const alliedCrews = alliedCrewsResult.records.map((r) => r.get('name'));
 
       const crewNameResult = await session.readTransaction((txc) =>
-        txc.run('MATCH (p:Player)-[PART_OF]->(c:Crew) WHERE p.uuid = $uuid RETURN c.name as name', {
-          uuid: uuid,
-        })
+        txc.run(
+          'MATCH (p:Player)-[PART_OF]->(c:Crew)-[OWNS]->(s:Ship) WHERE p.uuid = $uuid RETURN c.name as name, s.planet as planet',
+          {
+            uuid: uuid,
+          }
+        )
       );
       const crewName = crewNameResult.records[0].get('name');
+      let currentPlanetId = crewNameResult.records[0].get('planet');
+      let currentPlanet = await StellarObject.findOne({ id: currentPlanetId }).exec();
 
       if (query.owned !== undefined) {
-        const ownedPlanets = await StellarObject.find(
+        let ownedPlanets = await StellarObject.aggregate([
           {
-            type: StellarObjectType.PLANET,
-            colony: { $exists: true },
+            $geoNear: {
+              near: currentPlanet!.coordinates,
+              distanceField: 'distance',
+              query: {
+                'type': StellarObjectType.PLANET,
+                'colony': { $exists: true },
+                'colony.owner': crewName,
+              },
+            },
           },
-          '-_id -__v -colony._id'
-        )
-          .where('colony.owner')
-          .equals(crewName)
-          .exec();
+          {
+            $project: {
+              '_id': 0,
+              '__v': 0,
+              'colony._id': 0,
+            },
+          },
+        ]);
         jsonResponse.set('owned', ownedPlanets);
       }
 
       if (query.allied !== undefined) {
-        const alliedPlanets = await StellarObject.find(
-          { type: StellarObjectType.PLANET, colony: { $exists: true } },
-          '-_id -__v -colony._id'
-        )
-          .where('colony.owner')
-          .in(alliedCrews)
-          .exec();
-        jsonResponse.set('allied', alliedPlanets);
-      }
-
-      if (query.attackable !== undefined) {
-        const attackablePlanets = await StellarObject.find(
+        let alliedPlanets = await StellarObject.aggregate([
           {
-            'type': StellarObjectType.PLANET,
-            'colony': { $exists: true },
-            'colony.owner': { $nin: alliedCrews },
-            'colony.shieldEndTime': { $lt: new Date().toISOString() },
-            'coordinates': {
-              $near: {
-                $geometry: {
-                  type: 'Point',
-                  coordinates: [0, 0],
+            $geoNear: {
+              near: currentPlanet!.coordinates,
+              distanceField: 'distance',
+              query: {
+                'type': StellarObjectType.PLANET,
+                'colony': { $exists: true },
+                'colony.owner': {
+                  $in: alliedCrews,
+                  $ne: crewName,
                 },
               },
             },
           },
-          '-_id -__v -colony._id'
-        )
-          /*.where('colony.owner')
-          .nin(alliedCrews)*/
-          .exec();
+          {
+            $project: {
+              '_id': 0,
+              '__v': 0,
+              'colony._id': 0,
+            },
+          },
+        ]);
+        jsonResponse.set('allied', alliedPlanets);
+      }
+
+      if (query.attackable !== undefined) {
+        let attackablePlanets = await StellarObject.aggregate([
+          {
+            $geoNear: {
+              near: currentPlanet!.coordinates,
+              distanceField: 'distance',
+              query: {
+                'type': StellarObjectType.PLANET,
+                'colony': { $exists: true },
+                'colony.owner': { $nin: alliedCrews },
+                'colony.shieldEndTime': { $lt: new Date().toISOString() },
+              },
+            },
+          },
+          {
+            $project: {
+              '_id': 0,
+              '__v': 0,
+              'colony._id': 0,
+            },
+          },
+        ]);
         jsonResponse.set('attackable', attackablePlanets);
       }
 
       if (query.colonizable !== undefined) {
-        let shipResult = await session.readTransaction((txc) =>
-          txc.run(
-            'MATCH (s:Ship)<-[OWNS]-(:Crew)<-[PART_OF]-(p:Player) WHERE p.uuid = $uuid RETURN s.planet as planet',
-            { uuid: uuid }
-          )
-        );
-        let currentPlanetId = shipResult.records[0].get('planet');
-        let currentPlanet = await StellarObject.findOne({ id: currentPlanetId }).exec();
-
-        let distances = await StellarObject.aggregate([
+        let colonizablePlanets = await StellarObject.aggregate([
           {
             $geoNear: {
               near: currentPlanet!.coordinates,
@@ -145,7 +168,7 @@ export default class GameController {
             },
           },
         ]);
-        jsonResponse.set('colonizable', distances);
+        jsonResponse.set('colonizable', colonizablePlanets);
       }
       let json = Object.fromEntries(jsonResponse);
       response.status(200).json(json);
