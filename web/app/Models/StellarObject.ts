@@ -21,8 +21,13 @@ export class PlanetResources {
 
   @prop({ default: 0 })
   public energy: number;
+
+  public toString = (): string => {
+    return `water: ${this.water}, metal: ${this.metal}, biomass: ${this.biomass}, energy: ${this.energy}`;
+  };
 }
 
+/** @deprecated Use neo4j legacy coordinates system */
 @modelOptions({ schemaOptions: { _id: false }, options: { allowMixed: Severity.ALLOW } })
 export class Coordinates {
   @prop({ default: 'Point' })

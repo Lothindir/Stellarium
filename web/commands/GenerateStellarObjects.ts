@@ -1,6 +1,7 @@
 import { BaseCommand, args, flags } from '@adonisjs/core/build/standalone';
 import { PlanetResources } from '../app/Models/StellarObject';
 import axios from 'axios';
+import neo4j from 'neo4j-driver';
 
 export default class GenerateStellarObjects extends BaseCommand {
   /**
@@ -48,7 +49,7 @@ export default class GenerateStellarObjects extends BaseCommand {
   private readonly MAX_RESSOURCE_PER_OBJECT = 15;
 
   private objNumber: number = 0;
-  private objCoords: Map<number, number>;
+  private objCoords: Set<[number, number]>;
 
   public async run() {
     this.objNumber = Number(this.numberOfObjects);
@@ -63,23 +64,90 @@ export default class GenerateStellarObjects extends BaseCommand {
     if (this.interactive) {
       this.logger.error('Interactive mode is not implemented yet');
     } else {
+      let objectIndex = 0;
+      this.objCoords = new Set();
+
       const { default: StellarObject, StellarObjectType } = await import(
         '../app/Models/StellarObject'
       );
       const { default: StellarObjectTemplate } = await import(
         '../app/Models/StellarObjectTemplate'
       );
+      const { default: neo4jDriver } = await import('@ioc:Adonis/Addons/Neo4j');
+
+      let session = neo4jDriver.session({ defaultAccessMode: neo4j.session.READ });
 
       await StellarObject.deleteMany().exec();
+      await session.writeTransaction((txc) => {
+        txc.run('MATCH (c:Colony) DETACH DELETE c');
+      });
       this.logger.info('Emptied database');
 
-      let planetTemplates = await StellarObjectTemplate.find({ type: StellarObjectType.PLANET })
+      const result = await session.readTransaction((txc) =>
+        txc.run('MATCH (c:Crew) RETURN c.name as crew')
+      );
+      const crews = result.records.map((r) => {
+        return r.get('crew');
+      });
+      if (crews.length === 0) {
+        this.logger.warning('No homeplanet created beacause no crews were found');
+        console.log(crews);
+      } else {
+        let gaiaTemplate = await StellarObjectTemplate.findOne({
+          type: StellarObjectType.PLANET,
+          planetType: 'Gaïa',
+        }).exec();
+        if (gaiaTemplate === null)
+          this.logger.error("No Gaïa template found. Cannot generate crew's homeworlds");
+        else {
+          for (let i = 0; i < crews.length; i++, objectIndex++) {
+            let homeworld = new StellarObject();
+            let homeworldName = `${crews[i]} Homeworld`;
+            await homeworld
+              .createPlanet(
+                objectIndex,
+                homeworldName,
+                this.generateCoords(),
+                gaiaTemplate.resources as PlanetResources,
+                gaiaTemplate.planetType
+              )
+              .then(async () => {
+                await session
+                  .writeTransaction((txc) => {
+                    txc.run(
+                      `MATCH (c:Crew)-[:OWNS]->(s:Ship) WHERE c.name = "${crews[i]}"
+                        SET s.planet = ${objectIndex}
+                        CREATE (colony:Colony) SET colony.planet_id = ${objectIndex} 
+                        CREATE (c)-[r:OWNS]->(colony) 
+                        RETURN colony`
+                    );
+                  })
+                  .catch((err) => {
+                    this.logger.error(err);
+                  });
+
+                this.logger
+                  .action('CREATED')
+                  .succeeded(`Planet: ${homeworld.name}, coordinates: ${homeworld.coordinates}`);
+              })
+              .catch((err) => {
+                this.logger
+                  .action('CREATED')
+                  .failed(`Planet: ${homeworld.name}, coordinates: ${homeworld.coordinates}`, err);
+              });
+          }
+        }
+      }
+
+      let planetTemplates = await StellarObjectTemplate.find({
+        type: StellarObjectType.PLANET,
+      })
         .where('planetType')
         .ne('Gaïa')
         .exec();
       this.logger.info(`Retrieved ${planetTemplates.length} planet templates:`);
 
-      for (let i = 0; i < this.objNumber; i++) {
+      for (let i = 0; i < this.objNumber; i++, objectIndex++) {
         const objectTypeChoice = Math.random();
         if (objectTypeChoice < this.PLANET_THRESHOLD) {
           let planet = new StellarObject();
@@ -91,7 +159,7 @@ export default class GenerateStellarObjects extends BaseCommand {
           //if (objectsCoords.includes(coords))
           await planet
             .createPlanet(
-              i,
+              objectIndex,
               planetName.data.data.name,
               this.generateCoords(),
               planetTemplates[planetTypeChoice].resources as PlanetResources,
@@ -114,7 +182,7 @@ export default class GenerateStellarObjects extends BaseCommand {
           );
           await comet
             .createComet(
-              i,
+              objectIndex,
               cometName.data.data.name,
               this.generateCoords(),
               this.getRandomInt(0, this.MAX_RESSOURCE_PER_OBJECT)
@@ -136,7 +204,7 @@ export default class GenerateStellarObjects extends BaseCommand {
           );
           await asteroid
             .createAsteroid(
-              i,
+              objectIndex,
               asteroidName.data.data.name,
               this.generateCoords(),
               this.getRandomInt(0, this.MAX_RESSOURCE_PER_OBJECT)
@@ -158,7 +226,7 @@ export default class GenerateStellarObjects extends BaseCommand {
           );
           await gasCloud
             .createGasCloud(
-              i,
+              objectIndex,
               gasCloudName.data.data.name,
               this.generateCoords(),
               this.getRandomInt(0, this.MAX_RESSOURCE_PER_OBJECT)
@@ -185,10 +253,11 @@ export default class GenerateStellarObjects extends BaseCommand {
   }
 
   private generateCoords(): [number, number] {
-    let coords;
-    // do {
-    coords = [this.getRandomInt(-180, 180), this.getRandomInt(-180, 180)];
-    // } while (!this.objCoords.contains(coords));
+    let coords: [number, number];
+    do {
+      coords = [this.getRandomInt(-180, 180), this.getRandomInt(-180, 180)];
+    } while (this.objCoords.has(coords));
+    this.objCoords.add(coords);
     return coords;
   }
 }
