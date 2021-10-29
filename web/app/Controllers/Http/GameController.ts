@@ -62,15 +62,16 @@ export default class GameController {
 
       const crewNameResult = await session.readTransaction((txc) =>
         txc.run(
-          'MATCH (p:Player)-[PART_OF]->(c:Crew)-[OWNS]->(s:Ship) WHERE p.uuid = $uuid RETURN c.name as name, s.planet as planet',
+          'MATCH (p:Player)-[PART_OF]->(c:Crew)-[OWNS]->(s:Ship) WHERE p.uuid = $uuid RETURN c.name as name, s.planet as planet, s.currentFuel as fuel',
           {
             uuid: uuid,
           }
         )
       );
       const crewName = crewNameResult.records[0].get('name');
-      let currentPlanetId = crewNameResult.records[0].get('planet');
-      let currentPlanet = await StellarObject.findOne({ id: currentPlanetId }).exec();
+      const currentFuel = crewNameResult.records[0].get('fuel').low;
+      const currentPlanetId = crewNameResult.records[0].get('planet');
+      const currentPlanet = await StellarObject.findOne({ id: currentPlanetId }).exec();
 
       if (query.owned !== undefined) {
         let ownedPlanets = await StellarObject.aggregate([
@@ -129,6 +130,7 @@ export default class GameController {
             $geoNear: {
               near: currentPlanet!.coordinates,
               distanceField: 'distance',
+              maxDistance: currentFuel,
               query: {
                 'type': StellarObjectType.PLANET,
                 'colony': { $exists: true },
@@ -154,6 +156,7 @@ export default class GameController {
             $geoNear: {
               near: currentPlanet!.coordinates,
               distanceField: 'distance',
+              maxDistance: currentFuel,
               query: {
                 type: StellarObjectType.PLANET,
                 colony: { $exists: false },
