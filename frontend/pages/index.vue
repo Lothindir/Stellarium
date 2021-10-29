@@ -18,8 +18,8 @@
         <tr v-for="(planet, index) in this.sortedPlanets" :key="index" class="planet" @click="inspect(planet)">
           <td class="name">{{ planet.name }}</td>
           <td class="defense">{{ planet.defenseLevel }} ({{(ship.pa/(parseInt(planet.defenseLevel)+parseInt(ship.pa))*100).toFixed(0)}}%)</td>
-          <td v-if="planet.distance<400" class="distance accessible">{{ planet.distance }}<br>({{ planet.coordinates[0] }}, {{planet.coordinates[1]}})</td>
-          <td v-else class="distance inaccessible">144<br>({{ planet.coordinates[0] }}, {{planet.coordinates[1]}})</td>
+          <td v-if="computeDistance(myPosition, planet.coordinates)<90" class="distance accessible">{{ computeDistance(myPosition, planet.coordinates) }}<br>({{ planet.coordinates[0] }}, {{planet.coordinates[1]}})</td>
+          <td v-else class="distance inaccessible">{{ computeDistance(myPosition, planet.coordinates) }}<br>({{ planet.coordinates[0] }}, {{planet.coordinates[1]}})</td>
           <!-- <td v-if="planet.dist<400"><button @click="move(planet.dist)">Explorer</button></td> -->
         </tr>
       </tbody>
@@ -37,8 +37,8 @@
         <tr v-for="(planet, index) in this.alliedPlanets" :key="index" class="planet" @click="inspect(planet)">
           <td class="name">{{ planet.name }}</td>
           <td class="defense">{{ planet.defenseLevel }} ({{(ship.pa/(parseInt(planet.defenseLevel)+parseInt(ship.pa))*100).toFixed(0)}}%)</td>
-          <td v-if="planet.distance<400" class="distance accessible">{{ planet.distance }}<br>({{ planet.coordinates[0] }}, {{planet.coordinates[1]}})</td>
-          <td v-else class="distance inaccessible">144<br>({{ planet.coordinates[0] }}, {{planet.coordinates[1]}})</td>
+          <td v-if="computeDistance(myPosition, planet.coordinates)<90" class="distance accessible">{{ computeDistance(myPosition, planet.coordinates) }}<br>({{ planet.coordinates[0] }}, {{planet.coordinates[1]}})</td>
+          <td v-else class="distance inaccessible">{{ computeDistance(myPosition, planet.coordinates) }}<br>({{ planet.coordinates[0] }}, {{planet.coordinates[1]}})</td>
         </tr>
       </tbody>
     </table>
@@ -55,8 +55,8 @@
         <tr v-for="(planet, index) in this.otherStellarObjects" :key="index" class="planet" @click="inspect(planet)">
           <td class="name">{{ planet.name }}</td>
           <td class="defense">{{ planet.type }}</td>
-          <td v-if="planet.distance<400" class="distance accessible">{{ planet.distance }}<br>({{ planet.coordinates[0] }}, {{planet.coordinates[1]}})</td>
-          <td v-else class="distance inaccessible">144<br>({{ planet.coordinates[0] }}, {{planet.coordinates[1]}})</td>
+          <td v-if="computeDistance(myPosition, planet.coordinates)<90" class="distance accessible">{{ computeDistance(myPosition, planet.coordinates) }}<br>({{ planet.coordinates[0] }}, {{planet.coordinates[1]}})</td>
+          <td v-else class="distance inaccessible">{{ computeDistance(myPosition, planet.coordinates) }}<br>({{ planet.coordinates[0] }}, {{planet.coordinates[1]}})</td>
         </tr>
       </tbody>
     </table>
@@ -70,6 +70,9 @@ export default {
     return {
       planets: [],
       ship: [],
+      myPosition: {
+       coordinates: [-64, -90]
+      }
     }
   },
   computed: {
@@ -77,10 +80,10 @@ export default {
       return this.planets.filter(planet => planet.isAlly)
     },
     sortedPlanets: function() {
-      return (this.planets.filter(planet => planet.type == 'Planète')).sort((a, b) => a.distance > b.distance)
+      return (this.planets.filter(planet => planet.type == 'Planète')).sort((a, b) => this.computeDistance(this.myPosition, a.coordinates) > this.computeDistance(this.myPosition, b.coordinates))
     },
     otherStellarObjects: function() {
-      return (this.planets.filter(planet => planet.type != 'Planète')).sort((a, b) => a.distance > b.distance)
+      return (this.planets.filter(planet => planet.type != 'Planète')).sort((a, b) => this.computeDistance(this.myPosition, a.coordinates) > this.computeDistance(this.myPosition, b.coordinates))
     }
   },
   methods: {
@@ -90,6 +93,22 @@ export default {
         params: {id : planet.id, name: planet.name}
       })
     },
+    computeDistance: function(myPosition, objectCoordinates) {
+      const directRoad = Math.ceil(Math.sqrt(Math.pow(myPosition.coordinates[0] - objectCoordinates[0], 2) + Math.pow(myPosition.coordinates[1] - objectCoordinates[1], 2)))
+      var verticalRoad, horizontalRoad
+      if (myPosition.coordinates[0] > 0) {
+        horizontalRoad = Math.ceil(Math.sqrt(Math.pow((myPosition.coordinates[0] - 180) - objectCoordinates[0], 2) + Math.pow(myPosition.coordinates[1] - objectCoordinates[1], 2)))
+      } else {
+        horizontalRoad = Math.ceil(Math.sqrt(Math.pow((myPosition.coordinates[0] + 180) - objectCoordinates[0], 2) + Math.pow(myPosition.coordinates[1] - objectCoordinates[1], 2)))
+      }
+      if (myPosition.coordinates[1] > 0) {
+        verticalRoad = Math.ceil(Math.sqrt(Math.pow(myPosition.coordinates[0] - objectCoordinates[0], 2) + Math.pow((myPosition.coordinates[1] - 180) - objectCoordinates[1], 2)))
+      } else {
+        verticalRoad = Math.ceil(Math.sqrt(Math.pow(myPosition.coordinates[0] - objectCoordinates[0], 2) + Math.pow((myPosition.coordinates[1] + 180) - objectCoordinates[1], 2)))
+      }   
+      console.log(Math.min(directRoad, verticalRoad, horizontalRoad))     
+      return Math.min(directRoad, verticalRoad, horizontalRoad)
+    }
   },
   async fetch() { // Fetch when loading page
     this.planets = await fetch('/api/stellarobjects')

@@ -2,8 +2,14 @@
     <!-- <h1>{{root.params}}</h1> -->
     <section>
       <h1>{{planet.name}}</h1>
+      <h2 v-if="planet.type === 'Planète'">Informations sur la planète</h2>
+      <h2 v-else>Informations sur l'objet stellaire</h2>
+      <tbody>
+        <tr>
+          <td>Coordonnées: ({{planet.coordinates[0]}}, {{planet.coordinates[1]}})</td>
+        </tr>
+      </tbody>
       <tbody v-if="planet.type === 'Planète'">
-        <h2>Informations sur la planète</h2>
         <tr>
           <td>Type de planète: {{planet.planetType}}</td>
         </tr>
@@ -24,7 +30,11 @@
           <td>Usine d'énergie: {{planet.resources.energy }}</td>
         </tr>
       </tbody>
-      <p v-if="planet.type != 'Planète'">Ceci est un objet stellaire.</p>
+      <tbody v-if="planet.type != 'Planète'">
+        <tr>
+          <td>Ceci est un objet stellaire.</td>
+        </tr>
+      </tbody>
       <tbody>
         <tr>
           <button @click="move(planet.id)">Explorer</button> <!-- add "v-if planet.distance != 0"  -->
