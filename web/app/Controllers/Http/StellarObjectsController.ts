@@ -14,7 +14,7 @@ export default class StellarObjectsController {
 
   public async show({ request, response }: HttpContextContract) {
     const objectUuid = request.param('uuid');
-    await StellarObject.findOne({ uuid: objectUuid }, '-_id -_v')
+    await StellarObject.findOne({ id: objectUuid }, '-_id -_v')
       .exec()
       .then((obj) => {
         if (obj) {
