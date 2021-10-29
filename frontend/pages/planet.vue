@@ -120,7 +120,7 @@ export default {
     const planet = params.planet
     const ship = params.ship
     const isAllied = params.isAllied
-    console.log(isAllied)
+
     // Get crewID
     const ownCrew = await $axios.get('/game/crew').then((res) => res.data.crew)
     return { planet, isAllied, ship, ownCrew }
