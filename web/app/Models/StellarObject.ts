@@ -5,11 +5,13 @@ import {
   modelOptions,
   Severity,
   DocumentType,
+  Ref,
 } from '@typegoose/typegoose';
 import Mongoose from '@ioc:Adonis/Addons/Mongoose';
+import { Infrastructure } from './Infrastructure';
 
 @modelOptions({ schemaOptions: { _id: false } })
-export class PlanetResources {
+export class Resources {
   @prop({ default: 0 })
   public water: number;
 
@@ -27,7 +29,7 @@ export class PlanetResources {
   };
 }
 
-/** @deprecated Use neo4j legacy coordinates system */
+///** @deprecated Use neo4j legacy coordinates system */
 @modelOptions({ schemaOptions: { _id: false }, options: { allowMixed: Severity.ALLOW } })
 export class Coordinates {
   @prop({ default: 'Point' })
@@ -35,6 +37,11 @@ export class Coordinates {
 
   @prop({ required: true })
   public coordinates: [Number, Number];
+
+  constructor(coords: [Number, Number]) {
+    this.type = 'Point';
+    this.coordinates = coords;
+  }
 
   public static getJSON(coordinates: [number, number]) {
     return { type: 'Point', coordinates: coordinates };
@@ -47,6 +54,32 @@ export enum StellarObjectType {
   COMET = 'Comète',
   ASTEROID = 'Astéroïde',
   SPACE_DEBRIS = 'Débris',
+}
+
+@modelOptions({ schemaOptions: { id: false } })
+export class Colony {
+  @prop({ required: true })
+  public owner: string;
+
+  @prop()
+  public resources?: Resources;
+
+  @prop()
+  public defenseLevel?: number;
+
+  @prop()
+  public shieldEndTime?: Date;
+
+  @prop({ ref: () => Infrastructure, _id: false })
+  public infrastructure?: Ref<Infrastructure>[];
+
+  constructor(owner: string, shieldEndTime?: Date) {
+    this.owner = owner;
+    if (shieldEndTime === undefined) {
+      this.shieldEndTime = new Date();
+      this.shieldEndTime.setMinutes(this.shieldEndTime.getMinutes() + 30);
+    } else this.shieldEndTime = shieldEndTime;
+  }
 }
 
 /*
@@ -73,13 +106,13 @@ export class StellarObject {
   public type: StellarObjectType;
 
   @prop({ _id: false })
-  public resources?: PlanetResources | number;
+  public resources?: Resources | number;
 
   @prop({ type: String })
   public planetType?: string;
 
-  @prop({ type: String })
-  public colonyUuid?: number;
+  @prop()
+  public colony?: Colony;
 
   private createObject(id: number, name: string, coordinates: [number, number]) {
     this.id = id;
@@ -105,13 +138,19 @@ export class StellarObject {
     id: number,
     name: string,
     coordinates: [number, number],
-    resources: PlanetResources,
-    planetType: string
+    resources: Resources,
+    planetType: string,
+    colonyOwner?: string,
+    colonyShieldEndTime?: Date
   ) {
     this.type = StellarObjectType.PLANET;
     this.createObject(id, name, coordinates);
     this.resources = resources;
     this.planetType = planetType;
+    if (colonyOwner !== undefined) {
+      this.colony = new Colony(colonyOwner, colonyShieldEndTime);
+    }
+
     await this.save();
   }
 

@@ -1,5 +1,5 @@
 import { BaseCommand, args, flags } from '@adonisjs/core/build/standalone';
-import { PlanetResources } from '../app/Models/StellarObject';
+import { Resources } from '../app/Models/StellarObject';
 import axios from 'axios';
 import neo4j from 'neo4j-driver';
 
@@ -45,7 +45,6 @@ export default class GenerateStellarObjects extends BaseCommand {
   private readonly ASTEROID_THRESHOLD = 0.9;
   private readonly GAS_CLOUD_THRESHOLD = 0.97;
 
-  private readonly GALAXY_SIZE_RATIO = 20;
   private readonly MAX_RESSOURCE_PER_OBJECT = 15;
 
   private objNumber: number = 0;
@@ -89,6 +88,8 @@ export default class GenerateStellarObjects extends BaseCommand {
       const crews = result.records.map((r) => {
         return r.get('crew');
       });
+
+      /** Generate Homeworlds */
       if (crews.length === 0) {
         this.logger.warning('No homeplanet created beacause no crews were found');
         console.log(crews);
@@ -100,6 +101,9 @@ export default class GenerateStellarObjects extends BaseCommand {
         if (gaiaTemplate === null)
           this.logger.error("No Gaïa template found. Cannot generate crew's homeworlds");
         else {
+          let endDate = new Date();
+          endDate.setMonth(endDate.getMonth() + 3);
+
           for (let i = 0; i < crews.length; i++, objectIndex++) {
             let homeworld = new StellarObject();
             let homeworldName = `${crews[i]} Homeworld`;
@@ -108,27 +112,21 @@ export default class GenerateStellarObjects extends BaseCommand {
                 objectIndex,
                 homeworldName,
                 this.generateCoords(),
-                gaiaTemplate.resources as PlanetResources,
-                gaiaTemplate.planetType
+                gaiaTemplate.resources as Resources,
+                gaiaTemplate.planetType,
+                crews[i],
+                endDate
               )
               .then(async () => {
-                await session
-                  .writeTransaction((txc) => {
-                    txc.run(
-                      `MATCH (c:Crew)-[:OWNS]->(s:Ship) WHERE c.name = "${crews[i]}"
-                        SET s.planet = ${objectIndex}
-                        CREATE (colony:Colony) SET colony.planet_id = ${objectIndex} 
-                        CREATE (c)-[r:OWNS]->(colony) 
-                        RETURN colony`
-                    );
-                  })
-                  .catch((err) => {
-                    this.logger.error(err);
-                  });
-
                 this.logger
                   .action('CREATED')
                   .succeeded(`Planet: ${homeworld.name}, coordinates: ${homeworld.coordinates}`);
+                await session.writeTransaction((txc) =>
+                  txc.run(
+                    'MATCH (s:Ship)<-[OWNS]-(c:Crew) WHERE c.name = $name SET s.planet = $planet RETURN s',
+                    { name: crews[i], planet: objectIndex }
+                  )
+                );
               })
               .catch((err) => {
                 this.logger
@@ -139,6 +137,7 @@ export default class GenerateStellarObjects extends BaseCommand {
         }
       }
 
+      /** Generate other stellar objects */
       let planetTemplates = await StellarObjectTemplate.find({
         type: StellarObjectType.PLANET,
       })
@@ -155,14 +154,13 @@ export default class GenerateStellarObjects extends BaseCommand {
           let planetName = await axios.get(
             'https://story-shack-cdn-v2.glitch.me/generators/planet-name-generator'
           );
-          //let coords = this.generateCoords();
-          //if (objectsCoords.includes(coords))
+
           await planet
             .createPlanet(
               objectIndex,
               planetName.data.data.name,
               this.generateCoords(),
-              planetTemplates[planetTypeChoice].resources as PlanetResources,
+              planetTemplates[planetTypeChoice].resources as Resources,
               planetTemplates[planetTypeChoice].planetType
             )
             .then(() => {
@@ -255,7 +253,7 @@ export default class GenerateStellarObjects extends BaseCommand {
   private generateCoords(): [number, number] {
     let coords: [number, number];
     do {
-      coords = [this.getRandomInt(-180, 180), this.getRandomInt(-180, 180)];
+      coords = [this.getRandomInt(-180, 180), this.getRandomInt(-90, 90)];
     } while (this.objCoords.has(coords));
     this.objCoords.add(coords);
     return coords;

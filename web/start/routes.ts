@@ -24,7 +24,7 @@ Route.post('/login', 'AuthController.login');
 Route.get('/logout', 'AuthController.logout').middleware('auth');
 
 Route.get('/stellarobjects', 'StellarObjectsController.index');
-Route.get('/stellarobjects/:uuid', 'StellarObjectsController.show');
+Route.get('/stellarobjects/:id', 'StellarObjectsController.show');
 Route.post('/stellarobjects', 'StellarObjectsController.store');
 
 Route.get('/challenges', 'ChallengesController.index').as('challenges.index');
@@ -50,8 +50,13 @@ Route.resource('players', 'PlayersController')
   .only(['index', 'show', 'update'])
   .middleware({ update: ['adminAuth'] });
 
-Route.get('/game/player', 'GameController.player').middleware('auth');
-Route.get('/game/crew', 'GameController.crew').middleware('auth');
+Route.group(() => {
+  Route.get('/player', 'GameController.player');
+  Route.get('/crew', 'GameController.crew');
+  Route.get('/planets', 'GameController.planets');
+})
+  .prefix('/game')
+  .middleware('auth');
 
 Route.get('/fakeAPI', 'FakeAPI.genericCall');
 Route.post('/fakeAPI', 'FakeAPI.genericCall');

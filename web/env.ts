@@ -29,4 +29,5 @@ export default Env.rules({
   MONGO_URI: Env.schema.string(),
   MONGO_USER: Env.schema.string(),
   MONGO_PASSWORD: Env.schema.string(),
+  HASH_SECRET: Env.schema.string(),
 });

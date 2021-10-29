@@ -13,7 +13,7 @@ export default class StellarObjectsController {
   }
 
   public async show({ request, response }: HttpContextContract) {
-    const objectUuid = request.param('uuid');
+    const objectUuid = request.param('id');
     await StellarObject.findOne({ id: objectUuid }, '-_id -_v')
       .exec()
       .then((obj) => {
@@ -26,7 +26,7 @@ export default class StellarObjectsController {
   }
 
   public async store({ request, response }: HttpContextContract) {
-    const planetUuid = request.input('uuid');
+    const planetUuid = request.input('id');
     const planetCoordinates = request.input('coordinates');
 
     await StellarObject.create({ uuid: planetUuid, coordinates: planetCoordinates })

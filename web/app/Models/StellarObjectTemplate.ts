@@ -1,8 +1,7 @@
 import { prop, getModelForClass, index, modelOptions, Severity } from '@typegoose/typegoose';
 import Mongoose from '@ioc:Adonis/Addons/Mongoose';
-import { StellarObjectType, PlanetResources } from './StellarObject';
+import { StellarObjectType, Resources } from './StellarObject';
 
-@index({ coordinates: '2dsphere' })
 @modelOptions({
   existingMongoose: Mongoose,
   schemaOptions: { collection: 'templates' },
@@ -13,7 +12,7 @@ export class StellarObjectTemplate {
   public type: StellarObjectType;
 
   @prop({ required: true })
-  public resources: PlanetResources | number;
+  public resources: Resources | number;
 
   @prop()
   public planetType: string;
