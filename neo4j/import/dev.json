@@ -10,8 +10,8 @@
 {"type":"node","id":"9","labels":["Colony"],"properties":{"planet_id":56,"neo4jImportId":"9","defense":"<JSON>","production":"<JSON>","infrastructure":"<JSON>"}}
 {"type":"node","id":"10","labels":["Colony"],"properties":{"planet_id":887,"neo4jImportId":"10","defense":"<JSON>","production":"<JSON>","infrastructure":"<JSON>"}}
 {"type":"node","id":"11","labels":["Colony"],"properties":{"planet_id":8,"neo4jImportId":"11","defense":"<JSON>","production":"<JSON>","infrastructure":"<JSON>"}}
-{"type":"node","id":"12","labels":["Ship"],"properties":{"currentFuel":25,"attackPower":1,"maxFuel":25,"equipement":[],"name":"Enterprise","rechargeFuelRate":25}}
-{"type":"node","id":"13","labels":["Ship"],"properties":{"currentFuel":25,"attackPower":1,"maxFuel":25,"equipement":[],"name":"Millenium Falcon","rechargeFuelRate":25}}
+{"type":"node","id":"12","labels":["Ship"],"properties":{"currentFuel":25,"attackPower":1,"maxFuel":25,"equipement":[],"name":"Enterprise","rechargeFuelRate":25, "planet": 30}}
+{"type":"node","id":"13","labels":["Ship"],"properties":{"currentFuel":25,"attackPower":1,"maxFuel":25,"equipement":[],"name":"Millenium Falcon","rechargeFuelRate":25, "planet": 31}}
 {"id":"0","type":"relationship","label":"PART_OF","start":{"id":"0","labels":["Player"]},"end":{"id":"1","labels":["Crew"]}}
 {"id":"1","type":"relationship","label":"PART_OF","start":{"id":"2","labels":["Player"]},"end":{"id":"1","labels":["Crew"]}}
 {"id":"2","type":"relationship","label":"OWNS","start":{"id":"1","labels":["Crew"]},"end":{"id":"3","labels":["Colony"]}}

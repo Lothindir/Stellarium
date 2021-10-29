@@ -54,7 +54,9 @@ Route.group(() => {
   Route.get('/player', 'GameController.player');
   Route.get('/crew', 'GameController.crew');
   Route.get('/planets', 'GameController.planets');
+  Route.get('/planet', 'GameController.planet');
   Route.get('/ship', 'GameController.ship');
+  Route.post('/move', 'GameController.move');
 })
   .prefix('/game')
   .middleware('auth');
