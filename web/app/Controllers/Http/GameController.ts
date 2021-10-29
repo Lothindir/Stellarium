@@ -24,7 +24,7 @@ export default class GameController {
       });
       if (records.length !== 0) response.status(200).json(records[0]);
       else response.status(404).json({ message: 'Player not found', uuid: uuid });
-    }
+    } else return response.unauthorized();
   }
 
   public async crew({ auth, response }: HttpContextContract) {
@@ -43,7 +43,7 @@ export default class GameController {
       });
       if (records.length !== 0) response.status(200).json(records[0]);
       else response.status(404).json({ message: 'Player not found', uuid: uuid });
-    }
+    } else return response.unauthorized();
   }
 
   public async planets({ auth, request, response }: HttpContextContract) {
@@ -71,6 +71,7 @@ export default class GameController {
       const crewName = crewNameResult.records[0].get('name');
       const currentFuel = crewNameResult.records[0].get('fuel').low;
       const currentPlanetId = crewNameResult.records[0].get('planet');
+      console.log(currentPlanetId);
       const currentPlanet = await StellarObject.findOne({ id: currentPlanetId }).exec();
 
       if (query.owned !== undefined) {
@@ -174,7 +175,7 @@ export default class GameController {
       }
       let json = Object.fromEntries(jsonResponse);
       response.status(200).json(json);
-    }
+    } else return response.unauthorized();
   }
 
   public async ship({ auth, response }: HttpContextContract) {
@@ -194,12 +195,77 @@ export default class GameController {
         pa: shipRecord.get('ap').low,
         carb: {
           curr: shipRecord.get('cf').low,
-          max: shipRecord.get('mf').low
+          max: shipRecord.get('mf').low,
         },
         recharge: shipRecord.get('frr').low,
-        equipements: shipRecord.get('equipped')
-      }
+        equipements: shipRecord.get('equipped'),
+      };
       response.status(200).json(ship);
     }
+  }
+
+  public async move({ auth, request, response }: HttpContextContract) {
+    if (auth.isAuthenticated && auth.user !== undefined) {
+      let uuid = auth.user.uuid;
+      let session = neo4jDriver.session({ defaultAccessMode: neo4j.session.READ });
+      const result = await session.readTransaction((txc) =>
+        txc.run(
+          `MATCH (p:Player)-[PART_OF]->(c:Crew)-[OWNS]->(s:Ship) WHERE p.uuid = $uuid
+           RETURN s.currentFuel as fuel, s.planet as planet, c.name as name`,
+          { uuid: uuid }
+        )
+      );
+      let currentFuel = result.records[0].get('fuel').low;
+      let currentPlanetId = result.records[0].get('planet').low;
+      console.log(currentPlanetId);
+      const crewName = result.records[0].get('name');
+      const targetPlanetId = request.input('planetID');
+      if (targetPlanetId === undefined) {
+        return response.status(404).json({ reason: 'No id was provided' });
+      }
+
+      const currentPlanet = await StellarObject.findOne(
+        { id: currentPlanetId },
+        '-_id -__v'
+      ).exec();
+      if (currentPlanet === null) return response.internalServerError('Current planet is invalid');
+      const targetPlanets = await StellarObject.aggregate([
+        {
+          $geoNear: {
+            near: currentPlanet.coordinates,
+            distanceField: 'distance',
+            maxDistance: currentFuel,
+          },
+        },
+        {
+          $match: {
+            id: targetPlanetId,
+          },
+        },
+      ]);
+      // const targetPlanet = await StellarObject.findOne({ id: targetPlanetId }).exec();
+      const planets = await StellarObject.find({ id: targetPlanetId })
+        .where('coordinates')
+        .near({ center: currentPlanet.coordinates, distanceField: 'dist' })
+        .exec();
+      console.log(targetPlanets);
+      if (targetPlanets.length === 0)
+        return response.status(404).json({ reason: 'Invalid target id', id: targetPlanetId });
+      if (targetPlanets[0].distance > currentFuel)
+        return response.status(404).json({
+          reason: 'Not enough fuel',
+          distance: targetPlanets[0].distance,
+          currentFuel: currentFuel,
+        });
+      currentFuel -= targetPlanets[0].distance;
+      // await session.writeTransaction((txc) =>
+      //   txc.run(
+      //     'MATCH (c:Crew)-[OWNS]->(s:Ship) WHERE c.name = $name SET s.currentFuel = $fuel, s.planet = $planet',
+      //     { name: crewName, fuel: currentFuel, planet: targetPlanetId }
+      //   )
+      // );
+
+      response.status(200).json({ outcome: 'Moved', id: targetPlanetId });
+    } else return response.unauthorized();
   }
 }
