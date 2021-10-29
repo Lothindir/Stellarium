@@ -5,21 +5,21 @@
     <table class="table">
       <thead>
         <tr>
-          <th class="name">Propriétaire</th>
+          <th class="name">Nom</th>
           <th class="defense">Défense</th>
-          <th class="distance">Distance</th>
+          <th class="distance">Distance<br>(Coord.)</th>
         </tr>
       </thead>
       <p v-if="$fetchState.pending">Recherche des planètes...</p>
       <p v-else-if="$fetchState.error">
-        Impossible de scanner la planète actuellement
+        Impossible de scanner la galaxie actuellement
       </p>
       <tbody>
         <tr v-for="(planet, index) in this.sortedPlanets" :key="index" class="planet" @click="inspect(planet)">
           <td class="name">{{ planet.name }}</td>
           <td class="defense">{{ planet.defenseLevel }} ({{(ship.pa/(parseInt(planet.defenseLevel)+parseInt(ship.pa))*100).toFixed(0)}}%)</td>
-          <td v-if="planet.distance<400" class="distance accessible">{{ planet.distance }}</td>
-          <td v-else class="distance inaccessible">{{ planet.distance }}</td>
+          <td v-if="planet.distance<400" class="distance accessible">{{ planet.distance }}<br>({{ planet.coordinates[0] }}, {{planet.coordinates[1]}})</td>
+          <td v-else class="distance inaccessible">144<br>({{ planet.coordinates[0] }}, {{planet.coordinates[1]}})</td>
           <!-- <td v-if="planet.dist<400"><button @click="move(planet.dist)">Explorer</button></td> -->
         </tr>
       </tbody>
@@ -28,17 +28,35 @@
     <table class="table">
       <thead>
         <tr>
-          <th class="name">Propriétaire</th>
+          <th class="name">Nom</th>
           <th class="defense">Défense</th>
-          <th class="distance">Distance</th>
+          <th class="distance">Distance<br>(Coord.)</th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="(planet, index) in this.alliedPlanets" :key="index" class="planet" @click="inspect(planet)">
           <td class="name">{{ planet.name }}</td>
           <td class="defense">{{ planet.defenseLevel }} ({{(ship.pa/(parseInt(planet.defenseLevel)+parseInt(ship.pa))*100).toFixed(0)}}%)</td>
-          <td v-if="planet.distance<400" class="distance accessible">{{ planet.distance }}</td>
-          <td v-else class="distance inaccessible">{{ planet.distance }}</td>
+          <td v-if="planet.distance<400" class="distance accessible">{{ planet.distance }}<br>({{ planet.coordinates[0] }}, {{planet.coordinates[1]}})</td>
+          <td v-else class="distance inaccessible">144<br>({{ planet.coordinates[0] }}, {{planet.coordinates[1]}})</td>
+        </tr>
+      </tbody>
+    </table>
+    <h2>Autres objets stellaires visibles</h2>
+    <table class="table">
+      <thead>
+        <tr>
+          <th class="name">Nom</th>
+          <th class="defense">Type</th>
+          <th class="distance">Distance<br>(Coord.)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="(planet, index) in this.otherStellarObjects" :key="index" class="planet" @click="inspect(planet)">
+          <td class="name">{{ planet.name }}</td>
+          <td class="defense">{{ planet.type }}</td>
+          <td v-if="planet.distance<400" class="distance accessible">{{ planet.distance }}<br>({{ planet.coordinates[0] }}, {{planet.coordinates[1]}})</td>
+          <td v-else class="distance inaccessible">144<br>({{ planet.coordinates[0] }}, {{planet.coordinates[1]}})</td>
         </tr>
       </tbody>
     </table>
@@ -59,7 +77,10 @@ export default {
       return this.planets.filter(planet => planet.isAlly)
     },
     sortedPlanets: function() {
-      return this.planets.sort((a, b) => a.distance > b.distance)
+      return (this.planets.filter(planet => planet.type == 'Planète')).sort((a, b) => a.distance > b.distance)
+    },
+    otherStellarObjects: function() {
+      return (this.planets.filter(planet => planet.type != 'Planète')).sort((a, b) => a.distance > b.distance)
     }
   },
   methods: {
@@ -71,12 +92,12 @@ export default {
     },
   },
   async fetch() { // Fetch when loading page
-    this.planets = await fetch('/api/fakeAPI?api=GetVisiblePlanetsNew')
+    this.planets = await fetch('/api/stellarobjects')
       .then((res) => res.json())
-      .then((data) => data.planets)
     this.ship = await fetch('/api/fakeAPI?api=GetShip')
       .then((res) => res.json())
       .then((data) => data.ship)
+    console.log(this.planets)
   },
 }
 </script>

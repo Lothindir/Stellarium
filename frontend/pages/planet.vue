@@ -1,10 +1,41 @@
 <template>
     <!-- <h1>{{root.params}}</h1> -->
     <section>
-        <h1>{{this.$route.params.id}} {{this.$route.params.name}}</h1>
-        <button @click="move(planet.id)">Explorer</button>
-        <button @click="AttackOrColonize(planet.id)">Coloniser / Attaquer</button>
-        <button @click="Improve(planet.id, 'defense')">Constuire</button>
+      <h1>{{planet.name}}</h1>
+      <tbody v-if="planet.type === 'Planète'">
+        <h2>Informations sur la planète</h2>
+        <tr>
+          <td>Type de planète: {{planet.planetType}}</td>
+        </tr>
+        <tr>
+          <td>Niveau de défense: {{planet.defenseLevel}}</td>
+        </tr>
+        <h2>Production</h2>
+        <tr>
+          <td>Usine de métal: {{planet.resources.metal }}</td>
+        </tr>
+        <tr>
+          <td>Usine de biomasse: {{planet.resources.biomass }}</td>
+        </tr>
+        <tr>
+          <td>Usine d'eau: {{planet.resources.water }}</td>
+        </tr>
+        <tr>
+          <td>Usine d'énergie: {{planet.resources.energy }}</td>
+        </tr>
+      </tbody>
+      <p v-if="planet.type != 'Planète'">Ceci est un objet stellaire.</p>
+      <tbody>
+        <tr>
+          <button @click="move(planet.id)">Explorer</button> <!-- add "v-if planet.distance != 0"  -->
+        </tr>
+        <tr>
+          <button v-if="planet.type === 'Planète'" @click="AttackOrColonize(planet.id)">Coloniser / Attaquer</button> <!-- add "and planet.owner != user.name"  -->
+        </tr>
+        <tr>
+          <button v-if="planet.type === 'Planète'" @click="Improve(planet.id, 'defense')">Constuire</button> <!-- add "and planet.owner === user.name"  -->
+        </tr>
+      </tbody>
     </section>
 </template>
 
@@ -66,7 +97,8 @@ export default {
     },
   },
   async asyncData({ params, $axios }) {
-    const planet = await $axios.post('/fakeAPI', { api: 'GetPlanet', planetID: params.id }).then((res) => res.data.planet)
+    const planet = await $axios.get('/stellarobjects/' + params.id).then((res) => res.data)
+    console.log(planet)
     return { planet }
   }
 }
