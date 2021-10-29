@@ -2,7 +2,6 @@ import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext';
 import neo4j from 'neo4j-driver';
 import neo4jDriver from '@ioc:Adonis/Addons/Neo4j';
 import StellarObject, { StellarObjectType } from 'App/Models/StellarObject';
-import Mongoose from '@ioc:Adonis/Addons/Mongoose';
 
 export default class GameController {
   public async player({ auth, response }: HttpContextContract) {
@@ -172,6 +171,32 @@ export default class GameController {
       }
       let json = Object.fromEntries(jsonResponse);
       response.status(200).json(json);
+    }
+  }
+
+  public async ship({ auth, response }: HttpContextContract) {
+    if (auth.isAuthenticated && auth.user !== undefined) {
+      let uuid = auth.user.uuid;
+      let session = neo4jDriver.session({ defaultAccessMode: neo4j.session.READ });
+      const shipResult = await session.readTransaction((txc) =>
+        txc.run(
+          `MATCH (p:Player)-[PART_OF]->(Crew)-[OWNS]->(s:Ship) WHERE p.uuid = $uuid
+           RETURN s.name as name, s.attackPower as ap, s.currentFuel as cf, s.maxFuel as mf, s.rechargeFuelRate as frr, s.equipped as equipped`,
+          { uuid: uuid }
+        )
+      );
+      let shipRecord = shipResult.records[0];
+      let ship = {
+        name: shipRecord.get('name'),
+        pa: shipRecord.get('ap').low,
+        carb: {
+          curr: shipRecord.get('cf').low,
+          max: shipRecord.get('mf').low
+        },
+        recharge: shipRecord.get('frr').low,
+        equipements: shipRecord.get('equipped')
+      }
+      response.status(200).json(ship);
     }
   }
 }
