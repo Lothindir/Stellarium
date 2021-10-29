@@ -97,7 +97,6 @@ export default {
     this.ship = await fetch('/api/fakeAPI?api=GetShip')
       .then((res) => res.json())
       .then((data) => data.ship)
-    console.log(this.planets)
   },
 }
 </script>

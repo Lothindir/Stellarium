@@ -98,7 +98,6 @@ export default {
   },
   async asyncData({ params, $axios }) {
     const planet = await $axios.get('/stellarobjects/' + params.id).then((res) => res.data)
-    console.log(planet)
     return { planet }
   }
 }
