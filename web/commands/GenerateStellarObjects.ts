@@ -46,9 +46,17 @@ export default class GenerateStellarObjects extends BaseCommand {
   private readonly GAS_CLOUD_THRESHOLD = 0.97;
 
   private readonly MAX_RESSOURCE_PER_OBJECT = 15;
+  private readonly NAMES_BUFFER = 50;
 
   private objNumber: number = 0;
   private objCoords: Set<[number, number]>;
+
+  private planetNames;
+  private meteorNames;
+  private oasisNames;
+  private planetNamesIndex = this.NAMES_BUFFER;
+  private meteorNamesIndex = this.NAMES_BUFFER;
+  private oasisNamesIndex = this.NAMES_BUFFER;
 
   public async run() {
     this.objNumber = Number(this.numberOfObjects);
@@ -148,17 +156,40 @@ export default class GenerateStellarObjects extends BaseCommand {
 
       for (let i = 0; i < this.objNumber; i++, objectIndex++) {
         const objectTypeChoice = Math.random();
+
+        /** Retreive and buffer names */
+        if (this.planetNamesIndex >= this.NAMES_BUFFER) {
+          let planetsResponse = await axios.get(
+            'https://story-shack-cdn-v2.glitch.me/generators/planet-name-generator?count=50'
+          );
+          this.planetNames = planetsResponse.data.data;
+          this.planetNamesIndex = 0;
+        }
+        if (this.meteorNamesIndex >= this.NAMES_BUFFER) {
+          let meteorResponse = await axios.get(
+            'https://story-shack-cdn-v2.glitch.me/generators/meteor-name-generator?count=50'
+          );
+          this.meteorNames = meteorResponse.data.data;
+          this.meteorNamesIndex = 0;
+        }
+        if (this.oasisNamesIndex >= this.NAMES_BUFFER) {
+          let oasisResponse = await axios.get(
+            'https://story-shack-cdn-v2.glitch.me/generators/oasis-name-generator?count=50'
+          );
+          this.oasisNames = oasisResponse.data.data;
+          this.oasisNamesIndex = 0;
+        }
+
+        /** Generate objects */
         if (objectTypeChoice < this.PLANET_THRESHOLD) {
           let planet = new StellarObject();
           let planetTypeChoice = this.getRandomInt(0, planetTemplates.length);
-          let planetName = await axios.get(
-            'https://story-shack-cdn-v2.glitch.me/generators/planet-name-generator'
-          );
+          let planetName = this.planetNames[this.planetNamesIndex++].name;
 
           await planet
             .createPlanet(
               objectIndex,
-              planetName.data.data.name,
+              planetName,
               this.generateCoords(),
               planetTemplates[planetTypeChoice].resources as Resources,
               planetTemplates[planetTypeChoice].planetType
@@ -175,13 +206,11 @@ export default class GenerateStellarObjects extends BaseCommand {
             });
         } else if (objectTypeChoice < this.COMET_THRESHOLD) {
           let comet = new StellarObject();
-          let cometName = await axios.get(
-            'https://story-shack-cdn-v2.glitch.me/generators/meteor-name-generator'
-          );
+          let cometName = this.meteorNames[this.meteorNamesIndex++].name;
           await comet
             .createComet(
               objectIndex,
-              cometName.data.data.name,
+              cometName,
               this.generateCoords(),
               this.getRandomInt(0, this.MAX_RESSOURCE_PER_OBJECT)
             )
@@ -197,13 +226,11 @@ export default class GenerateStellarObjects extends BaseCommand {
             });
         } else if (objectTypeChoice < this.ASTEROID_THRESHOLD) {
           let asteroid = new StellarObject();
-          let asteroidName = await axios.get(
-            'https://story-shack-cdn-v2.glitch.me/generators/meteor-name-generator'
-          );
+          let asteroidName = this.meteorNames[this.meteorNamesIndex++].name;
           await asteroid
             .createAsteroid(
               objectIndex,
-              asteroidName.data.data.name,
+              asteroidName,
               this.generateCoords(),
               this.getRandomInt(0, this.MAX_RESSOURCE_PER_OBJECT)
             )
@@ -219,13 +246,11 @@ export default class GenerateStellarObjects extends BaseCommand {
             });
         } else if (objectTypeChoice < this.GAS_CLOUD_THRESHOLD) {
           let gasCloud = new StellarObject();
-          let gasCloudName = await axios.get(
-            'https://story-shack-cdn-v2.glitch.me/generators/oasis-name-generator'
-          );
+          let gasCloudName = this.oasisNames[this.oasisNamesIndex++].name;
           await gasCloud
             .createGasCloud(
               objectIndex,
-              gasCloudName.data.data.name,
+              gasCloudName,
               this.generateCoords(),
               this.getRandomInt(0, this.MAX_RESSOURCE_PER_OBJECT)
             )
