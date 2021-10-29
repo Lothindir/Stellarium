@@ -50,6 +50,7 @@
       <thead>
         <tr>
           <th class="name">Nom</th>
+          <th class="owner_name">Equip.</th>
           <th class="defense">Défense</th>
           <th class="distance">Distance<br>(Coord.)</th>
         </tr>
@@ -57,6 +58,7 @@
       <tbody>
         <tr v-for="(planet, index) in this.planets.allied" :key="index" class="planet" @click="inspect(planet, true)">
           <td class="name">{{ planet.name }}</td>
+          <td v-if="planet.colony" class="owner_name">{{ planet.colony }}</td>
           <td class="defense">{{ planet.defenseLevel }} ({{(ship.pa/(parseInt(planet.defenseLevel)+parseInt(ship.pa))*100).toFixed(0)}}%)</td>
           <td v-if="planet.distance<400" class="distance accessible">{{ Math.ceil(planet.distance) }}<br>({{ planet.coordinates[0] }}, {{planet.coordinates[1]}})</td>
           <td v-else class="distance inaccessible">{{ Math.ceil(planet.distance) }}<br>({{ planet.coordinates[0] }}, {{planet.coordinates[1]}})</td>
