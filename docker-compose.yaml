@@ -47,8 +47,8 @@ services:
       - "traefik.http.middlewares.stellarium-web-stripprefix.stripprefix.prefixes=/api"
       - "traefik.http.middlewares.stellarium-web-redirectregex.redirectregex.regex=^http://defi.localhost/(.*)"
       - "traefik.http.middlewares.stellarium-web-redirectregex.redirectregex.replacement=http://localhost/api/trial/$${1}"
-      - "traefik.http.routers.stellarium-web.middlewares=stellarium-web-stripprefix"
-      - "traefik.thhp.routers.stellarium-web.middlewares=stellarium-web-redirectregex"
+      - "traefik.http.middlewares.stellarium-web-redirectregex.redirectregex.permanent=true"
+      - "traefik.http.routers.stellarium-web.middlewares=stellarium-web-redirectregex,stellarium-web-stripprefix"
       - "traefik.http.routers.stellarium-web.entrypoints=web"
     environment:
       - PORT=3333

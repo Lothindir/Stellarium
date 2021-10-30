@@ -10,13 +10,13 @@ export default class GameController {
       let session = neo4jDriver.session({ defaultAccessMode: neo4j.session.READ });
       const result = await session.readTransaction((txc) =>
         txc.run(
-          'MATCH (p:Player)-[PART_OF]->(c:Crew)-[BELONGS_TO]->(f:Federation) WHERE p.uuid = $uuid RETURN p.uuid as uuid, p.username as username, c.name as crew, f.name as federation',
+          'MATCH (p:Player)-[PART_OF]->(c:Crew)-[BELONGS_TO]->(f:Federation) WHERE p.uuid = $uuid RETURN p.username as username, c.name as crew, f.name as federation',
           { uuid: uuid }
         )
       );
       const records = result.records.map((r) => {
         return {
-          uuid: r.get('uuid'),
+          uuid: uuid,
           username: r.get('username'),
           crew: r.get('crew'),
           federation: r.get('federation'),
@@ -69,16 +69,16 @@ export default class GameController {
         )
       );
       const crewName = crewNameResult.records[0].get('name');
-      const currentFuel = crewNameResult.records[0].get('fuel').low;
+      const currentFuel = crewNameResult.records[0].get('fuel');
       const currentPlanetId = crewNameResult.records[0].get('planet');
-      console.log(currentPlanetId);
       const currentPlanet = await StellarObject.findOne({ id: currentPlanetId }).exec();
+      if(currentPlanet === null) return response.status(500).json({message: "Current planet is invalid", id: currentPlanetId})
 
       if (query.owned !== undefined) {
         let ownedPlanets = await StellarObject.aggregate([
           {
             $geoNear: {
-              near: currentPlanet!.coordinates,
+              near: currentPlanet.coordinates,
               distanceField: 'distance',
               query: {
                 'type': StellarObjectType.PLANET,
@@ -102,7 +102,7 @@ export default class GameController {
         let alliedPlanets = await StellarObject.aggregate([
           {
             $geoNear: {
-              near: currentPlanet!.coordinates,
+              near: currentPlanet.coordinates,
               distanceField: 'distance',
               query: {
                 'type': StellarObjectType.PLANET,
@@ -129,7 +129,7 @@ export default class GameController {
         let attackablePlanets = await StellarObject.aggregate([
           {
             $geoNear: {
-              near: currentPlanet!.coordinates,
+              near: currentPlanet.coordinates,
               distanceField: 'distance',
               maxDistance: currentFuel,
               query: {
@@ -155,7 +155,7 @@ export default class GameController {
         let colonizablePlanets = await StellarObject.aggregate([
           {
             $geoNear: {
-              near: currentPlanet!.coordinates,
+              near: currentPlanet.coordinates,
               distanceField: 'distance',
               maxDistance: currentFuel,
               query: {
@@ -172,6 +172,30 @@ export default class GameController {
           },
         ]);
         jsonResponse.set('colonizable', colonizablePlanets);
+      }
+
+      if (query.objects !== undefined) {
+        let stellarObjects = await StellarObject.aggregate([
+          {
+            $geoNear: {
+              near: currentPlanet!.coordinates,
+              distanceField: 'distance',
+              maxDistance: currentFuel,
+              query: {
+                type: {
+                  $ne: StellarObjectType.PLANET,
+                },
+              },
+            },
+          },
+          {
+            $project: {
+              _id: 0,
+              __v: 0,
+            },
+          },
+        ]);
+        jsonResponse.set('objects', stellarObjects);
       }
       let json = Object.fromEntries(jsonResponse);
       response.status(200).json(json);
@@ -192,12 +216,12 @@ export default class GameController {
       let shipRecord = shipResult.records[0];
       let ship = {
         name: shipRecord.get('name'),
-        pa: shipRecord.get('ap').low,
+        pa: shipRecord.get('ap'),
         carb: {
-          curr: shipRecord.get('cf').low,
-          max: shipRecord.get('mf').low,
+          curr: shipRecord.get('cf'),
+          max: shipRecord.get('mf'),
         },
-        recharge: shipRecord.get('frr').low,
+        recharge: shipRecord.get('frr'),
         equipements: shipRecord.get('equipped'),
       };
       response.status(200).json(ship);
@@ -215,8 +239,8 @@ export default class GameController {
           { uuid: uuid }
         )
       );
-      let currentFuel = result.records[0].get('fuel').low;
-      let currentPlanetId = result.records[0].get('planet').low;
+      let currentFuel = result.records[0].get('fuel');
+      let currentPlanetId = result.records[0].get('planet');
       console.log(currentPlanetId);
       const crewName = result.records[0].get('name');
       const targetPlanetId = request.input('planetID');
@@ -239,17 +263,12 @@ export default class GameController {
         },
         {
           $match: {
-            id: targetPlanetId,
+            id: Number(targetPlanetId),
           },
         },
       ]);
-      // const targetPlanet = await StellarObject.findOne({ id: targetPlanetId }).exec();
-      const planets = await StellarObject.find({ id: targetPlanetId })
-        .where('coordinates')
-        .near({ center: currentPlanet.coordinates, distanceField: 'dist' })
-        .exec();
-      console.log(targetPlanets);
-      if (targetPlanets.length === 0)
+
+      if (targetPlanets[0].length === 0)
         return response.status(404).json({ reason: 'Invalid target id', id: targetPlanetId });
       if (targetPlanets[0].distance > currentFuel)
         return response.status(404).json({
@@ -258,12 +277,12 @@ export default class GameController {
           currentFuel: currentFuel,
         });
       currentFuel -= targetPlanets[0].distance;
-      // await session.writeTransaction((txc) =>
-      //   txc.run(
-      //     'MATCH (c:Crew)-[OWNS]->(s:Ship) WHERE c.name = $name SET s.currentFuel = $fuel, s.planet = $planet',
-      //     { name: crewName, fuel: currentFuel, planet: targetPlanetId }
-      //   )
-      // );
+      await session.writeTransaction((txc) =>
+        txc.run(
+          'MATCH (c:Crew)-[OWNS]->(s:Ship) WHERE c.name = $name SET s.currentFuel = $fuel, s.planet = $planet',
+          { name: crewName, fuel: currentFuel, planet: targetPlanetId }
+        )
+      );
 
       response.status(200).json({ outcome: 'Moved', id: targetPlanetId });
     } else return response.unauthorized();

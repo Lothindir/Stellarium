@@ -11,7 +11,10 @@ export default class Neo4JProvider {
 
     this.driver = neo4j.driver(
       'bolt://' + Env.get('NEO4J_HOST') + ':7687',
-      neo4j.auth.basic(Env.get('NEO4J_USER'), Env.get('NEO4J_PASSWORD'))
+      neo4j.auth.basic(Env.get('NEO4J_USER'), Env.get('NEO4J_PASSWORD')),
+      {
+        disableLosslessIntegers: true,
+      }
     );
 
     this.app.container.singleton('Adonis/Addons/Neo4j', () => this.driver);

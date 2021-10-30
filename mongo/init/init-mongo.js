@@ -32,3 +32,5 @@ db.createCollection("challenges", { capped: false }); // Défis
 db.challenges.createIndex({ id: 1 }, { unique: true });
 
 db.createCollection("trials", { capped: false }); // Épreuves
+
+db.createCollection("logs", { capped: false });

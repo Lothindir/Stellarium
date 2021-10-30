@@ -64,4 +64,4 @@ Route.group(() => {
 Route.get('/fakeAPI', 'FakeAPI.genericCall');
 Route.post('/fakeAPI', 'FakeAPI.genericCall');
 
-Route.get('/', 'TrialsController.index').domain('defi.localhost'); // TODO change for prod
+Route.get('/trial', 'TrialsController.index').middleware('auth');
