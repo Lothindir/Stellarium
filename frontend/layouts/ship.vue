@@ -1,6 +1,7 @@
 <template>
     <div id="layout">
-        <HeaderEmpty />
+        <HeaderResources />
         <Nuxt />
+        <Footer />
     </div>
-</template>
+</template> 

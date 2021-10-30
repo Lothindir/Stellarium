@@ -88,6 +88,7 @@
 <script>
 
 export default {
+  layout:'galaxy',
   computed: {
     visiblePlanets: function() {
       // Join attackable and colonizable (they are for sure planets)

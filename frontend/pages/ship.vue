@@ -9,8 +9,8 @@
         </tr>
         <tr>
           <td>Carburant: {{ Math.floor(ship.carb.curr) }}/{{ ship.carb.max }}</td>
-          <td v-if="ship.recharge">Recharge quotidienne: {{ ship.recharge }}</td>
-          <td v-else>Recharge quotidienne: 25</td>
+          <td v-if="ship.recharge">Recharge quotidienne: +{{ ship.recharge }}</td>
+          <td v-else>Recharge quotidienne: +25</td>
         </tr>
       </tbody>
     </table>
@@ -48,6 +48,7 @@
 
 <script>
 export default {
+  layout:'ship',
   methods: {
     // Make a post request
     async UpgradeShip(anUpgradeType) {
