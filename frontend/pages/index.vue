@@ -6,7 +6,7 @@
       <thead>
         <tr>
           <th class="name">Nom</th>
-          <th class="owner_name">Equip.</th>
+          <th class="owner_name">Equipage</th>
           <th class="defense">Défense</th>
           <th class="distance">Distance<br>(Coord.)</th>
         </tr>
@@ -32,6 +32,7 @@
       <thead>
         <tr>
           <th class="name">Nom</th>
+          <th class="production">Production</th>
           <th class="defense">Défense</th>
           <th class="distance">Distance<br>(Coord.)</th>
         </tr>
@@ -39,6 +40,7 @@
       <tbody>
         <tr v-for="(planet, index) in this.planets.owned" :key="index" class="planet" @click="inspect(planet, true)">
           <td class="name">{{ planet.name }}</td>
+          <td class="production">{{ planet.resources.metal }} {{ planet.resources.biomass }} {{ planet.resources.water }} {{ planet.resources.energy }}</td>
           <td class="defense">{{ planet.defenseLevel }} ({{(ship.pa/(parseInt(planet.defenseLevel)+parseInt(ship.pa))*100).toFixed(0)}}%)</td>
           <td v-if="planet.distance<400" class="distance accessible">{{ Math.ceil(planet.distance) }}<br>({{ planet.coordinates[0] }}, {{planet.coordinates[1]}})</td>
           <td v-else class="distance inaccessible">{{ Math.ceil(planet.distance) }}<br>({{ planet.coordinates[0] }}, {{planet.coordinates[1]}})</td>
@@ -50,7 +52,7 @@
       <thead>
         <tr>
           <th class="name">Nom</th>
-          <th class="owner_name">Equip.</th>
+          <th class="owner_name">Equipage</th>
           <th class="defense">Défense</th>
           <th class="distance">Distance<br>(Coord.)</th>
         </tr>
@@ -150,14 +152,15 @@ export default {
     font-family:'Source Sans Pro', sans-serif;
     font-weight: 700;
     font-size: 1.1rem;
-    text-align: left;
+    text-align: center;
   }
 
   .owner_name{
-    font-family:'Source Sans Pro', sans-serif;
-    font-weight: 700;
-    font-size: 1.1rem;
-    text-align: left;
+    text-align: center;
+  }
+
+  .production{
+    text-align: center;
   }
 
   .defense{
