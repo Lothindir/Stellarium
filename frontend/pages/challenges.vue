@@ -36,8 +36,8 @@
 export default {
   data() {
     return {
-      trialNumber: '',
-      trialResponse: '',
+      trialNumber: '1',
+      trialResponse: 'B31EA3',
       error: ''
     }
   },
@@ -45,7 +45,7 @@ export default {
     // Called instead of the submit
     async ValidateTrial() {
       const trialValidation = await this.$axios
-        .post('/fakeAPI', { api: 'ValidateTrial', trialNumber: this.trialNumber, trialResponse: this.trialResponse })
+        .get('/trial/?chall=' + this.trialNumber + '&qr=' + this.trialResponse)
         .then((res) => res.data.trialValidation)
       console.log(trialValidation)
       if (trialValidation.actionSuccessful) {
