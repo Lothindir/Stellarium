@@ -27,8 +27,7 @@
             </div>
         </section>
         <section id="ship">
-            <p v-if="$fetchState.pending">Recherche du vaisseau...</p>
-            <p v-else-if="$fetchState.error">Impossible localiser le vaisseau</p>
+            <p v-if="$fetchState.error">Impossible localiser le vaisseau</p>
             <div class="stat" id="attack">
                 <img class="stat-logo" :src="require('~/static/attack.svg')"/>
                 <p v-if="ship.pa" class="stat-value">{{ship.pa}}</p>
@@ -36,11 +35,11 @@
             </div>
             <div class="stat" id="fuel">
                 <img class="stat-logo" :src="require('~/static/fuel.svg')"/>
-                <p class="stat-value">{{Math.floor(this.carb.curr)}}/{{this.carb.max}}</p>
+                <p class="stat-value">{{Math.floor(carb.curr)}}/{{carb.max}}</p>
             </div>
             <div class="stat" id="refill">
                 <img class="stat-logo" :src="require('~/static/refill.svg')"/>
-                <p v-if="ship.recharge" class="stat-value">+{{this.ship.recharge}}</p>
+                <p v-if="ship.recharge" class="stat-value">+{{ship.recharge}}</p>
                 <p v-else class="stat-value">+25</p>
             </div>
         </section>

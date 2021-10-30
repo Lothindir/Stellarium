@@ -126,7 +126,7 @@ export default {
       $axios.get('/game/planets/?owned&allied&attackable&colonizable&objects').then((res) => res.data),
       $axios.get('/game/ship').then((res) => res.data)
     ])
-    console.log(ship)
+    //console.log(ship)
     return { planets, ship }
   }
 }
