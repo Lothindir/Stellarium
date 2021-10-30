@@ -75,6 +75,7 @@ export class Colony {
 
   constructor(owner: string, shieldEndTime?: Date) {
     this.owner = owner;
+    this.defenseLevel = 0;
     if (shieldEndTime === undefined) {
       this.shieldEndTime = new Date();
       this.shieldEndTime.setMinutes(this.shieldEndTime.getMinutes() + 30);
