@@ -4,16 +4,18 @@
       <tbody>
         <tr>
           <td><img src="~/static/battleship.svg" /></td>
-          <td>Puissance d'attaque: {{ ship.pa }}</td>
+          <td v-if="ship.pa">Puissance d'attaque: {{ ship.pa }}</td>
+          <td v-else>Puissance d'attaque: 1</td>
         </tr>
         <tr>
           <td>Carburant: {{ ship.carb.curr }}/{{ ship.carb.max }}</td>
-          <td>Recharge quotidienne: {{ ship.recharge }}</td>
+          <td v-if="ship.recharge">Recharge quotidienne: {{ ship.recharge }}</td>
+          <td v-else>Recharge quotidienne: 25</td>
         </tr>
       </tbody>
     </table>
     <br /><br />
-    <table class="table table-striped table-bordered">
+    <table v-if="ship.equipements" class="table table-striped table-bordered">
       <thead>
         <tr>
           <th>Equipement</th>
@@ -28,6 +30,9 @@
           <td>{{ equipement.cost }}</td>
         </tr>
       </tbody>
+    </table>
+    <table v-else>
+      <tr>Aucun équipement supplémentaire n'a été construit sur ce vaisseau.</tr>
     </table>
     <button @click="UpgradeShip('weapons')">Améliorer l'armement</button>
     <button @click="UpgradeShip('maxFuel')">
@@ -63,7 +68,7 @@ export default {
   // Fetch data before rendering the page. No need of placeholder in the code, then.
   async asyncData({ params, $axios }) {
     const ship = await $axios.get('/game/ship').then((res) => res.data)
-    console.log(ship)
+    //console.log(ship)
     return { ship }
   },
 }
