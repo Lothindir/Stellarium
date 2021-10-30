@@ -29,9 +29,13 @@
         </tr>
       </tbody>
     </table>
-    <button @click='UpgradeShip("weapons")'>Améliorer l'armement</button>
-    <button @click='UpgradeShip("maxFuel")'>Améliorer le carburant maximal</button>
-    <button @click='UpgradeShip("fuelRecharge")'>Améliorer la vitesse de rechargement du carburant</button>
+    <button @click="UpgradeShip('weapons')">Améliorer l'armement</button>
+    <button @click="UpgradeShip('maxFuel')">
+      Améliorer le carburant maximal
+    </button>
+    <button @click="UpgradeShip('fuelRecharge')">
+      Améliorer la vitesse de rechargement du carburant
+    </button>
     <NuxtLink to="/" tag="button">Explorer</NuxtLink>
     <NuxtLink to="/" tag="button">Attaquer / Coloniser</NuxtLink>
   </div>
@@ -42,18 +46,24 @@ export default {
   methods: {
     // Make a post request
     async UpgradeShip(anUpgradeType) {
-      const shipUpgrade = await this.$axios.post('/fakeAPI', { api: 'UpgradeShip', upgradeType: anUpgradeType }).then((res) => res.data.shipUpgrade)
+      const shipUpgrade = await this.$axios
+        .post('/fakeAPI', { api: 'UpgradeShip', upgradeType: anUpgradeType })
+        .then((res) => res.data.shipUpgrade)
       console.log(shipUpgrade)
       if (shipUpgrade.actionSuccessful) {
-        alert("Tu as bien pu construire un nouvel armement: " + shipUpgrade.upgradeName)
+        alert(
+          'Tu as bien pu construire un nouvel armement: ' +
+            shipUpgrade.upgradeName
+        )
       } else {
-        alert("Impossible de construire : " + shipUpgrade.error)
+        alert('Impossible de construire : ' + shipUpgrade.error)
       }
-    }
+    },
   },
-  // Fetch data (post) before rendering the page. No need of placeholder in the code, then.
+  // Fetch data before rendering the page. No need of placeholder in the code, then.
   async asyncData({ params, $axios }) {
-    const ship = await $axios.post('/fakeAPI', { api: 'GetShip' }).then((res) => res.data.ship)
+    const ship = await $axios.get('/game/ship').then((res) => res.data)
+    console.log(ship)
     return { ship }
   },
 }
