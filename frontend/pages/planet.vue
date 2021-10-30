@@ -81,17 +81,23 @@ export default {
     },
     methods: {
     // Make a get request
-    async move(planetID) {
-      const move = await fetch('/api/fakeAPI?api=Move&planetID=' + planetID)
-        .then((res) => res.json())
-        .then((data) => data.move)
-      if (move.actionSuccessful) {
-        alert('Vous vous êtes déplacés sur la planète ' + planetID)
-      } else if (move.outcome == 'fuel') {
+    async move(aPlanetID) {
+      var requestError = undefined
+      const move = await this.$axios
+        .post('/game/move', { planetID: aPlanetID })
+        .then((res) => res.data)
+        .catch(err => {
+          console.log(err.response);
+          requestError = err.response;
+        })
+      if (!requestError && move.outcome == "Moved") {
+        alert('Vous vous êtes déplacés sur la planète ' + move.id)
+        this.$router.push('/')
+      } else if (requestError === 404 && requestError.data.reason === 'Not enough fuel') {
         alert(
           "Vous n'avez pas assez de carburant pour effectuer le déplacement."
         )
-      } else {
+      } else { // Other errors that are no concern of the user
         alert(
           "Vous n'avez pas pu effectuer le déplacement pour une drôle de raison..."
         )
@@ -101,9 +107,9 @@ export default {
     async AttackOrColonize(aPlanetID) {
       const result = await this.$axios
         .post('/fakeAPI', { api: 'AttackOrColonize', planetID: aPlanetID })
-        .then((res) => res.data.result)
+        .then((res) => res.data)
       console.log(result)
-      if (result.actionSuccessful) {
+      if (result.outcome) {
         if (result.type == 'combat') {
           if (result.outcome == 'victory') {
             alert('Combat gagné :)')

@@ -8,7 +8,7 @@
           <td v-else>Puissance d'attaque: 1</td>
         </tr>
         <tr>
-          <td>Carburant: {{ ship.carb.curr }}/{{ ship.carb.max }}</td>
+          <td>Carburant: {{ Math.floor(ship.carb.curr) }}/{{ ship.carb.max }}</td>
           <td v-if="ship.recharge">Recharge quotidienne: {{ ship.recharge }}</td>
           <td v-else>Recharge quotidienne: 25</td>
         </tr>
