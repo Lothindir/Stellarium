@@ -5,39 +5,45 @@
       <tbody v-if="planet.type === 'Planète'">
         <h2>Informations sur la planète</h2>
         <tr>
-          <td>Type de planète: {{planet.planetType}}</td>
+          <td>Type de planète : {{planet.planetType}}</td>
         </tr>
-        <tr>
-          <td v-if="planet.colony">Niveau de défense: {{planet.colony.infrastructure}}</td>
+        <tr v-if="planet.colony">
+          <td>Propriétaire : {{planet.colony.owner}}</td>
+        </tr>
+        <tr v-else>
+          <td>Planète inhabitée</td>
+        </tr>
+        <tr v-if="planet.colony">
+          <td>Niveau de défense : {{planet.colony.infrastructure}}</td>
         </tr>
         <h2>Production</h2>
         <tr>
-          <td>Production de métal: {{planet.resources.metal }}/h</td>
+          <td>Production de métal : {{planet.resources.metal }}/h</td>
         </tr>
         <tr>
-          <td>Production de biomasse: {{planet.resources.biomass }}/h</td>
+          <td>Production de biomasse : {{planet.resources.biomass }}/h</td>
         </tr>
         <tr>
-          <td>Production d'eau: {{planet.resources.water }}/h</td>
+          <td>Production d'eau : {{planet.resources.water }}/h</td>
         </tr>
         <tr>
-          <td>Production d'énergie: {{planet.resources.energy }}/h</td>
+          <td>Production d'énergie : {{planet.resources.energy }}/h</td>
         </tr>
       </tbody>
       <tbody v-else>
         <p>Ceci est un objet stellaire.</p>
         <h2>Ressources à récupérer</h2>
         <tr>
-          <td>Métal: {{planet.resources.metal }}</td>
+          <td>Métal : {{planet.resources.metal }}</td>
         </tr>
         <tr>
-          <td>Biomasse: {{planet.resources.biomass }}</td>
+          <td>Biomasse : {{planet.resources.biomass }}</td>
         </tr>
         <tr>
-          <td>Eau: {{planet.resources.water }}</td>
+          <td>Eau : {{planet.resources.water }}</td>
         </tr>
         <tr>
-          <td>Energie: {{planet.resources.energy }}</td>
+          <td>Energie : {{planet.resources.energy }}</td>
         </tr>
       </tbody>
       
