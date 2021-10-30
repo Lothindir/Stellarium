@@ -157,6 +157,27 @@ export default class FakeAPI {
               };
           }
         }
+        case 'FreeMove': {
+          const planetID = request.input('planetID');
+          // Always authorized to move
+          const firstTime = true
+          const planetFromTrial = true
+          if (firstTime && planetFromTrial) {
+            return {
+              move: {
+                actionSuccessful: true,
+                outcome: 'moved',
+              },
+            };
+          } else {
+            return {
+              move: {
+                actionSuccessful: false,
+                outcome: 'cheaterShouldBeBanned',
+              },
+            }
+          }
+        }
         case 'Improve': {
           const planetID = request.input('planetID');
           const buildingType = request.input('buildingType');
@@ -216,21 +237,62 @@ export default class FakeAPI {
               };
           }
         }
-        case 'ValidateChallenge': {
-          const challengeNumber = request.input('challengeNumber');
-          const challengeResponse = request.input('challengeResponse');
+        case 'ValidateTrial': {
+          const trialNumber = request.input('trialNumber');
+          const trialResponse = request.input('trialResponse');
           const SECRET = 'test';
           var crypto = require('crypto');
           var shasum = crypto.createHash('sha1');
-          var challengeIDString = challengeNumber.toString().padStart(3, '0');
-          shasum.update(challengeIDString + SECRET);
+          var trialIDString = trialNumber.toString().padStart(3, '0');
+          shasum.update(trialIDString + SECRET);
           var computedResponse = shasum.digest('hex').slice(-6).toUpperCase();
-          var result = computedResponse === challengeResponse;
-          return {
-            challengeValidation: {
-              actionSuccessful: result,
-            },
-          };
+          var result = computedResponse === trialResponse;
+          const chooseRandomly = Math.random()
+          if (chooseRandomly < 0.33) {
+            return {
+              trialValidation: {
+                actionSuccessful: result,
+                planet: { 
+                  id: 12,
+                  coordinates: [25, 72],
+                  type: "Planète",
+                  planetType: "Tundra",
+                  colony: {
+                    owner: "Crew2"
+                  }
+                }
+              },
+            };
+          } else if (chooseRandomly < 0.66) {
+            return {
+              trialValidation: {
+                actionSuccessful: result,
+                planet: { 
+                  id: 12,
+                  coordinates: [25, 72],
+                  type: "Planète",
+                  planetType: "Gaïa",
+                }
+              },
+            };            
+          } else {
+            return {
+              trialValidation: {
+                actionSuccessful: result,
+                planet: { 
+                  id: 12,
+                  coordinates: [25, 72],
+                  type: "Comète",
+                  resources: {
+                    water: 10,
+                    metal : 10,
+                    energy: 10,
+                    biomass: 10
+                  }
+                }
+              },
+            };
+          }
         }
         // Get the scoreboard -> all federations score for each "jauge"
         case 'GetScoreBoard': {

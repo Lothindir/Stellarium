@@ -1,30 +1,30 @@
 <template>
   <section class="content">
-    <h2>VALIDATION DES DÉFIS</h2>
+    <h2>Validation des défis</h2>
     <Notification :message="error" v-if="error" />
-    <form id="challenge_form" method="post" @submit.prevent="ValidateChallenge">
+    <form id="trial_form" method="post" @submit.prevent="ValidateTrial">
       <div class="field">
         <input
           type="number"
           class="input"
-          name="challengeNumber"
+          name="trialNumber"
           placeholder="1"
-          v-model="challengeNumber"
+          v-model="trialNumber"
         />
       </div>
       <div class="field">
         <input
           type="text"
           class="input"
-          name="challengeResponse"
+          name="trialResponse"
           placeholder="EA253E"
-          v-model="challengeResponse"
+          v-model="trialResponse"
         />
       </div>
     </form>
     <button
       type="submit"
-      form="challenge_form"
+      form="trial_form"
       class="button is-dark is-fullwidth"
     >
       VALIDER
@@ -34,15 +34,54 @@
 
 <script>
 export default {
+  data() {
+    return {
+      trialNumber: '',
+      trialResponse: '',
+      error: ''
+    }
+  },
   methods: {
     // Called instead of the submit
-    async ValidateChallenge() {
-      const challengeValidation = await this.$axios
-        .post('/fakeAPI', { api: 'ValidateChallenge', challengeNumber: this.challengeNumber, challengeResponse: this.challengeResponse })
-        .then((res) => res.data.challengeValidation)
-      console.log(challengeValidation)
-      if (challengeValidation.actionSuccessful) {
-        alert('Défi validé !')
+    async ValidateTrial() {
+      const trialValidation = await this.$axios
+        .post('/fakeAPI', { api: 'ValidateTrial', trialNumber: this.trialNumber, trialResponse: this.trialResponse })
+        .then((res) => res.data.trialValidation)
+      console.log(trialValidation)
+      if (trialValidation.actionSuccessful) {
+        var message = 'Défi validé !\nSe déplacer gratuitement vers la ' + trialValidation.planet.type.toLowerCase() + ' en ' + trialValidation.planet.coordinates[0] + ', ' + trialValidation.planet.coordinates[1] + ' ?\n(Position actuelle : ??)\n'
+        if (trialValidation.planet.type === 'Planète') {
+          // Add information on planet
+          message += 'Type de planète : ' + trialValidation.planet.planetType + '\n'
+          if (trialValidation.planet.colony) {
+            message += 'Propriétaire : ' + trialValidation.planet.colony.owner
+          } else {
+            message += 'Actuellement inabitée'
+          }
+        } else {
+          // Add information on other stallar objects
+          message += "Ressources à récupérer :\n"
+          message += 'Eau : ' + trialValidation.planet.resources.water + '\n'
+          message += 'Métal : ' + trialValidation.planet.resources.metal + '\n'
+          message += 'Energie : ' + trialValidation.planet.resources.energy + '\n'
+          message += 'Biomasse : ' + trialValidation.planet.resources.biomass
+        }
+        if (window.confirm(message)) {
+          const move = await this.$axios
+            .get('/fakeAPI?api=FreeMove&planetID=' + trialValidation.planet.id)
+            .then((res) => res.data)
+          if (move.actionSuccessful) {
+            alert("Merci de ne pas essayer de tricher.\nLa conséquence est une expulsion du jeu immédiate.")
+            this.$router.push('/logout')
+          } else {
+            this.$router.push('/')
+          }
+        } else {
+          // Empty fields
+          this.trialNumber = ''
+          this.trialResponse = ''
+          alert('Vous ne vous êtes pas déplacés.')
+        }
       } else {
         alert('N\'essaie pas des trucs au hasard !')
       }
