@@ -47,7 +47,13 @@ export default {
       const trialValidation = await this.$axios
         .get('/trial/?chall=' + this.trialNumber + '&qr=' + this.trialResponse)
         .then((res) => res.data.trialValidation)
-      console.log(trialValidation)
+        // TODO: To be removed, this is a quick fix while no planet is received from API.
+        .catch(err => {
+          console.log('fail');
+          alert("Le défi n'a pas pu être validé.")
+        })
+      return
+      //console.log(trialValidation)
       if (trialValidation.actionSuccessful) {
         var message = 'Défi validé !\nSe déplacer gratuitement vers la ' + trialValidation.planet.type.toLowerCase() + ' en ' + trialValidation.planet.coordinates[0] + ', ' + trialValidation.planet.coordinates[1] + ' ?\n(Position actuelle : ??)\n'
         if (trialValidation.planet.type === 'Planète') {
