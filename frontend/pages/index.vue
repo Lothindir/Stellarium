@@ -16,7 +16,7 @@
           <td class="name">{{ planet.name }}</td>
           <td v-if="planet.colony" class="owner_name enemy">{{ planet.colony }}</td>
           <td v-else class="owner_name">Aucun</td>
-          <td class="defense">{{ planet.defenseLevel }} ({{(ship.pa/(parseInt(planet.defenseLevel)+parseInt(ship.pa))*100).toFixed(0)}}%)</td>
+          <td class="defense">{{ planet.colony.defenseLevel }} ({{(ship.pa/(parseInt(planet.colony.defenseLevel)+parseInt(ship.pa))*100).toFixed(0)}}%)</td>
           <td v-if="planet.distance<ship.carb.curr" class="distance accessible">{{ Math.ceil(planet.distance) }}<br>({{ planet.coordinates[0] }}, {{planet.coordinates[1]}})</td>
           <td v-else class="distance inaccessible">{{ Math.ceil(planet.distance) }}<br>({{ planet.coordinates[0] }}, {{planet.coordinates[1]}})</td>
           <!-- <td v-if="planet.dist<400"><button @click="move(planet.dist)">Explorer</button></td> -->
@@ -37,7 +37,7 @@
         <tr v-for="(planet, index) in this.planets.owned" :key="index" class="planet" @click="inspect(planet, true)">
           <td class="name">{{ planet.name }}</td>
           <td class="production">{{ planet.resources.metal }} {{ planet.resources.biomass }} {{ planet.resources.water }} {{ planet.resources.energy }}</td>
-          <td class="defense">{{ planet.defenseLevel }} ({{(ship.pa/(parseInt(planet.defenseLevel)+parseInt(ship.pa))*100).toFixed(0)}}%)</td>
+          <td class="defense">{{ planet.colony.defenseLevel }} ({{(ship.pa/(parseInt(planet.colony.defenseLevel)+parseInt(ship.pa))*100).toFixed(0)}}%)</td>
           <td v-if="planet.distance<ship.carb.curr" class="distance accessible">{{ Math.ceil(planet.distance) }}<br>({{ planet.coordinates[0] }}, {{planet.coordinates[1]}})</td>
           <td v-else class="distance inaccessible">{{ Math.ceil(planet.distance) }}<br>({{ planet.coordinates[0] }}, {{planet.coordinates[1]}})</td>
         </tr>
@@ -57,7 +57,7 @@
         <tr v-for="(planet, index) in this.planets.allied" :key="index" class="planet" @click="inspect(planet, true)">
           <td class="name">{{ planet.name }}</td>
           <td v-if="planet.colony" class="owner_name">{{ planet.colony }}</td>
-          <td class="defense">{{ planet.defenseLevel }} ({{(ship.pa/(parseInt(planet.defenseLevel)+parseInt(ship.pa))*100).toFixed(0)}}%)</td>
+          <td class="defense">{{ planet.colony.defenseLevel }} ({{(ship.pa/(parseInt(planet.colony.defenseLevel)+parseInt(ship.pa))*100).toFixed(0)}}%)</td>
           <td v-if="planet.distance<=ship.carb.curr" class="distance accessible">{{ Math.ceil(planet.distance) }}<br>({{ planet.coordinates[0] }}, {{planet.coordinates[1]}})</td>
           <td v-else class="distance inaccessible">{{ Math.ceil(planet.distance) }}<br>({{ planet.coordinates[0] }}, {{planet.coordinates[1]}})</td>
         </tr>
@@ -101,16 +101,12 @@ export default {
       })
     },
   },
-  async fetch() { // Fetch when loading page
-    this.ship = await fetch('/api/fakeAPI?api=GetShip') //await fetch('/api/game/ship') // Erreur 500...
-      .then((res) => res.json())
-      .then((data) => data.ship)
-  },
   async asyncData({ params, $axios }) { // Async so we can use the values in computed data
     const [planets, ship] = await Promise.all([
       $axios.get('/game/planets/?owned&allied&attackable&colonizable&objects').then((res) => res.data),
-      $axios.get('/fakeAPI?api=GetShip').then((res) => res.data.ship) // TODO: change to real API /game/ship
+      $axios.get('/game/ship').then((res) => res.data)
     ])
+    console.log(ship)
     return { planets, ship }
   }
 }
