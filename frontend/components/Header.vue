@@ -62,7 +62,7 @@
   }
 
   .stellarium-logo{
-      flex-basis: 40%;
+      max-width: 60%;
   }
 
   #menu-burger{

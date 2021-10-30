@@ -14,13 +14,21 @@
           "propertyName": "numberOfObjects",
           "name": "Objects number",
           "required": true,
-          "description": "The number of objects to generate. Must be greater than 10"
+          "description": "The number of objects to generate. Must be greater than 10."
         }
       ],
       "aliases": [
         "generate:mongo"
       ],
-      "flags": []
+      "flags": [
+        {
+          "name": "interactive",
+          "propertyName": "interactive",
+          "type": "boolean",
+          "alias": "i",
+          "description": "Enable interactive mode"
+        }
+      ]
     },
     "dump:rcfile": {
       "settings": {},

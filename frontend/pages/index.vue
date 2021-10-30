@@ -48,6 +48,7 @@
 <script>
 
 export default {
+  layout:'galaxy',
   data() {
     return {
       planets: [],

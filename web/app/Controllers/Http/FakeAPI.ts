@@ -40,7 +40,7 @@ export default class FakeAPI {
                                 { name: 'Blaster', effect: 'Attaque +6', cost: 'Equipé' },
                                 { name: 'Canon ionic', effect: 'Attaque +33', cost: 'Equipé' },
                                 { name: 'Pompe à proton', effect: 'Carburant +26', cost: '8 2 6' },
-                                { name: 'Panneau stellaire', effect: 'Recharge +12', cost: '2 3 4' },
+                                { name: 'Pannwater stellaire', effect: 'Recharge +12', cost: '2 3 4' },
                             ]
                         }
                     };
@@ -216,7 +216,7 @@ export default class FakeAPI {
                     return {
                         crewInfos: {
                             crewID: crewID,
-                            resources: [{ name: "Biomasse", amount: 45 }, { name: "Energie:", amount: 57 }, { name: "Métal", amount: 78 }, { name: "Eau", amount: 99 }],
+                            resources: [{ name: "biomass", amount: 45 }, { name: "energy", amount: 57 }, { name: "metal", amount: 78 }, { name: "water", amount: 99 }],
                             activities: { challenges: { done: 2, max: maxChallenges }, trials: { done: 43, max: maxTrials } },
                             research: [{ name: "military", displayName: "Militaire", numberDone: 4, max: maxMilitary }, { name: "exploration", displayName: "Exploration", numberDone: 3, max: maxExploration }, { name: "production", displayName: "Production", numberDone: 4, max: maxProduction }, { name: "culture", displayName: "Culture", numberDone: 4, max: maxCulture }]
                         }
@@ -233,7 +233,7 @@ export default class FakeAPI {
                     return {
                         crewInfos: {
                             crewID: crewID,
-                            resources: [{ name: "Biomasse", amount: 45 }, { name: "Energie:", amount: 57 }, { name: "Métal", amount: 78 }, { name: "Eau", amount: 99 }],
+                            resources: [{ name: "biomass", amount: 45 }, { name: "energy", amount: 57 }, { name: "metal", amount: 78 }, { name: "water", amount: 99 }],
                             activities: { challenges: { done: 2, max: maxChallenges }, trials: { done: 43, max: maxTrials } },
                             research: [{ name: "military", displayName: "Militaire", numberDone: 4, max: maxMilitary }, { name: "exploration", displayName: "Exploration", numberDone: 3, max: maxExploration }, { name: "production", displayName: "Production", numberDone: 4, max: maxProduction }, { name: "culture", displayName: "Culture", numberDone: 4, max: maxCulture }]
                         }

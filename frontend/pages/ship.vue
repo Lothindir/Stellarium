@@ -39,6 +39,7 @@
 
 <script>
 export default {
+  layout:'ship',
   methods: {
     // Make a post request
     async UpgradeShip(anUpgradeType) {
