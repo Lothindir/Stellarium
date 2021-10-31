@@ -91,6 +91,14 @@
     transform: skewX(-20deg);
   }
 
+  h2 + table {
+    margin-top: -0.4rem;
+  }
+
+  table + h2 {
+    margin-top: 1.4rem;
+  }
+
   input{
     width: 80%;
     text-align: center;

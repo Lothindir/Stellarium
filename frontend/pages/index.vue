@@ -1,6 +1,6 @@
 <template>
   <div class="content">
-    <h1>Planètes</h1>
+    <h1>objets stellaires</h1>
     <h2>Planètes visibles</h2>
     <table class="table">
       <thead>
