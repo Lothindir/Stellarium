@@ -126,6 +126,8 @@ export default {
       padding-left: 0.4rem;
       padding-right: 0.4rem;
       height: fit-content;
+      font-size: smaller;
+      font-weight: 600;
       min-height: 3rem;
     }
 
