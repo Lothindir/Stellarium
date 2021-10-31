@@ -426,10 +426,10 @@ export default class FakeAPI {
             crewInfos: {
               crewID: crewID,
               resources: [
-                { name: 'Biomasse', amount: 45 },
-                { name: 'Energie:', amount: 57 },
-                { name: 'Métal', amount: 78 },
-                { name: 'Eau', amount: 99 },
+                { name: 'biomass', amount: 45 },
+                { name: 'energy', amount: 57 },
+                { name: 'metal', amount: 78 },
+                { name: 'water', amount: 99 },
               ],
               activities: {
                 challenges: { done: 2, max: maxChallenges },
@@ -467,10 +467,10 @@ export default class FakeAPI {
             crewInfos: {
               crewID: crewID,
               resources: [
-                { name: 'Biomasse', amount: 45 },
-                { name: 'Energie:', amount: 57 },
-                { name: 'Métal', amount: 78 },
-                { name: 'Eau', amount: 99 },
+                { name: 'biomass', amount: 45 },
+                { name: 'energy', amount: 57 },
+                { name: 'metal', amount: 78 },
+                { name: 'water', amount: 99 },
               ],
               activities: {
                 challenges: { done: 2, max: maxChallenges },

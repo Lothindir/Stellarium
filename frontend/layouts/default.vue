@@ -43,13 +43,6 @@
       "footer";
   }
   
-  #header {
-    display: flex;
-    justify-content: space-around;
-    align-content: space-around;
-    grid-area: header;
-  }
-  
   .content {
     display: flex;
     flex-direction: column;
