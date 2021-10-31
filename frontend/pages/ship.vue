@@ -3,7 +3,8 @@
     <img id="ship-logo" src="~/static/battleship-color.svg" />
     <div id="ship-stats">
       <div id="attack" class="stat">
-        <p class="stat-value">{{ ship.pa }}</p>
+        <p v-if="ship.pa" class="stat-value">{{ ship.pa }}</p>
+        <p v-else class="stat-value">1</p> <!-- default value, nothing built -->
         <p class="stat-title">Puissance d'attaque</p>
         <img class="stat-icon" src="~/static/attack.svg" />
       </div>
@@ -13,7 +14,8 @@
         <img class="stat-icon" src="~/static/fuel.svg" />
       </div>
       <div id="refill" class="stat">
-        <p class="stat-value">+{{ ship.recharge }}</p>
+        <p v-if="ship.recharge" class="stat-value">+{{ ship.recharge }}</p>
+        <p v-else class="stat-value">+25</p> <!-- default value, nothing built -->
         <p class="stat-title">Recharge quotidienne</p>
         <img class="stat-icon" src="~/static/refill.svg" />
       </div>
