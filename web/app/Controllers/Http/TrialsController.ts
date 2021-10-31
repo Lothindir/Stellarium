@@ -6,6 +6,8 @@ import neo4j from 'neo4j-driver';
 import neo4jDriver from '@ioc:Adonis/Addons/Neo4j';
 
 export default class TrialsController {
+  private const readonly TRIALS_NUMBER = 200;
+
   public async index({ auth, request, response }: HttpContextContract) {
     if (auth.isAuthenticated && auth.user !== undefined) {
       let uuid = auth.user.uuid;
@@ -24,6 +26,8 @@ export default class TrialsController {
 
       if (trialNumber === undefined)
         return response.status(404).json({ message: 'Trial number not provided' });
+      if (trialNumber > this.TRIALS_NUMBER)
+        return response.status(404).json({ message: 'Trial number not valid' });
       if (trialResponse === undefined)
         return response.status(404).json({ message: 'Trial response not provided' });
 
