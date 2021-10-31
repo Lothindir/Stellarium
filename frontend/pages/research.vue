@@ -1,6 +1,7 @@
 <template>
   <section class="content">
     <section id="militaryContent" class="researchContent">
+
       <img :src="require('~/static/military.svg')"/>
     </section>
     <section id="explorationContent" class="researchContent hidden">
@@ -18,25 +19,7 @@
 <script>
 export default {
   layout: 'research',
-  data() {
-    return {
-      currentTree: 'tree2',
-    }
-  },
   methods: {
-    showTree: function (tree) {
-      switch (tree) {
-        case 'military': {
-        }
-        case 'production': {
-          this.currentTree = 'tree2'
-          break
-        }
-        default: {
-          this.currentTree = 'tree1'
-        }
-      }
-    },
   },
   // Fetch data (post) before rendering the page. No need of placeholder in the code, then.
   async asyncData({ params, $axios }) {
