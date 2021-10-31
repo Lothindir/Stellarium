@@ -21,6 +21,7 @@
             class="menu-element" 
             to="/profil">Profil
             </nuxt-link>
+            <div class="menu-element"><a href="https://asvd.space/les-regles/">Règles</a></div>
             <div class="menu-element" @click="logout">Déconnexion</div>
         </div>
     </header>
