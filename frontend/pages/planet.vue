@@ -14,7 +14,9 @@
           <td>Planète inhabitée</td>
         </tr>
         <tr v-if="planet.colony">
-          <td>Niveau de défense : {{planet.colony.infrastructure}}</td>
+          <td v-if="isAllied || planet.colony.owner === ownCrew">Niveau de défense : {{ defenseLevelToValue(planet.colony.defenseLevel) }}</td>
+          <td v-else-if="ship.pa">Niveau de défense : {{ defenseLevelToValue(planet.colony.defenseLevel) }} ({{(ship.pa/(parseInt(defenseLevelToValue(planet.colony.defenseLevel))+parseInt(ship.pa))*100).toFixed(0)}}%)</td>
+          <td v-else>Niveau de défense : {{ defenseLevelToValue(planet.colony.defenseLevel) }} ({{(1/(parseInt(defenseLevelToValue(planet.colony.defenseLevel))+1)*100).toFixed(0)}}%)</td> <!-- default value, nothing built -->
         </tr>
         <h2>Production</h2>
         <tr>
@@ -51,7 +53,7 @@
         <tr v-if="planet.distance != 0 && planet.distance <= ship.carb.curr">
           <button @click="move(planet.id)">Explorer</button>
         </tr>
-        <tr v-if="planet.type === 'Planète' && (!isAllied) && planet.colony">
+        <tr v-if="planet.type === 'Planète' && (!isAllied) && planet.colony && planet.colony.owner !== ownCrew">
           <button @click="AttackOrColonize(planet.id)">Attaquer</button>
         </tr>
         <tr v-else-if="planet.type === 'Planète' && (!isAllied) && !planet.colony">
@@ -136,6 +138,24 @@ export default {
         alert('Bâtiment construit !')
       } else {
         alert('Pas assez de ressources pour construire ce bâtiment.')
+      }
+    },
+    defenseLevelToValue(defenseLevel) {
+      switch(defenseLevel) {
+        case 0: // ISP -> undefined?
+          return 1
+        case 1:
+          return 2
+        case 2:
+          return 3
+        case 3:
+          return 5
+        case 4:
+          return 7
+        case 5:
+          return 9
+        default:
+          return 1 // ISP -> undefined?
       }
     },
   },

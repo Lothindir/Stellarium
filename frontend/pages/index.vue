@@ -16,7 +16,8 @@
           <td class="name">{{ planet.name }}</td>
           <td v-if="planet.colony" class="owner_name enemy">{{ planet.colony.owner }}</td>
           <td v-else class="owner_name">Aucun</td>
-          <td v-if="planet.colony" class="defense">{{ defenseLevelToValue(planet.colony.defenseLevel) }} ({{(ship.pa/(parseInt(defenseLevelToValue(planet.colony.defenseLevel))+parseInt(ship.pa))*100).toFixed(0)}}%)</td>
+          <td v-if="planet.colony && ship.pa" class="defense">{{ defenseLevelToValue(planet.colony.defenseLevel) }} ({{(ship.pa/(parseInt(defenseLevelToValue(planet.colony.defenseLevel))+parseInt(ship.pa))*100).toFixed(0)}}%)</td> 
+          <td v-else-if="planet.colony" class="defense">{{ defenseLevelToValue(planet.colony.defenseLevel) }} ({{(1/(parseInt(defenseLevelToValue(planet.colony.defenseLevel))+1)*100).toFixed(0)}}%)</td> <!-- default value, nothing built -->
           <td v-else planet.colony class="defense">N/A</td>
           <td v-if="planet.distance<=ship.carb.curr" class="distance accessible">{{ Math.ceil(planet.distance) }}<br>({{ planet.coordinates[0] }}, {{planet.coordinates[1]}})</td>
           <td v-else class="distance inaccessible">{{ Math.ceil(planet.distance) }}<br>({{ planet.coordinates[0] }}, {{planet.coordinates[1]}})</td>
@@ -58,7 +59,7 @@
         <tr v-for="(planet, index) in this.planets.allied" :key="index" class="planet" @click="inspect(planet, true)">
           <td class="name">{{ planet.name }}</td>
           <td v-if="planet.colony" class="owner_name">{{ planet.colony.owner }}</td>
-          <td class="defense">{{ defenseLevelToValue(planet.colony.defenseLevel) }})</td>
+          <td class="defense">{{ defenseLevelToValue(planet.colony.defenseLevel) }}</td>
           <td v-if="planet.distance<=ship.carb.curr" class="distance accessible">{{ Math.ceil(planet.distance) }}<br>({{ planet.coordinates[0] }}, {{planet.coordinates[1]}})</td>
           <td v-else class="distance inaccessible">{{ Math.ceil(planet.distance) }}<br>({{ planet.coordinates[0] }}, {{planet.coordinates[1]}})</td>
         </tr>
@@ -188,6 +189,6 @@ export default {
   }
 
   .enemy{
-    background: rgba(255, 72, 0, 0.8);
+    background: rgba(255, 72, 0, 0.6);
   }
 </style>

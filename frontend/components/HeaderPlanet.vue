@@ -17,8 +17,7 @@
             </button>
         </section>
         <section id="resources">
-            <p v-if="$fetchState.pending">Comptage des ressources...</p>
-            <p v-else-if="$fetchState.error">Impossible de compter les ressources</p>
+            <p v-if="$fetchState.error">Impossible de compter les ressources</p>
             <div v-for="(resource, index) in this.resources" :key="index" class="resource" :id="resource.name">
                 <img class="resource-logo" :src="require('~/static/'+resource.name+'.svg')"/>
                 <p class="resource-value">{{resource.amount}}</p>
