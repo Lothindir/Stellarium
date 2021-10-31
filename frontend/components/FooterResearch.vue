@@ -1,7 +1,10 @@
 <template>
     <footer @click="turnOffMenu">
         <section id="researchNav">
-            <div class="researchNavElement active" id="military" @click="showReseach('#military')">
+            <div class="researchNavElement active" id="culture" @click="showReseach('#culture')">
+                <img :src="require('~/static/culture.svg')"/>
+            </div>
+            <div class="researchNavElement" id="military" @click="showReseach('#military')">
                 <img :src="require('~/static/military.svg')"/>
             </div>
             <div class="researchNavElement" id="exploration" @click="showReseach('#exploration')">
@@ -9,9 +12,6 @@
             </div>
             <div class="researchNavElement" id="production" @click="showReseach('#production')">
                 <img :src="require('~/static/production.svg')"/>
-            </div>
-            <div class="researchNavElement" id="culture" @click="showReseach('#culture')">
-                <img :src="require('~/static/culture.svg')"/>
             </div>
         </section>
         <section id="footer">
