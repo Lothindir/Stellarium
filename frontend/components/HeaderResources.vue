@@ -107,6 +107,7 @@
   }
   .stellarium-logo{
       max-width: 60%;
+      max-height: 2.5rem;
   }
   #metal .resource-logo{
       margin-right: 0.2rem;

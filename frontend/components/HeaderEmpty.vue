@@ -18,6 +18,7 @@
   }
 
   .stellarium-logo{
-      flex-basis: 40%;
+      max-width: 60%;
+      max-height: 2.5rem;
   }
 </style>

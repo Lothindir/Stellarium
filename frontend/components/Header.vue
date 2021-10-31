@@ -63,6 +63,7 @@
 
   .stellarium-logo{
       max-width: 60%;
+      max-height: 2.5rem;
   }
 
   #menu-burger{
