@@ -8,30 +8,39 @@
     <div class="level" id="level0">Σ</div>
     <section id="cultureContent" class="researchContent">
       <h1>Culture</h1>
-      <button id=c0>Centre culturel</button>
-      <button id=ca1>Beaux-arts</button>
-      <button id=ca2>Esthétique</button>
-      <button id=ca3>Génie artistique</button>
-      <button id=ca4>Liberté de penser</button>
-      <button id=cb1>Age des héros</button>
-      <button id=cb2>Age d'airain</button>
-      <button id=cb3>Age d'argent</button>
-      <button id=cb4>Age d'or</button>
-      <button id=cb5>Age du turgonium</button>
-      <button id=cc1>Historiographie</button>
-      <button id=cc2>Ethnographie</button>
-      <button id=cc3>Archéologie</button>
-      <button id=cc4>Echange culturel</button>
-      <button id=cc5a>Humanisme</button>
-      <button id=cc5b>Révolution culturelle</button>
-      <button id=cd1>Transcience</button>
-      <button id=cd2>Réforme</button>
-      <button id=cd3>Nouveauté</button>
-      <button id=cd4>Machinerie</button>
-      <button id=cd5>Transhumanisme</button>
+      <button id=c0 class="validated">Centre culturel</button>
+      <button id=ca1 class="validated">Beaux-arts</button>
+      <button id=ca2 class="validated">Esthétique</button>
+      <button id=ca3 class="validable">Génie artistique</button>
+      <button id=ca4 class="inaccessible">Liberté de penser</button>
+      <button id=cb1 class="validated">Age des héros</button>
+      <button id=cb2 class="validated">Age d'airain</button>
+      <button id=cb3 class="validated">Age d'argent</button>
+      <button id=cb4 class="validable">Age d'or</button>
+      <button id=cb5 class="inaccessible">Age du turgonium</button>
+      <button id=cc1 class="validated">Historiographie</button>
+      <button id=cc2 class="validated">Ethnographie</button>
+      <button id=cc3 class="validated">Archéologie</button>
+      <button id=cc4 class="validable">Echange culturel</button>
+      <button id=cc5a class="inaccessible">Humanisme</button>
+      <button id=cc5b class="inaccessible">Révolution culturelle</button>
+      <button id=cd1 class="validated">Transcience</button>
+      <button id=cd2 class="validable">Réforme</button>
+      <button id=cd3 class="inaccessible">Nouveauté</button>
+      <button id=cd4 class="inaccessible">Machinerie</button>
+      <button id=cd5 class="inaccessible">Transhumanisme</button>
     </section>
     <section id="militaryContent" class="researchContent hidden">
       <h1>ingénierie militaire</h1>
+      <button id=m0 class="validated">Armement<p>attaque 2<br>defense 2</p></button>
+      <button id=ma1 class="validated">Canons lasers<p>attaque 3</p></button>
+      <button id=ma2 class="validated">Puissance laser I<p>attaque 5</p></button>
+      <button id=ma3 class="validated">Puissance laser II<p>attaque 7</p></button>
+      <button id=ma4 class="validated">Puissance laser III<p>attaque 9</p></button>
+      <button id=mb1 class="validated">Boucliers énergetiques<p>defense 3</p></button>
+      <button id=mb2 class="validated">Energie bleue<p>defense 5</p></button>
+      <button id=mb3 class="validated">Energie rouge<p>defense 7</p></button>
+      <button id=mb4 class="validated">Energie violette<p>defense 9</p></button>
     </section>
     <section id="explorationContent" class="researchContent hidden">
       <h1>Exploration</h1>
@@ -71,7 +80,7 @@ export default {
     .content{
       display: grid;
       grid-template-rows: 40px repeat(6,1fr);
-      grid-column-gap: 0.4rem;
+      grid-column-gap: 0.8rem;
     }
 
     .level{
@@ -127,6 +136,26 @@ export default {
       padding-right: 0.4rem;
       height: fit-content;
       min-height: 3rem;
+      line-height: 100%;
+    }
+
+    button.validated{
+      background: none;
+      border: 4px double #00bebe;
+      color: #00bebe;
+    }
+
+    button.validable{
+      background: rgba(0, 190, 190, 0.2);
+      border: 1px solid #00bebe;
+      color: #00bebe;
+    }
+
+    button.inaccessible{
+      background: #c0c0c022;
+      border: 1px dashed #c0c0c0;
+      color: #bbbbbb;
+      opacity: 0.6;
     }
 
     #cultureContent{
