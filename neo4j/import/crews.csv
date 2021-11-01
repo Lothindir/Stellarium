@@ -1,4 +1,4 @@
-﻿id:ID;name:STRING;metal:INT;biomass:INT;water:INT;energy:INT
+﻿:ID;name:STRING;metal:INT;biomass:INT;water:INT;energy:INT
 C1;Athame;0;0;0;0
 C2;Dyka;0;0;0;0
 C3;Carillon;0;0;0;0

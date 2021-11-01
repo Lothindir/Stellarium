@@ -17,15 +17,15 @@ services:
       - "--entrypoints.neo4j-secure.address=:7473"
       - "--entrypoints.mongo.address=:27017"
       - "--entrypoints.mongo-express.address=:8081"
-      - "--certificatesResolvers.sample.acme.email=lothindir@gmail.com"
-      - "--certificatesResolvers.sample.acme.storage=acme.json"
-      - "--certificatesResolvers.sample.acme.caServer=https://acme-staging-v02.api.letsencrypt.org/directory" #Remove to use prod server
-      - "--certificatesResolvers.sample.acme.tlsChallenge=true"
+      - "--certificatesResolvers.stellarium-tls.acme.email=lothindir@gmail.com"
+      - "--certificatesResolvers.stellarium-tls.acme.storage=/letsencrypt/acme.json"
+      - "--certificatesResolvers.stellarium-tls.acme.caServer=https://acme-staging-v02.api.letsencrypt.org/directory" #Remove to use prod server
+      - "--certificatesResolvers.stellarium-tls.acme.tlsChallenge=true"
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.api.rule=Host(`traefik.${BASE_HOSTNAME}`)"
       - "traefik.http.routers.api.service=api@internal"
-      - "traefik.http.routers.api.tls=true"
+      - "traefik.http.routers.api.tls.certresolver=stellarium-tls"
       - "traefik.http.middlewares.auth.basicauth.users=stellarium:$$2y$$10$$Iwj88jGAUSaQMec0lSRxo.oLlyYReu6n5PGek1dcEuluD.W.VVl06"
     restart: always
     ports:
@@ -33,6 +33,7 @@ services:
       - 443:443
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+      - ./letsencrypt:/letsencrypt
     networks:
       - main-network
   web:
@@ -51,13 +52,19 @@ services:
       - web-node-modules:/home/node/app/node_modules
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.stellarium-web.rule=(Host(`${BASE_HOSTNAME}`) && PathPrefix(`/api`)) || Host(`defi.${BASE_HOSTNAME}`)"
       - "traefik.http.middlewares.stellarium-web-stripprefix.stripprefix.prefixes=/api"
       - "traefik.http.middlewares.stellarium-web-redirectregex.redirectregex.regex=^http://defi.${BASE_HOSTNAME}/(.*)"
       - "traefik.http.middlewares.stellarium-web-redirectregex.redirectregex.replacement=http://api.${BASE_HOSTNAME}/trial/$${1}"
       - "traefik.http.middlewares.stellarium-web-redirectregex.redirectregex.permanent=true"
+      # HTTP
+      - "traefik.http.routers.stellarium-web.rule=(Host(`${BASE_HOSTNAME}`) && PathPrefix(`/api`)) || Host(`defi.${BASE_HOSTNAME}`)"
       - "traefik.http.routers.stellarium-web.middlewares=stellarium-web-redirectregex,stellarium-web-stripprefix"
       - "traefik.http.routers.stellarium-web.entrypoints=web"
+      # HTTPS
+      - "traefik.http.routers.stellarium-web-secure.rule=(Host(`${BASE_HOSTNAME}`) && PathPrefix(`/api`)) || Host(`defi.${BASE_HOSTNAME}`)"
+      - "traefik.http.routers.stellarium-web-secure.middlewares=stellarium-web-redirectregex,stellarium-web-stripprefix"
+      - "traefik.http.routers.stellarium-web-secure.entrypoints=websecure"
+      - "traefik.http.routers.stellarium-web-secure.tls.certresolver=stallarium-tls"
     environment:
       - PORT=3333
       - HOST=0.0.0.0
@@ -91,8 +98,13 @@ services:
       - frontend-node-modules:/home/node/app/node_modules
     labels:
       - "traefik.enable=true"
+      # HTTP
       - "traefik.http.routers.stellarium-frontend.rule=Host(`${BASE_HOSTNAME}`)"
       - "traefik.http.routers.stellarium-frontend.entrypoints=web"
+      # HTTPS
+      - "traefik.http.routers.stellarium-frontend-secure.rule=Host(`${BASE_HOSTNAME}`)"
+      - "traefik.http.routers.stellarium-frontend-secure.entrypoints=websecure"
+      - "traefik.http.routers.stellarium-frontend-secure.tls.certresolver=stellarium-tls"
     environment: 
       - NUXT_HOST=0.0.0.0
       - NUXT_PORT=3000
@@ -148,7 +160,7 @@ services:
       - NEO4J_dbms_memory_pagecache_size=1G
       - NEO4J_dbms.memory.heap.initial_size=1G
       - NEO4J_dbms_memory_heap_max__size=1G
-      - NEO4J_AUTH=${NEO4J_USER}/${NEO4J_PASSWORD}
+      - NEO4J_dbms.connector.https.enabled=true
     networks: 
       - main-network
   mongodb:
