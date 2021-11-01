@@ -30,7 +30,7 @@ export default class MongooseProvider {
     const Env = this.app.container.resolveBinding('Adonis/Core/Env');
 
     this.mongoose
-      .connect(Env.get('MONGO_URI'), {
+      .connect(Env.get('MONGO_URI') + Env.get('MONGO_DB'), {
         user: Env.get('MONGO_USER'),
         pass: Env.get('MONGO_PASSWORD'),
         keepAlive: true,
