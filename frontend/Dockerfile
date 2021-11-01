@@ -12,10 +12,12 @@ COPY . /home/node/app/
 
 RUN chown -R node:node /home/node
 
-RUN npm install
+RUN npm ci
+
+RUN npm run build
 
 USER node
 
 EXPOSE 3000
 
-ENTRYPOINT [ "npm", "run", "dev" ]
+ENTRYPOINT [ "npm", "run", "start" ]

@@ -12,7 +12,13 @@ COPY . /home/node/app/
 
 RUN chown -R node:node /home/node
 
-RUN npm install
+RUN npm ci
+
+RUN node ace build --production
+
+RUN cd build
+
+RUN npm ci --production
 
 USER node
 
@@ -20,4 +26,4 @@ EXPOSE 3333
 
 EXPOSE 8080
 
-ENTRYPOINT ["node","ace","serve","--watch"]
+ENTRYPOINT ["node","server.js"]
