@@ -46,23 +46,23 @@ services:
       - traefik
       - neo4j
       - mongodb
-    ports: 
-      - 8080:8080
     labels:
       - "traefik.enable=true"
-      - "traefik.http.middlewares.stellarium-web-stripprefix.stripprefix.prefixes=/api"
-      - "traefik.http.middlewares.stellarium-web-redirectregex.redirectregex.regex=^http://defi.${BASE_HOSTNAME}/(.*)"
-      - "traefik.http.middlewares.stellarium-web-redirectregex.redirectregex.replacement=http://api.${BASE_HOSTNAME}/trial/$${1}"
-      - "traefik.http.middlewares.stellarium-web-redirectregex.redirectregex.permanent=true"
+      - "traefik.http.middlewares.web-stripprefix.stripprefix.prefixes=/api"
+      - "traefik.http.middlewares.web-redirectregex.redirectregex.regex=^http://defi.${BASE_HOSTNAME}/(.*)"
+      - "traefik.http.middlewares.web-redirectregex.redirectregex.replacement=http://api.${BASE_HOSTNAME}/trial/$${1}"
+      - "traefik.http.middlewares.web-redirectregex.redirectregex.permanent=true"
+      - "traefik.http.middlewares.web-redirecthttps.redirectscheme.scheme=https"
+      - "traefik.http.middlewares.web-redirecthttps.redirectscheme.permanent=true"
       # HTTP
-      - "traefik.http.routers.stellarium-web.rule=(Host(`${BASE_HOSTNAME}`) && PathPrefix(`/api`)) || Host(`defi.${BASE_HOSTNAME}`)"
-      - "traefik.http.routers.stellarium-web.middlewares=stellarium-web-redirectregex,stellarium-web-stripprefix"
+      - "traefik.http.routers.web.rule=(Host(`${BASE_HOSTNAME}`) && PathPrefix(`/api`)) || Host(`defi.${BASE_HOSTNAME}`)"
+      - "traefik.http.routers.web.middlewares=web-redirecthttps"
       - "traefik.http.routers.stellarium-web.entrypoints=web"
       # HTTPS
-      - "traefik.http.routers.stellarium-web-secure.rule=(Host(`${BASE_HOSTNAME}`) && PathPrefix(`/api`)) || Host(`defi.${BASE_HOSTNAME}`)"
-      - "traefik.http.routers.stellarium-web-secure.middlewares=stellarium-web-redirectregex,stellarium-web-stripprefix"
-      - "traefik.http.routers.stellarium-web-secure.entrypoints=websecure"
-      - "traefik.http.routers.stellarium-web-secure.tls.certresolver=stellarium-tls"
+      - "traefik.http.routers.web-secure.rule=(Host(`${BASE_HOSTNAME}`) && PathPrefix(`/api`)) || Host(`defi.${BASE_HOSTNAME}`)"
+      - "traefik.http.routers.web-secure.middlewares=web-redirectregex,web-stripprefix"
+      - "traefik.http.routers.web-secure.entrypoints=websecure"
+      - "traefik.http.routers.web-secure.tls.certresolver=stellarium-tls"
     environment:
       - PORT=3333
       - HOST=0.0.0.0
@@ -93,13 +93,16 @@ services:
       - traefik
     labels:
       - "traefik.enable=true"
+      - "traefik.http.middlewares.frontend-redirecthttps.redirectscheme.scheme=https"
+      - "traefik.http.middlewares.stellarium-frontend-redirecthttps.redirectscheme.permanent=true"
       # HTTP
-      - "traefik.http.routers.stellarium-frontend.rule=Host(`${BASE_HOSTNAME}`)"
-      - "traefik.http.routers.stellarium-frontend.entrypoints=web"
+      - "traefik.http.routers.frontend.rule=Host(`${BASE_HOSTNAME}`)"
+      - "traefik.http.routers.frontend.entrypoints=web"
+      - "traefik.http.routers.frontend.middlewares=frontend-redirecthttps"
       # HTTPS
-      - "traefik.http.routers.stellarium-frontend-secure.rule=Host(`${BASE_HOSTNAME}`)"
-      - "traefik.http.routers.stellarium-frontend-secure.entrypoints=websecure"
-      - "traefik.http.routers.stellarium-frontend-secure.tls.certresolver=stellarium-tls"
+      - "traefik.http.routers.frontend-secure.rule=Host(`${BASE_HOSTNAME}`)"
+      - "traefik.http.routers.frontend-secure.entrypoints=websecure"
+      - "traefik.http.routers.frontend-secure.tls.certresolver=stellarium-tls"
     environment: 
       - NUXT_HOST=0.0.0.0
       - NUXT_PORT=3000
