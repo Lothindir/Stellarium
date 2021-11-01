@@ -6,7 +6,7 @@ import neo4j from 'neo4j-driver';
 import neo4jDriver from '@ioc:Adonis/Addons/Neo4j';
 
 export default class TrialsController {
-  private const readonly TRIALS_NUMBER = 200;
+  private readonly TRIALS_NUMBER = 200;
 
   public async index({ auth, request, response }: HttpContextContract) {
     if (auth.isAuthenticated && auth.user !== undefined) {

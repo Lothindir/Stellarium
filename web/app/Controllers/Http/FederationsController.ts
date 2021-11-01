@@ -1,7 +1,6 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext';
 import neo4j from 'neo4j-driver';
 import neo4jDriver from '@ioc:Adonis/Addons/Neo4j';
-import Federation from '../../Models/Federation';
 
 export default class FederationsController {
   public async index({ response }: HttpContextContract) {

@@ -1,4 +1,4 @@
-import { prop, getModelForClass, index, modelOptions, Severity } from '@typegoose/typegoose';
+import { prop, getModelForClass, modelOptions, Severity } from '@typegoose/typegoose';
 import Mongoose from '@ioc:Adonis/Addons/Mongoose';
 import { StellarObjectType, Resources } from './StellarObject';
 

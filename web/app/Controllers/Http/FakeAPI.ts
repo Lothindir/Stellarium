@@ -1,7 +1,7 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext';
 
 export default class FakeAPI {
-  public async genericCall({ request, auth, response }: HttpContextContract) {
+  public async genericCall({ request, response }: HttpContextContract) {
     try {
       const api = request.input('api');
       const planets = [
@@ -158,7 +158,6 @@ export default class FakeAPI {
           }
         }
         case 'FreeMove': {
-          const planetID = request.input('planetID');
           // Always authorized to move
           const firstTime = true
           const planetFromTrial = true

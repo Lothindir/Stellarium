@@ -22,4 +22,4 @@ class Colony {
   public infrastructure?: Ref<Infrastructure>[];
 }
 
-//export default getModelForClass(Colony);
+export default getModelForClass(Colony);
