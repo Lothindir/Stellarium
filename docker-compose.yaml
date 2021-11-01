@@ -6,31 +6,40 @@ services:
     command:
       - "--log.level=ERROR"
       - "--api.dashboard=true"
-      #- "--accesslog=true"
+      - "--accesslog=true"
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false"
       - "--providers.docker.network=main-network"
       - "--entrypoints.web.address=:80"
-      #- "--entrypoints.websecure.address=:443"
+      - "--entrypoints.websecure.address=:443"
       - "--entrypoints.bolt.address=:7687"
       - "--entrypoints.neo4j.address=:7474"
+      - "--entrypoints.neo4j-secure.address=:7473"
       - "--entrypoints.mongo.address=:27017"
       - "--entrypoints.mongo-express.address=:8081"
+      - "--certificatesResolvers.stellarium-tls.acme.email=lothindir@gmail.com"
+      - "--certificatesResolvers.stellarium-tls.acme.storage=/letsencrypt/acme.json"
+      - "--certificatesResolvers.stellarium-tls.acme.caServer=https://acme-staging-v02.api.letsencrypt.org/directory" #Remove to use prod server
+      - "--certificatesResolvers.stellarium-tls.acme.tlsChallenge=true"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.api.rule=Host(`traefik.localhost`)"
+      - "traefik.http.routers.api.rule=Host(`traefik.${BASE_HOSTNAME}`)"
       - "traefik.http.routers.api.service=api@internal"
+      - "traefik.http.routers.api.tls.certresolver=stellarium-tls"
+      - "traefik.http.middlewares.auth.basicauth.users=stellarium:$$2y$$10$$Iwj88jGAUSaQMec0lSRxo.oLlyYReu6n5PGek1dcEuluD.W.VVl06"
     restart: always
     ports:
       - 80:80
+      - 443:443
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+      - ./letsencrypt:/letsencrypt
     networks:
       - main-network
   web:
     build:
       context: ./web
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile
     container_name: web
     depends_on:
       - traefik
@@ -43,28 +52,42 @@ services:
       - web-node-modules:/home/node/app/node_modules
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.stellarium-web.rule=(Host(`localhost`) && PathPrefix(`/api`)) || Host(`defi.localhost`)"
       - "traefik.http.middlewares.stellarium-web-stripprefix.stripprefix.prefixes=/api"
-      - "traefik.http.middlewares.stellarium-web-redirectregex.redirectregex.regex=^http://defi.localhost/(.*)"
-      - "traefik.http.middlewares.stellarium-web-redirectregex.redirectregex.replacement=http://localhost/api/trial/$${1}"
+      - "traefik.http.middlewares.stellarium-web-redirectregex.redirectregex.regex=^http://defi.${BASE_HOSTNAME}/(.*)"
+      - "traefik.http.middlewares.stellarium-web-redirectregex.redirectregex.replacement=http://api.${BASE_HOSTNAME}/trial/$${1}"
       - "traefik.http.middlewares.stellarium-web-redirectregex.redirectregex.permanent=true"
+      # HTTP
+      - "traefik.http.routers.stellarium-web.rule=(Host(`${BASE_HOSTNAME}`) && PathPrefix(`/api`)) || Host(`defi.${BASE_HOSTNAME}`)"
       - "traefik.http.routers.stellarium-web.middlewares=stellarium-web-redirectregex,stellarium-web-stripprefix"
       - "traefik.http.routers.stellarium-web.entrypoints=web"
+      # HTTPS
+      - "traefik.http.routers.stellarium-web-secure.rule=(Host(`${BASE_HOSTNAME}`) && PathPrefix(`/api`)) || Host(`defi.${BASE_HOSTNAME}`)"
+      - "traefik.http.routers.stellarium-web-secure.middlewares=stellarium-web-redirectregex,stellarium-web-stripprefix"
+      - "traefik.http.routers.stellarium-web-secure.entrypoints=websecure"
+      - "traefik.http.routers.stellarium-web-secure.tls.certresolver=stallarium-tls"
     environment:
       - PORT=3333
       - HOST=0.0.0.0
       - NODE_ENV=development
       - APP_NAME=stellarium
       - APP_URL=http://0.0.0.0:3333
-      - CACHE_VIEWS=false
+      - APP_KEY=${APP_KEY}
       - SESSION_DRIVER=cookie
+      - NEO4J_HOST=neo4j
+      - NEO4J_USER=${NEO4J_USER}
+      - NEO4J_PASSWORD=${NEO4J_PASSWORD}
+      - MONGO_DB=stellarium
+      - MONGO_URI=mongodb://mongodb/
+      - MONGO_USER=${MONGO_USER}
+      - MONGO_PASSWORD=${MONGO_PASSWORD}
+      - HASH_SECRET=${HASH_SECRET}
     restart: unless-stopped
     networks: 
       - main-network
   frontend:
     build: 
       context: ./frontend
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile
     container_name: frontend
     ports:
       - 3000:3000
@@ -75,18 +98,24 @@ services:
       - frontend-node-modules:/home/node/app/node_modules
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.stellarium-frontend.rule=Host(`localhost`)"
+      # HTTP
+      - "traefik.http.routers.stellarium-frontend.rule=Host(`${BASE_HOSTNAME}`)"
       - "traefik.http.routers.stellarium-frontend.entrypoints=web"
+      # HTTPS
+      - "traefik.http.routers.stellarium-frontend-secure.rule=Host(`${BASE_HOSTNAME}`)"
+      - "traefik.http.routers.stellarium-frontend-secure.entrypoints=websecure"
+      - "traefik.http.routers.stellarium-frontend-secure.tls.certresolver=stellarium-tls"
     environment: 
       - NUXT_HOST=0.0.0.0
       - NUXT_PORT=3000
+      - NODE_ENV=developpement
     restart: unless-stopped
     networks: 
       - main-network
   # admin-dashboard:
   #   build:
   #     context: ./admin
-  #     dockerfile: Dockerfile.dev
+  #     dockerfile: Dockerfile
   #   container_name: admin-dashboard
   #   depends_on:
   #     - traefik
@@ -96,7 +125,7 @@ services:
   #     - admin-node-modules:/home/node/app/node_modules
   #   labels:
   #     - "traefik.enable=true"
-  #     - "traefik.http.routers.stellarium_admin.rule=Host(`admin.localhost`)"
+  #     - "traefik.http.routers.stellarium_admin.rule=Host(`admin.${BASE_HOSTNAME}`)"
   #     - "traefik.http.routers.stellarium_admin.entrypoints=web"
   #   environment: 
   #     - BASE_URL=0.0.0.0
@@ -112,12 +141,13 @@ services:
       - traefik
     ports:
       - 7474:7474
+      - 7473:7473
       - 7687:7687
     labels: 
       - "traefik.enable=true"
-      - "traefik.http.routers.neo4j.rule=Host(`localhost`)"
-      - "traefik.http.routers.neo4j.entrypoints=neo4j"
-      - "traefik.tcp.routers.neo4j.rule=HostSNI(`localhost`)"
+      - "traefik.http.routers.neo4j.rule=Host(`${BASE_HOSTNAME}`)"
+      - "traefik.http.routers.neo4j.entrypoints=neo4j, neo4j-secure"
+      - "traefik.tcp.routers.neo4j.rule=HostSNI(`${BASE_HOSTNAME}`)"
       - "traefik.tcp.routers.neo4j.entrypoints=bolt"
     volumes:
       - neo4j-data:/data
@@ -130,6 +160,7 @@ services:
       - NEO4J_dbms_memory_pagecache_size=1G
       - NEO4J_dbms.memory.heap.initial_size=1G
       - NEO4J_dbms_memory_heap_max__size=1G
+      - NEO4J_dbms.connector.https.enabled=true
     networks: 
       - main-network
   mongodb:
@@ -142,12 +173,12 @@ services:
       - mongo-data:/data/db
       - ./mongo/init:/docker-entrypoint-initdb.d/
     environment: 
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: rootpassword
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD}
       MONGO_INITDB_DATABASE: stellarium
     labels: 
       - "traefik.enable=true"
-      - "traefik.tcp.routers.mongo.rule=HostSNI(`localhost`)"
+      - "traefik.tcp.routers.mongo.rule=HostSNI(`${BASE_HOSTNAME}`)"
       - "traefik.tcp.routers.mongo.entrypoints=mongo"
     networks: 
       - main-network
@@ -162,11 +193,11 @@ services:
       - 8081:8081
     labels: 
       - "traefik.enable=true"
-      - "traefik.http.routers.mongo.rule=Host(`localhost`)"
+      - "traefik.http.routers.mongo.rule=Host(`${BASE_HOSTNAME}`)"
       - "traefik.http.routers.mongo.entrypoints=mongo-express"
     environment: 
-      ME_CONFIG_MONGODB_ADMINUSERNAME: root
-      ME_CONFIG_MONGODB_ADMINPASSWORD: rootpassword
+      ME_CONFIG_MONGODB_ADMINUSERNAME: ${MONGO_ROOT_USERNAME}
+      ME_CONFIG_MONGODB_ADMINPASSWORD: ${MONGO_ROOT_PASSWORD}
       ME_CONFIG_MONGODB_SERVER: mongodb
     networks: 
       - main-network

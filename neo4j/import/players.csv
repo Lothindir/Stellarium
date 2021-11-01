@@ -1,4 +1,4 @@
-﻿id:ID;username:STRING;email:STRING;password:STRING
+﻿:ID;username:STRING;email:STRING;password:STRING
 P1;Sorcha;sorcha.a.walsh@gmail.com;
 P2;Fred;frederic.rebeaud@asvd.ch;
 P3;Estelle Pasche;altaica@scout-echallens.ch;
