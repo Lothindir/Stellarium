@@ -1,22 +1,18 @@
 FROM node:lts-alpine
 
-RUN mkdir -p /home/node/app/node_modules
+USER node
+
+RUN mkdir /home/node/app
 
 WORKDIR /home/node/app
 
-COPY package.json ./
-
-RUN apk add --no-cache git
-
-COPY . /home/node/app/
-
-RUN chown -R node:node /home/node
+COPY --chown=node:node package.json package-lock.json /home/node/app/
 
 RUN npm ci
 
-RUN npm run build
+COPY --chown=node:node . /home/node/app/
 
-USER node
+RUN npm run build
 
 EXPOSE 3000
 

@@ -1,15 +1,14 @@
 export default {
-
   router: {
     base: '/',
-    middleware: ['auth']
+    middleware: ['auth'],
   },
 
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
-  ssr: false,
+  ssr: true,
 
   // Target: https://go.nuxtjs.dev/config-target
-  target: 'static',
+  target: 'server',
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
@@ -18,26 +17,22 @@ export default {
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { hid: 'description', name: 'description', content: '' },
-      { name: 'format-detection', content: 'telephone=yes' }
+      { name: 'format-detection', content: 'telephone=yes' },
     ],
-    link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
-    ],
+    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
     script: [
       {
-        src: "https://code.jquery.com/jquery-3.3.1.slim.min.js",
-        type: "text/javascript"
-      }
-    ]
+        src: 'https://code.jquery.com/jquery-3.3.1.slim.min.js',
+        type: 'text/javascript',
+      },
+    ],
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
-  css: [
-  ],
+  css: [],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [
-  ],
+  plugins: [],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -65,7 +60,7 @@ export default {
       local: {
         token: {
           required: false,
-          type: false
+          type: false,
         },
         cookie: {
           name: 'adonis-session',
@@ -73,10 +68,10 @@ export default {
         endpoints: {
           login: { url: 'login', method: 'post' },
           user: false, // We get the data directly in the login request
-          logout: { url: 'logout', method: 'post' }
+          logout: { url: 'logout', method: 'post' },
         },
-        autoFetchUser: false
-      }
+        autoFetchUser: false,
+      },
     },
     /*redirect: {
       login: '/api/login',
@@ -88,21 +83,20 @@ export default {
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    baseURL: '/api'
+    baseURL: '/api',
   },
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa
   pwa: {
     manifest: {
-      lang: 'en'
-    }
+      lang: 'en',
+    },
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {
-  },
+  build: {},
 
   server: {
-    host: '0' // default: localhost
-  }
+    host: '0', // default: localhost
+  },
 }
