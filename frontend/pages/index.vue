@@ -19,8 +19,8 @@
             <td class="name">{{ planet.name }}</td>
             <td v-if="planet.colony" class="owner_name enemy">{{ planet.colony.owner }}</td>
             <td v-else class="owner_name">Aucun</td>
-            <td v-if="planet.colony && ship.pa" class="defense">{{ defenseLevelToValue(planet.colony.defenseLevel) }} ({{(ship.pa/(parseInt(defenseLevelToValue(planet.colony.defenseLevel))+parseInt(ship.pa))*100).toFixed(0)}}%)</td> 
-            <td v-else-if="planet.colony" class="defense">{{ defenseLevelToValue(planet.colony.defenseLevel) }} ({{(1/(parseInt(defenseLevelToValue(planet.colony.defenseLevel))+1)*100).toFixed(0)}}%)</td> <!-- default value, nothing built -->
+            <td v-if="planet.colony && ship.pa" class="defense">{{ defenseLevelToValue[planet.colony.defenseLevel] }} ({{(attackLevelToValue[ship.pa]/(defenseLevelToValue[planet.colony.defenseLevel]+ship.pa)*100).toFixed(0)}}%)</td> 
+            <td v-else-if="planet.colony" class="defense">{{ defenseLevelToValue[planet.colony.defenseLevel] }} ({{(1/(defenseLevelToValue[planet.colony.defenseLevel]+1)*100).toFixed(0)}}%)</td> <!-- default value, nothing built -->
             <td v-else planet.colony class="defense">N/A</td>
             <td v-if="planet.distance<=ship.carb.curr" class="distance accessible">{{ Math.ceil(planet.distance) }}<br>({{ planet.coordinates[0] }}, {{planet.coordinates[1]}})</td>
             <td v-else class="distance inaccessible">{{ Math.ceil(planet.distance) }}<br>({{ planet.coordinates[0] }}, {{planet.coordinates[1]}})</td>
@@ -42,7 +42,7 @@
           <tr v-for="(planet, index) in planets.owned" :key="index" class="planet" @click="inspect(planet, true)">
             <td class="name">{{ planet.name }}</td>
             <td class="production">{{ planet.resources.metal }} {{ planet.resources.biomass }} {{ planet.resources.water }} {{ planet.resources.energy }}</td>
-            <td class="defense">{{ defenseLevelToValue(planet.colony.defenseLevel) }}</td>
+            <td class="defense">{{ defenseLevelToValue[planet.colony.defenseLevel] }}</td>
             <td v-if="planet.distance<=ship.carb.curr" class="distance accessible">{{ Math.ceil(planet.distance) }}<br>({{ planet.coordinates[0] }}, {{planet.coordinates[1]}})</td>
             <td v-else class="distance inaccessible">{{ Math.ceil(planet.distance) }}<br>({{ planet.coordinates[0] }}, {{planet.coordinates[1]}})</td>
           </tr>
@@ -62,7 +62,7 @@
           <tr v-for="(planet, index) in planets.allied" :key="index" class="planet" @click="inspect(planet, true)">
             <td class="name">{{ planet.name }}</td>
             <td v-if="planet.colony" class="owner_name">{{ planet.colony.owner }}</td>
-            <td class="defense">{{ defenseLevelToValue(planet.colony.defenseLevel) }}</td>
+            <td class="defense">{{ defenseLevelToValue[planet.colony.defenseLevel] }}</td>
             <td v-if="planet.distance<=ship.carb.curr" class="distance accessible">{{ Math.ceil(planet.distance) }}<br>({{ planet.coordinates[0] }}, {{planet.coordinates[1]}})</td>
             <td v-else class="distance inaccessible">{{ Math.ceil(planet.distance) }}<br>({{ planet.coordinates[0] }}, {{planet.coordinates[1]}})</td>
           </tr>
@@ -97,7 +97,8 @@ export default {
   data() {
     return {
       planets: [],
-      visiblePlanets: []
+      visiblePlanets: [],
+      defenseLevelToValue: [1, 2, 3, 5, 7, 9] // lvl 0 = ISP, lvl 1 = niveau 0
     }
   },
   methods: {
@@ -106,24 +107,6 @@ export default {
         name: 'planet',
         params: {planet : planet, isAllied: isAllied, ship: this.ship}
       })
-    },
-    defenseLevelToValue(defenseLevel) {
-      switch(defenseLevel) {
-        case 0: // ISP -> undefined?
-          return 1
-        case 1:
-          return 2
-        case 2:
-          return 3
-        case 3:
-          return 5
-        case 4:
-          return 7
-        case 5:
-          return 9
-        default:
-          return 1 // ISP -> undefined?
-      }
     },
   },
   async asyncData({ params, $axios }) { // Async so we can use the values in computed data

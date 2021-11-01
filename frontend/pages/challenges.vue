@@ -1,7 +1,7 @@
 <template>
   <section class="content">
     <h2>Validation des défis</h2>
-    <Notification :message="error" v-if="error" />
+    <!-- <Notification :message="error" v-if="error" /> -->
     <form id="trial_form" method="post" @submit.prevent="ValidateTrial">
       <div class="field">
         <input
@@ -36,8 +36,8 @@
 export default {
   data() {
     return {
-      trialNumber: '1',
-      trialResponse: 'B31EA3',
+      trialNumber: this.$route.query.chall,
+      trialResponse: this.$route.query.qr,
       error: ''
     }
   },
@@ -55,9 +55,9 @@ export default {
         })
       // If no error
       if (!requestError) {
-        alert('Défi validé !')
+        alert('Code correct.')
         return // TODO: get planet from API
-        var message = 'Défi validé !\nSe déplacer gratuitement vers la ' + this.trialValidation.planet.type.toLowerCase() + ' en ' + this.trialValidation.planet.coordinates[0] + ', ' + this.trialValidation.planet.coordinates[1] + ' ?\n(Position actuelle : ??)\n'
+        var message = 'Code correct !\nSe déplacer gratuitement vers la ' + this.trialValidation.planet.type.toLowerCase() + ' en ' + this.trialValidation.planet.coordinates[0] + ', ' + this.trialValidation.planet.coordinates[1] + ' ? (OK : Oui, Annuler : Non)\n(Position actuelle : ??)\n'
         if (this.trialValidation.planet.type === 'Planète') {
           // Add information on planet
           message += 'Type de planète : ' + this.trialValidation.planet.planetType + '\n'
@@ -76,19 +76,22 @@ export default {
         }
         if (window.confirm(message)) {
           const move = await this.$axios
-            .get('/fakeAPI?api=FreeMove&planetID=' + this.trialValidation.planet.id)
+            .post('/fakeAPI?api=ValidateTrial', { chall: trialNumber, qr: trialResponse, isMoveRequested: true })
             .then((res) => res.data)
-          if (move.actionSuccessful) {
+          if (move.actionSuccessful) { // TODO: dangerous errors
             alert("Merci de ne pas essayer de tricher.\nLa conséquence est une expulsion du jeu immédiate.")
             this.$router.push('/logout')
           } else {
             this.$router.push('/')
           }
         } else {
+          const move = await this.$axios
+            .post('/fakeAPI?api=ValidateTrial', { chall: trialNumber, qr: trialResponse, isMoveRequested: false })
+            .then((res) => res.data)
           // Empty fields
           this.trialNumber = ''
           this.trialResponse = ''
-          alert('Vous ne vous êtes pas déplacés.')
+          alert('Défi validé et vous ne vous êtes pas déplacés.')
         }
       } else {
         if (requestError.status === 403) {
