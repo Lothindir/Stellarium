@@ -2,87 +2,91 @@
   <div class="content">
     <h1>objets stellaires</h1>
     <h2>Planètes visibles</h2>
-    <table class="table">
-      <thead>
-        <tr>
-          <th class="name">Nom</th>
-          <th class="owner_name">Equipage</th>
-          <th class="defense">Défense</th>
-          <th class="distance">Distance<br>(Coord.)</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="(planet, index) in this.visiblePlanets" :key="index" class="planet" @click="inspect(planet, false)">
-          <td class="name">{{ planet.name }}</td>
-          <td v-if="planet.colony" class="owner_name enemy">{{ planet.colony.owner }}</td>
-          <td v-else class="owner_name">Aucun</td>
-          <td v-if="planet.colony && ship.pa" class="defense">{{ defenseLevelToValue(planet.colony.defenseLevel) }} ({{(ship.pa/(parseInt(defenseLevelToValue(planet.colony.defenseLevel))+parseInt(ship.pa))*100).toFixed(0)}}%)</td> 
-          <td v-else-if="planet.colony" class="defense">{{ defenseLevelToValue(planet.colony.defenseLevel) }} ({{(1/(parseInt(defenseLevelToValue(planet.colony.defenseLevel))+1)*100).toFixed(0)}}%)</td> <!-- default value, nothing built -->
-          <td v-else planet.colony class="defense">N/A</td>
-          <td v-if="planet.distance<=ship.carb.curr" class="distance accessible">{{ Math.ceil(planet.distance) }}<br>({{ planet.coordinates[0] }}, {{planet.coordinates[1]}})</td>
-          <td v-else class="distance inaccessible">{{ Math.ceil(planet.distance) }}<br>({{ planet.coordinates[0] }}, {{planet.coordinates[1]}})</td>
-          <!-- <td v-if="planet.dist<400"><button @click="move(planet.dist)">Explorer</button></td> -->
-        </tr>
-      </tbody>
-    </table>
-    <h2>Colonies possédées</h2>
-    <table class="table">
-      <thead>
-        <tr>
-          <th class="name">Nom</th>
-          <th class="production">Production</th>
-          <th class="defense">Défense</th>
-          <th class="distance">Distance<br>(Coord.)</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="(planet, index) in this.planets.owned" :key="index" class="planet" @click="inspect(planet, true)">
-          <td class="name">{{ planet.name }}</td>
-          <td class="production">{{ planet.resources.metal }} {{ planet.resources.biomass }} {{ planet.resources.water }} {{ planet.resources.energy }}</td>
-          <td class="defense">{{ defenseLevelToValue(planet.colony.defenseLevel) }}</td>
-          <td v-if="planet.distance<=ship.carb.curr" class="distance accessible">{{ Math.ceil(planet.distance) }}<br>({{ planet.coordinates[0] }}, {{planet.coordinates[1]}})</td>
-          <td v-else class="distance inaccessible">{{ Math.ceil(planet.distance) }}<br>({{ planet.coordinates[0] }}, {{planet.coordinates[1]}})</td>
-        </tr>
-      </tbody>
-    </table>
-    <h2>Planètes alliées</h2>
-    <table class="table">
-      <thead>
-        <tr>
-          <th class="name">Nom</th>
-          <th class="owner_name">Equipage</th>
-          <th class="defense">Défense</th>
-          <th class="distance">Distance<br>(Coord.)</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="(planet, index) in this.planets.allied" :key="index" class="planet" @click="inspect(planet, true)">
-          <td class="name">{{ planet.name }}</td>
-          <td v-if="planet.colony" class="owner_name">{{ planet.colony.owner }}</td>
-          <td class="defense">{{ defenseLevelToValue(planet.colony.defenseLevel) }}</td>
-          <td v-if="planet.distance<=ship.carb.curr" class="distance accessible">{{ Math.ceil(planet.distance) }}<br>({{ planet.coordinates[0] }}, {{planet.coordinates[1]}})</td>
-          <td v-else class="distance inaccessible">{{ Math.ceil(planet.distance) }}<br>({{ planet.coordinates[0] }}, {{planet.coordinates[1]}})</td>
-        </tr>
-      </tbody>
-    </table>
-    <h2>Autres objets stellaires visibles</h2>
-    <table class="table">
-      <thead>
-        <tr>
-          <th class="name">Nom</th>
-          <th class="defense">Type</th>
-          <th class="distance">Distance<br>(Coord.)</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="(planet, index) in this.planets.objects" :key="index" class="planet" @click="inspect(planet, false)">
-          <td class="name">{{ planet.name }}</td>
-          <td class="defense">{{ planet.type }}</td>
-          <td v-if="planet.distance<=ship.carb.curr" class="distance accessible">{{ Math.ceil(planet.distance) }}<br>({{ planet.coordinates[0] }}, {{planet.coordinates[1]}})</td>
-          <td v-else class="distance inaccessible">{{ Math.ceil(planet.distance) }}<br>({{ planet.coordinates[0] }}, {{planet.coordinates[1]}})</td>
-        </tr>
-      </tbody>
-    </table>
+    <div v-if="$fetchState.error">Impossible de scanner la galaxie actuellement</div>
+    <div v-else-if="$fetchState.pending">Scan de la galaxie en cours...</div>
+    <div v-else>
+      <table v-if="visiblePlanets.length > 0" class="table">
+        <thead >
+          <tr>
+            <th class="name">Nom</th>
+            <th class="owner_name">Equipage</th>
+            <th class="defense">Défense</th>
+            <th class="distance">Distance<br>(Coord.)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(planet, index) in visiblePlanets" :key="index" class="planet" @click="inspect(planet, false)">
+            <td class="name">{{ planet.name }}</td>
+            <td v-if="planet.colony" class="owner_name enemy">{{ planet.colony.owner }}</td>
+            <td v-else class="owner_name">Aucun</td>
+            <td v-if="planet.colony && ship.pa" class="defense">{{ defenseLevelToValue(planet.colony.defenseLevel) }} ({{(ship.pa/(parseInt(defenseLevelToValue(planet.colony.defenseLevel))+parseInt(ship.pa))*100).toFixed(0)}}%)</td> 
+            <td v-else-if="planet.colony" class="defense">{{ defenseLevelToValue(planet.colony.defenseLevel) }} ({{(1/(parseInt(defenseLevelToValue(planet.colony.defenseLevel))+1)*100).toFixed(0)}}%)</td> <!-- default value, nothing built -->
+            <td v-else planet.colony class="defense">N/A</td>
+            <td v-if="planet.distance<=ship.carb.curr" class="distance accessible">{{ Math.ceil(planet.distance) }}<br>({{ planet.coordinates[0] }}, {{planet.coordinates[1]}})</td>
+            <td v-else class="distance inaccessible">{{ Math.ceil(planet.distance) }}<br>({{ planet.coordinates[0] }}, {{planet.coordinates[1]}})</td>
+            <!-- <td v-if="planet.dist<400"><button @click="move(planet.dist)">Explorer</button></td> -->
+          </tr>
+        </tbody>
+      </table>
+      <h2>Colonies possédées</h2>
+      <table planets.owned class="table">
+        <thead>
+          <tr>
+            <th class="name">Nom</th>
+            <th class="production">Production</th>
+            <th class="defense">Défense</th>
+            <th class="distance">Distance<br>(Coord.)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(planet, index) in planets.owned" :key="index" class="planet" @click="inspect(planet, true)">
+            <td class="name">{{ planet.name }}</td>
+            <td class="production">{{ planet.resources.metal }} {{ planet.resources.biomass }} {{ planet.resources.water }} {{ planet.resources.energy }}</td>
+            <td class="defense">{{ defenseLevelToValue(planet.colony.defenseLevel) }}</td>
+            <td v-if="planet.distance<=ship.carb.curr" class="distance accessible">{{ Math.ceil(planet.distance) }}<br>({{ planet.coordinates[0] }}, {{planet.coordinates[1]}})</td>
+            <td v-else class="distance inaccessible">{{ Math.ceil(planet.distance) }}<br>({{ planet.coordinates[0] }}, {{planet.coordinates[1]}})</td>
+          </tr>
+        </tbody>
+      </table>
+      <h2>Planètes alliées</h2>
+      <table class="table">
+        <thead v-if="planets.allied.length > 0">
+          <tr>
+            <th class="name">Nom</th>
+            <th class="owner_name">Equipage</th>
+            <th class="defense">Défense</th>
+            <th class="distance">Distance<br>(Coord.)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(planet, index) in planets.allied" :key="index" class="planet" @click="inspect(planet, true)">
+            <td class="name">{{ planet.name }}</td>
+            <td v-if="planet.colony" class="owner_name">{{ planet.colony.owner }}</td>
+            <td class="defense">{{ defenseLevelToValue(planet.colony.defenseLevel) }}</td>
+            <td v-if="planet.distance<=ship.carb.curr" class="distance accessible">{{ Math.ceil(planet.distance) }}<br>({{ planet.coordinates[0] }}, {{planet.coordinates[1]}})</td>
+            <td v-else class="distance inaccessible">{{ Math.ceil(planet.distance) }}<br>({{ planet.coordinates[0] }}, {{planet.coordinates[1]}})</td>
+          </tr>
+        </tbody>
+      </table>
+      <h2>Autres objets stellaires visibles</h2>
+      <table v-if="planets.objects.length > 0" class="table">
+        <thead>
+          <tr>
+            <th class="name">Nom</th>
+            <th class="defense">Type</th>
+            <th class="distance">Distance<br>(Coord.)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(planet, index) in planets.objects" :key="index" class="planet" @click="inspect(planet, false)">
+            <td class="name">{{ planet.name }}</td>
+            <td class="defense">{{ planet.type }}</td>
+            <td v-if="planet.distance<=ship.carb.curr" class="distance accessible">{{ Math.ceil(planet.distance) }}<br>({{ planet.coordinates[0] }}, {{planet.coordinates[1]}})</td>
+            <td v-else class="distance inaccessible">{{ Math.ceil(planet.distance) }}<br>({{ planet.coordinates[0] }}, {{planet.coordinates[1]}})</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </template>
 
@@ -90,11 +94,11 @@
 
 export default {
   layout:'galaxy',
-  computed: {
-    visiblePlanets: function() {
-      // Join attackable and colonizable (they are for sure planets)
-      return (((this.planets.colonizable).concat(this.planets.attackable)).sort((a, b) => a.distance > b.distance))
-    },
+  data() {
+    return {
+      planets: [],
+      visiblePlanets: []
+    }
   },
   methods: {
     inspect(planet, isAllied) {
@@ -123,12 +127,15 @@ export default {
     },
   },
   async asyncData({ params, $axios }) { // Async so we can use the values in computed data
-    const [planets, ship] = await Promise.all([
-      $axios.get('/game/planets/?owned&allied&attackable&colonizable&objects').then((res) => res.data),
+    const [ship] = await Promise.all([
       $axios.get('/game/ship').then((res) => res.data)
     ])
     //console.log(ship)
-    return { planets, ship }
+    return { ship }
+  },
+  async fetch() {
+    this.planets = await fetch('api/game/planets/?owned&allied&attackable&colonizable&objects').then((res) => res.json())
+    this.visiblePlanets = (((this.planets.colonizable).concat(this.planets.attackable)).sort((a, b) => a.distance > b.distance))
   }
 }
 </script>
