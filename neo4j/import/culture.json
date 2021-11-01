@@ -1,0 +1,43 @@
+{"type":"node","id":"0","labels":["Culture","TechStart"],"properties":{"uid":"C"}}
+{"type":"node","id":"1","labels":["Culture","TechTree"],"properties":{"uid":"C19","name":"Révolution culturelle"}}
+{"type":"node","id":"2","labels":["Culture","TechTree"],"properties":{"uid":"C20","name":"Transhumanisme"}}
+{"type":"node","id":"52","labels":["Culture","TechTree"],"properties":{"uid":"C2","name":"Age des Héros"}}
+{"type":"node","id":"53","labels":["Culture","TechTree"],"properties":{"uid":"C0","name":"Centre culturel"}}
+{"type":"node","id":"54","labels":["Culture","TechTree"],"properties":{"uid":"C1","name":"Beaux-Arts"}}
+{"type":"node","id":"55","labels":["Culture","TechTree"],"properties":{"uid":"C5","name":"Estéthique"}}
+{"type":"node","id":"56","labels":["Culture","TechTree"],"properties":{"uid":"C9","name":"Génie artistique"}}
+{"type":"node","id":"57","labels":["Culture","TechTree"],"properties":{"uid":"C13","name":"Liberté de penser"}}
+{"type":"node","id":"58","labels":["Culture","TechTree"],"properties":{"uid":"C6","name":"Age d'airain"}}
+{"type":"node","id":"59","labels":["Culture","TechTree"],"properties":{"uid":"C10","name":"Age d'argent"}}
+{"type":"node","id":"60","labels":["Culture","TechTree"],"properties":{"uid":"C14","name":"Age d'or"}}
+{"type":"node","id":"61","labels":["Culture","TechTree"],"properties":{"uid":"C17","name":"Age de turgonium"}}
+{"type":"node","id":"62","labels":["Culture","TechTree"],"properties":{"uid":"C4","name":"Transcience"}}
+{"type":"node","id":"63","labels":["Culture","TechTree"],"properties":{"uid":"C3","name":"Historiographie"}}
+{"type":"node","id":"64","labels":["Culture","TechTree"],"properties":{"uid":"C7","name":"Ethnographie"}}
+{"type":"node","id":"65","labels":["Culture","TechTree"],"properties":{"uid":"C11","name":"Archéologie"}}
+{"type":"node","id":"66","labels":["Culture","TechTree"],"properties":{"uid":"C15","name":"Echange culturel"}}
+{"type":"node","id":"67","labels":["Culture","TechTree"],"properties":{"uid":"C18","name":"Humanisme"}}
+{"type":"node","id":"68","labels":["Culture","TechTree"],"properties":{"uid":"C8","name":"Réforme"}}
+{"type":"node","id":"69","labels":["Culture","TechTree"],"properties":{"uid":"C12","name":"Nouvauté"}}
+{"type":"node","id":"70","labels":["Culture","TechTree"],"properties":{"uid":"C16","name":"Machinerie"}}
+{"id":"145","type":"relationship","label":"LEADS_TO","properties":{"challenge":"CC2"},"start":{"id":"53","labels":["Culture","TechTree"]},"end":{"id":"52","labels":["Culture","TechTree"]}}
+{"id":"146","type":"relationship","label":"LEADS_TO","properties":{"challenge":"CC1"},"start":{"id":"53","labels":["Culture","TechTree"]},"end":{"id":"54","labels":["Culture","TechTree"]}}
+{"id":"147","type":"relationship","label":"LEADS_TO","properties":{"challenge":"CC5"},"start":{"id":"54","labels":["Culture","TechTree"]},"end":{"id":"55","labels":["Culture","TechTree"]}}
+{"id":"148","type":"relationship","label":"LEADS_TO","properties":{"challenge":"CC9"},"start":{"id":"55","labels":["Culture","TechTree"]},"end":{"id":"56","labels":["Culture","TechTree"]}}
+{"id":"149","type":"relationship","label":"LEADS_TO","properties":{"challenge":"CC13"},"start":{"id":"56","labels":["Culture","TechTree"]},"end":{"id":"57","labels":["Culture","TechTree"]}}
+{"id":"150","type":"relationship","label":"LEADS_TO","properties":{"challenge":"CC6"},"start":{"id":"52","labels":["Culture","TechTree"]},"end":{"id":"58","labels":["Culture","TechTree"]}}
+{"id":"151","type":"relationship","label":"LEADS_TO","properties":{"challenge":"CC10"},"start":{"id":"58","labels":["Culture","TechTree"]},"end":{"id":"59","labels":["Culture","TechTree"]}}
+{"id":"152","type":"relationship","label":"LEADS_TO","properties":{"challenge":"CC14"},"start":{"id":"59","labels":["Culture","TechTree"]},"end":{"id":"60","labels":["Culture","TechTree"]}}
+{"id":"153","type":"relationship","label":"LEADS_TO","properties":{"challenge":"CC17"},"start":{"id":"60","labels":["Culture","TechTree"]},"end":{"id":"61","labels":["Culture","TechTree"]}}
+{"id":"154","type":"relationship","label":"LEADS_TO","properties":{"challenge":"CC4"},"start":{"id":"53","labels":["Culture","TechTree"]},"end":{"id":"62","labels":["Culture","TechTree"]}}
+{"id":"155","type":"relationship","label":"LEADS_TO","properties":{"challenge":"CC3"},"start":{"id":"53","labels":["Culture","TechTree"]},"end":{"id":"63","labels":["Culture","TechTree"]}}
+{"id":"156","type":"relationship","label":"LEADS_TO","properties":{"challenge":"CC7"},"start":{"id":"63","labels":["Culture","TechTree"]},"end":{"id":"64","labels":["Culture","TechTree"]}}
+{"id":"157","type":"relationship","label":"LEADS_TO","properties":{"challenge":"CC11"},"start":{"id":"64","labels":["Culture","TechTree"]},"end":{"id":"65","labels":["Culture","TechTree"]}}
+{"id":"158","type":"relationship","label":"LEADS_TO","properties":{"challenge":"CC15"},"start":{"id":"65","labels":["Culture","TechTree"]},"end":{"id":"66","labels":["Culture","TechTree"]}}
+{"id":"159","type":"relationship","label":"LEADS_TO","properties":{"challenge":"CC18"},"start":{"id":"66","labels":["Culture","TechTree"]},"end":{"id":"67","labels":["Culture","TechTree"]}}
+{"id":"160","type":"relationship","label":"LEADS_TO","properties":{"challenge":"CC8"},"start":{"id":"62","labels":["Culture","TechTree"]},"end":{"id":"68","labels":["Culture","TechTree"]}}
+{"id":"161","type":"relationship","label":"LEADS_TO","properties":{"challenge":"CC12"},"start":{"id":"68","labels":["Culture","TechTree"]},"end":{"id":"69","labels":["Culture","TechTree"]}}
+{"id":"162","type":"relationship","label":"LEADS_TO","properties":{"challenge":"CC16"},"start":{"id":"69","labels":["Culture","TechTree"]},"end":{"id":"70","labels":["Culture","TechTree"]}}
+{"id":"163","type":"relationship","label":"LEADS_TO","properties":{"challenge":"CC0"},"start":{"id":"0","labels":["Culture","TechStart"]},"end":{"id":"53","labels":["Culture","TechTree"]}}
+{"id":"164","type":"relationship","label":"LEADS_TO","properties":{"challenge":"CC19"},"start":{"id":"66","labels":["Culture","TechTree"]},"end":{"id":"1","labels":["Culture","TechTree"]}}
+{"id":"165","type":"relationship","label":"LEADS_TO","properties":{"challenge":"CC20"},"start":{"id":"70","labels":["Culture","TechTree"]},"end":{"id":"2","labels":["Culture","TechTree"]}}

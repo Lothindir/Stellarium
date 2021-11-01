@@ -1,0 +1,27 @@
+{"type":"node","id":"0","labels":["Player"],"properties":{"password":"$argon2id$v=19$t=3,m=4096,p=1$am25lVWFm0BL2WnJ82zSQg$FiiBgmB7hfah0uR8Pbuiq1J/D+YJbB/wW9EBiKb/LpY","neo4jImportId":"0","uuid":"c3143e14-7a3c-447b-b3ed-ef49162d2f14","email":"test@mail.com","username":"Test"}}
+{"type":"node","id":"1","labels":["Crew"],"properties":{"neo4jImportId":"1","name":"Crew1"}}
+{"type":"node","id":"2","labels":["Player"],"properties":{"password":"$argon2id$v=19$t=3,m=4096,p=1$am25lVWFm0BL2WnJ82zSQg$FiiBgmB7hfah0uR8Pbuiq1J/D+YJbB/wW9EBiKb/LpY","neo4jImportId":"2","uuid":"0819d741-5fe1-44eb-bdd2-79cbee7ecdd2","email":"test2@mail.com","username":"Test2"}}
+{"type":"node","id":"3","labels":["Colony"],"properties":{"planet_id":1,"neo4jImportId":"3","defense":"<JSON>","production":"<JSON>","infrastructure":"<JSON>"}}
+{"type":"node","id":"4","labels":["Federation"],"properties":{"neo4jImportId":"4","name":"Federation1"}}
+{"type":"node","id":"5","labels":["Crew"],"properties":{"neo4jImportId":"5","name":"Crew2"}}
+{"type":"node","id":"6","labels":["Colony"],"properties":{"planet_id":521,"neo4jImportId":"6","defense":"<JSON>","production":"<JSON>","infrastructure":"<JSON>"}}
+{"type":"node","id":"7","labels":["Player"],"properties":{"password":"$argon2id$v=19$t=3,m=4096,p=1$am25lVWFm0BL2WnJ82zSQg$FiiBgmB7hfah0uR8Pbuiq1J/D+YJbB/wW9EBiKb/LpY","neo4jImportId":"7","uuid":"ba5ebb4a-fc44-453c-9a06-7cd5ffb8e1a8","email":"test3@mail.com","username":"Test3"}}
+{"type":"node","id":"8","labels":["Player"],"properties":{"password":"$argon2id$v=19$t=3,m=4096,p=1$am25lVWFm0BL2WnJ82zSQg$FiiBgmB7hfah0uR8Pbuiq1J/D+YJbB/wW9EBiKb/LpY","neo4jImportId":"8","uuid":"a5777051-d96a-4795-b056-519a323b9719","email":"test4@mail.com","username":"Test4"}}
+{"type":"node","id":"9","labels":["Colony"],"properties":{"planet_id":56,"neo4jImportId":"9","defense":"<JSON>","production":"<JSON>","infrastructure":"<JSON>"}}
+{"type":"node","id":"10","labels":["Colony"],"properties":{"planet_id":887,"neo4jImportId":"10","defense":"<JSON>","production":"<JSON>","infrastructure":"<JSON>"}}
+{"type":"node","id":"11","labels":["Colony"],"properties":{"planet_id":8,"neo4jImportId":"11","defense":"<JSON>","production":"<JSON>","infrastructure":"<JSON>"}}
+{"type":"node","id":"12","labels":["Ship"],"properties":{"currentFuel":25,"attackPower":1,"maxFuel":25,"equipement":[],"name":"Enterprise","rechargeFuelRate":25, "planet": 30}}
+{"type":"node","id":"13","labels":["Ship"],"properties":{"currentFuel":25,"attackPower":1,"maxFuel":25,"equipement":[],"name":"Millenium Falcon","rechargeFuelRate":25, "planet": 31}}
+{"id":"0","type":"relationship","label":"PART_OF","start":{"id":"0","labels":["Player"]},"end":{"id":"1","labels":["Crew"]}}
+{"id":"1","type":"relationship","label":"PART_OF","start":{"id":"2","labels":["Player"]},"end":{"id":"1","labels":["Crew"]}}
+{"id":"2","type":"relationship","label":"OWNS","start":{"id":"1","labels":["Crew"]},"end":{"id":"3","labels":["Colony"]}}
+{"id":"3","type":"relationship","label":"BELONGS_TO","start":{"id":"1","labels":["Crew"]},"end":{"id":"4","labels":["Federation"]}}
+{"id":"4","type":"relationship","label":"BELONGS_TO","start":{"id":"5","labels":["Crew"]},"end":{"id":"4","labels":["Federation"]}}
+{"id":"5","type":"relationship","label":"OWNS","start":{"id":"5","labels":["Crew"]},"end":{"id":"6","labels":["Colony"]}}
+{"id":"6","type":"relationship","label":"PART_OF","start":{"id":"7","labels":["Player"]},"end":{"id":"5","labels":["Crew"]}}
+{"id":"7","type":"relationship","label":"PART_OF","start":{"id":"8","labels":["Player"]},"end":{"id":"5","labels":["Crew"]}}
+{"id":"8","type":"relationship","label":"OWNS","start":{"id":"1","labels":["Crew"]},"end":{"id":"9","labels":["Colony"]}}
+{"id":"9","type":"relationship","label":"OWNS","start":{"id":"5","labels":["Crew"]},"end":{"id":"10","labels":["Colony"]}}
+{"id":"10","type":"relationship","label":"OWNS","start":{"id":"5","labels":["Crew"]},"end":{"id":"11","labels":["Colony"]}}
+{"id":"11","type":"relationship","label":"OWNS","start":{"id":"5","labels":["Crew"]},"end":{"id":"12","labels":["Ship"]}}
+{"id":"12","type":"relationship","label":"OWNS","start":{"id":"1","labels":["Crew"]},"end":{"id":"13","labels":["Ship"]}}

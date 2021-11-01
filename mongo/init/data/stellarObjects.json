@@ -1,0 +1,148 @@
+[
+  {
+    "type": "Planète",
+    "resources": {
+      "water": 2,
+      "metal": 2,
+      "energy": 2,
+      "biomass": 2
+    },
+    "planetType": "Gaïa"
+  },
+  {
+    "type": "Planète",
+    "resources": {
+      "water": 1,
+      "metal": 3,
+      "energy": 3,
+      "biomass": 1
+    },
+    "planetType": "Aride"
+  },
+  {
+    "type": "Planète",
+    "resources": {
+      "water": 0,
+      "metal": 4,
+      "energy": 4,
+      "biomass": 0
+    },
+    "planetType": "Désertique"
+  },
+  {
+    "type": "Planète",
+    "resources": {
+      "water": 1,
+      "metal": 2,
+      "energy": 3,
+      "biomass": 2
+    },
+    "planetType": "Savanne"
+  },
+  {
+    "type": "Planète",
+    "resources": {
+      "water": 3,
+      "metal": 1,
+      "energy": 3,
+      "biomass": 1
+    },
+    "planetType": "Alpine"
+  },
+  {
+    "type": "Planète",
+    "resources": {
+      "water": 4,
+      "metal": 0,
+      "energy": 4,
+      "biomass": 0
+    },
+    "planetType": "Artique"
+  },
+  {
+    "type": "Planète",
+    "resources": {
+      "water": 3,
+      "metal": 2,
+      "energy": 2,
+      "biomass": 1
+    },
+    "planetType": "Tundra"
+  },
+  {
+    "type": "Planète",
+    "resources": {
+      "water": 3,
+      "metal": 1,
+      "energy": 1,
+      "biomass": 3
+    },
+    "planetType": "Continentale"
+  },
+  {
+    "type": "Planète",
+    "resources": {
+      "water": 2,
+      "metal": 1,
+      "energy": 1,
+      "biomass": 4
+    },
+    "planetType": "Tropicale"
+  },
+  {
+    "type": "Planète",
+    "resources": {
+      "water": 4,
+      "metal": 0,
+      "energy": 1,
+      "biomass": 3
+    },
+    "planetType": "Océanique"
+  },
+  {
+    "type": "Planète",
+    "resources": {
+      "water": 2,
+      "metal": 3,
+      "energy": 1,
+      "biomass": 2
+    },
+    "planetType": "Machine"
+  },
+  {
+    "type": "Planète",
+    "resources": {
+      "water": 0,
+      "metal": 4,
+      "energy": 0,
+      "biomass": 4
+    },
+    "planetType": "Matrix"
+  },
+  {
+    "type": "Planète",
+    "resources": {
+      "water": 1,
+      "metal": 3,
+      "energy": 1,
+      "biomass": 3
+    },
+    "planetType": "Toxique"
+  },
+  {
+    "type": "Nuage de gaz",
+    "resources": 0
+  },
+  {
+    "type": "Comète",
+    "resources": 0
+  },
+  {
+    "type": "Astéroïde",
+    "resources": 0
+  },
+  {
+    "type": "Débris",
+    "resources": 0
+  }
+]

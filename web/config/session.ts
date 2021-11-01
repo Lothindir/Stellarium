@@ -5,9 +5,9 @@
  * file.
  */
 
-import Env from '@ioc:Adonis/Core/Env'
-import Application from '@ioc:Adonis/Core/Application'
-import { SessionConfig } from '@ioc:Adonis/Addons/Session'
+import Env from '@ioc:Adonis/Core/Env';
+import Application from '@ioc:Adonis/Core/Application';
+import { SessionConfig } from '@ioc:Adonis/Addons/Session';
 
 const sessionConfig: SessionConfig = {
   /*
@@ -87,7 +87,7 @@ const sessionConfig: SessionConfig = {
   cookie: {
     path: '/',
     httpOnly: true,
-    sameSite: false,
+    sameSite: true,
   },
 
   /*
@@ -113,6 +113,6 @@ const sessionConfig: SessionConfig = {
   |
   */
   redisConnection: 'local',
-}
+};
 
-export default sessionConfig
+export default sessionConfig;
