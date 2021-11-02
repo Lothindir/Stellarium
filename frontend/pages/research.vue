@@ -66,6 +66,33 @@
     </section>
     <section id="productionContent" class="researchContent hidden">
       <h1>Production</h1>
+      <div class="level" id="level5">V</div>
+      <div class="level" id="level4">IV</div>
+      <div class="level" id="level3">III</div>
+      <div class="level" id="level2">II</div>
+      <div class="level" id="level1">I</div>
+      <div class="level" id="level0">Σ</div>
+      <button id=p0 class="validated">Usine</button>
+      <button id=pa1 class="validated">Source de H2O<p>ISP + 3h</p></button>
+      <button id=pa2 class="validated">Bisse sans fin<p>ISP + 3h</p></button>
+      <button id=pa3 class="validable">Puit stellaire<p>ISP + 3h</p></button>
+      <button id=pa4 class="inaccessible">Pompe à énéergie solaire<p>ISP + 3h</p></button>
+      <button id=pa5 class="inaccessible">Barrage de l'Hongrin<p>ISP + 3h</p></button>
+      <button id=pb1 class="validated">Pile nucléaire<p>ISP + 3h</p></button>
+      <button id=pb2 class="validated">Batterie lunaire<p>ISP + 3h</p></button>
+      <button id=pb3 class="validated">Batterie solaire<p>ISP + 3h</p></button>
+      <button id=pb4 class="validable">Réservoir électrique<p>ISP + 3h</p></button>
+      <button id=pb5 class="inaccessible">Réservoir sans fond<p>ISP + 3h</p></button>
+      <button id=pc1 class="validated">Charrue à air comprimé<p>ISP + 3h</p></button>
+      <button id=pc2 class="validated">Terreau stellaire<p>ISP + 3h</p></button>
+      <button id=pc3 class="validated">Engrais de lune<p>ISP + 3h</p></button>
+      <button id=pc4 class="validable">Serre photovoltaïque<p>ISP + 3h</p></button>
+      <button id=pc5 class="inaccessible">Serre à gaz solaire<p>ISP + 3h</p></button>
+      <button id=pd1 class="validated">Fillon de thurgonium<p>ISP + 3h</p></button>
+      <button id=pd2 class="validable">Gisement vertical<p>ISP + 3h</p></button>
+      <button id=pd3 class="inaccessible">Mine avec le petit chariot motorisé<p>ISP + 3h</p></button>
+      <button id=pd4 class="inaccessible">Marteau piqueur d'extraction laser<p>ISP + 3h</p></button>
+      <button id=pd5 class="inaccessible">Carrière stellaire<p>ISP + 3h</p></button>
     </section>
   </section>
 </template>
@@ -263,6 +290,54 @@ export default {
     }
 
     #ma4,#mb4,#ea4,#eb4{
+      grid-row: 2/3;
+    }
+
+
+
+    #productionContent{
+      grid-template-columns: 60px repeat(4, 1fr);
+      grid-template-rows: 40px repeat(6,1fr);
+    }
+
+    #p0{
+      grid-column: 2/7;
+      grid-row: 7/8;
+    }
+
+    #pa1,#pa2,#pa3,#pa4,#pa5{
+      grid-column: 2/3;
+    }
+
+    #pb1,#pb2,#pb3,#pb4,#pb5{
+      grid-column: 3/4;
+    }
+
+    #pc1,#pc2,#pc3,#pc4,#pc5{
+      grid-column: 4/5;
+    }
+
+    #pd1,#pd2,#pd3,#pd4,#pd5{
+      grid-column: 5/6;
+    }
+
+    #pa1,#pb1,#pc1,#pd1{
+      grid-row: 6/7;
+    }
+
+    #pa2,#pb2,#pc2,#pd2{
+      grid-row: 5/6;
+    }
+
+    #pa3,#pb3,#pc3,#pd3{
+      grid-row: 4/5;
+    }
+
+    #pa4,#pb4,#pc4,#pd4{
+      grid-row: 3/4;
+    }
+
+    #pa5,#pb5,#pc5,#pd5{
       grid-row: 2/3;
     }
 
