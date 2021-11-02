@@ -1,13 +1,13 @@
 <template>
   <section class="content">
-    <div class="level" id="level5">V</div>
-    <div class="level" id="level4">IV</div>
-    <div class="level" id="level3">III</div>
-    <div class="level" id="level2">II</div>
-    <div class="level" id="level1">I</div>
-    <div class="level" id="level0">Σ</div>
     <section id="cultureContent" class="researchContent">
       <h1>Culture</h1>
+      <div class="level" id="level5">V</div>
+      <div class="level" id="level4">IV</div>
+      <div class="level" id="level3">III</div>
+      <div class="level" id="level2">II</div>
+      <div class="level" id="level1">I</div>
+      <div class="level" id="level0">Σ</div>
       <button id=c0 class="validated">Centre culturel</button>
       <button id=ca1 class="validated">Beaux-arts</button>
       <button id=ca2 class="validated">Esthétique</button>
@@ -32,15 +32,20 @@
     </section>
     <section id="militaryContent" class="researchContent hidden">
       <h1>ingénierie militaire</h1>
+      <div class="level" id="level4">IV</div>
+      <div class="level" id="level3">III</div>
+      <div class="level" id="level2">II</div>
+      <div class="level" id="level1">I</div>
+      <div class="level" id="level0">Σ</div>
       <button id=m0 class="validated">Armement<p>attaque 2<br>defense 2</p></button>
       <button id=ma1 class="validated">Canons lasers<p>attaque 3</p></button>
-      <button id=ma2 class="validated">Puissance laser I<p>attaque 5</p></button>
-      <button id=ma3 class="validated">Puissance laser II<p>attaque 7</p></button>
-      <button id=ma4 class="validated">Puissance laser III<p>attaque 9</p></button>
-      <button id=mb1 class="validated">Boucliers énergetiques<p>defense 3</p></button>
-      <button id=mb2 class="validated">Energie bleue<p>defense 5</p></button>
-      <button id=mb3 class="validated">Energie rouge<p>defense 7</p></button>
-      <button id=mb4 class="validated">Energie violette<p>defense 9</p></button>
+      <button id=ma2 class="validable">Puissance laser I<p>attaque 5</p></button>
+      <button id=ma3 class="inaccessible">Puissance laser II<p>attaque 7</p></button>
+      <button id=ma4 class="inaccessible">Puissance laser III<p>attaque 9</p></button>
+      <button id=mb1 class="validable">Boucliers énergetiques<p>defense 3</p></button>
+      <button id=mb2 class="inaccessible">Energie bleue<p>defense 5</p></button>
+      <button id=mb3 class="inaccessible">Energie rouge<p>defense 7</p></button>
+      <button id=mb4 class="inaccessible">Energie violette<p>defense 9</p></button>
     </section>
     <section id="explorationContent" class="researchContent hidden">
       <h1>Exploration</h1>
@@ -69,18 +74,16 @@ export default {
 
     @import url('https://fonts.googleapis.com/css2?family=Quattrocento&display=swap');
 
+    .content{
+      display: grid;
+    }
+
     section.researchContent{
         display: grid;
     }
 
     .hidden {
         display: none !important;
-    }
-
-    .content{
-      display: grid;
-      grid-template-rows: 40px repeat(6,1fr);
-      grid-column-gap: 0.8rem;
     }
 
     .level{
@@ -92,34 +95,31 @@ export default {
     }
 
     #level5{
-      grid-row: 2/3;
+      grid-row: -7/-6;
     }
 
     #level4{
-      grid-row: 3/4;
+      grid-row: -6/-5;
     }
 
     #level3{
-      grid-row: 4/5;
+      grid-row: -5/-4;
     }
 
     #level2{
-      grid-row: 5/6;
+      grid-row: -4/-3;
     }
 
     #level1{
-      grid-row: 6/7;
+      grid-row: -3/-2;
     }
 
     #level0{
-      grid-row: 7/8;
+      grid-row: -2/-1;
     }
 
     .researchContent{
-      grid-column: 2/3;
-      grid-row: 1/8;
       display: grid;
-      grid-template-rows: 40px repeat(6,1fr);
       grid-column-gap: 0.4rem;
       align-items: center;
       justify-items: center;
@@ -158,37 +158,44 @@ export default {
       opacity: 0.6;
     }
 
+    button>p{
+      font-weight: 400;
+      text-transform: none;
+      font-style: italic;
+    }
+
     #cultureContent{
-      grid-template-columns: repeat(5, 1fr);
+      grid-template-columns: 60px repeat(5, 1fr);
+      grid-template-rows: 40px repeat(6,1fr);
     }
 
     #c0{
-      grid-column: 1/6;
+      grid-column: 2/7;
       grid-row: 7/8;
     }
 
     #ca1,#ca2,#ca3,#ca4{
-      grid-column: 1/2;
-    }
-
-    #cb1,#cb2,#cb3,#cb4,#cb5{
       grid-column: 2/3;
     }
 
-    #cc1,#cc2,#cc3,#cc4{
-      grid-column: 3/5;
-    }
-
-    #cc5a{
+    #cb1,#cb2,#cb3,#cb4,#cb5{
       grid-column: 3/4;
     }
 
-    #cc5b{
+    #cc1,#cc2,#cc3,#cc4{
+      grid-column: 4/6;
+    }
+
+    #cc5a{
       grid-column: 4/5;
     }
 
-    #cd1,#cd2,#cd3,#cd4,#cd5{
+    #cc5b{
       grid-column: 5/6;
+    }
+
+    #cd1,#cd2,#cd3,#cd4,#cd5{
+      grid-column: 6/7;
     }
 
     #ca1,#cb1,#cc1,#cd1{
@@ -211,5 +218,38 @@ export default {
       grid-row: 2/3;
     }
 
+    #militaryContent{
+      grid-template-columns: 60px repeat(2, 1fr);
+      grid-template-rows: 40px repeat(5,1fr);
+    }
+
+    #m0{
+      grid-column: 2/4;
+      grid-row: 6/7;
+    }
+
+    #ma1,#ma2,#ma3,#ma4{
+      grid-column: 2/3;
+    }
+
+    #mb1,#mb2,#mb3,#mb4{
+      grid-column: 3/4;
+    }
+
+    #ma1,#mb1{
+      grid-row: 5/6;
+    }
+
+    #ma2,#mb2{
+      grid-row: 4/5;
+    }
+
+    #ma3,#mb3{
+      grid-row: 3/4;
+    }
+
+    #ma4,#mb4{
+      grid-row: 2/3;
+    }
 
 </style>
