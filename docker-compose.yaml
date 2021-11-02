@@ -17,7 +17,8 @@ services:
       - "--entrypoints.neo4j-secure.address=:7473"
       - "--entrypoints.mongo.address=:27017"
       - "--entrypoints.mongo-express.address=:8081"
-      - "--certificatesresolvers.stellarium-tls.acme.tlsChallenge=true"
+      - "--certificatesresolvers.stellarium-tls.acme.dnsChallenge=true"
+      - "--certificatesresolvers.stellarium-tls.acme.dnsChallenge.provider=cloudflare"
       - "--certificatesresolvers.stellarium-tls.acme.email=lothindir@gmail.com"
       - "--certificatesresolvers.stellarium-tls.acme.storage=/letsencrypt/acme.json"
       - "--certificatesresolvers.stellarium-tls.acme.caServer=https://acme-staging-v02.api.letsencrypt.org/directory" #Remove to use prod server
@@ -27,7 +28,12 @@ services:
       - "traefik.http.routers.api.service=api@internal"
       - "traefik.http.routers.api.entrypoints=websecure"
       - "traefik.http.routers.api.tls.certresolver=stellarium-tls"
+      - "traefik.http.routers.api.tls.domains[0].main=${BASE_HOSTNAME}"
+      - "traefik.http.routers.api.tls.domains[0].sans=*.${BASE_HOSTNAME}"
       - "traefik.http.middlewares.auth.basicauth.users=stellarium:$$2y$$10$$Iwj88jGAUSaQMec0lSRxo.oLlyYReu6n5PGek1dcEuluD.W.VVl06"
+    environment:
+      - CLOUDFLARE_EMAIL=${CLOUDFLARE_EMAIL}
+      - CLOUDFLARE_API_KEY=${CLOUDFLARE_API_KEY}
     restart: always
     ports:
       - 80:80

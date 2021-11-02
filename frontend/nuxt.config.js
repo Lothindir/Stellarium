@@ -97,6 +97,7 @@ export default {
   build: {},
 
   server: {
-    host: '0', // default: localhost
+    host: '0.0.0.0',
+    timing: false,
   },
 }
