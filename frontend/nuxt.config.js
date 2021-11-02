@@ -54,10 +54,28 @@ export default {
     '@nuxtjs/auth-next',
   ],
 
+  // Axios module configuration: https://go.nuxtjs.dev/config-axios
+  axios: {
+    baseURL: 'localhost',
+  },
+
+  privateRuntimeConfig: {
+    axios: {
+      baseURL: process.env.API_URL,
+    },
+  },
+
   auth: {
     // Options
+    localStorage: false,
+    cookie: {
+      options: {
+        secure: true,
+      },
+    },
     strategies: {
-      local: {
+      local: false,
+      cookie: {
         token: {
           required: false,
           type: false,
@@ -66,24 +84,13 @@ export default {
           name: 'adonis-session',
         },
         endpoints: {
-          login: { url: 'login', method: 'post' },
+          login: { url: '/login', method: 'post' },
           user: false, // We get the data directly in the login request
-          logout: { url: 'logout', method: 'post' },
+          logout: { url: '/logout', method: 'post' },
         },
         autoFetchUser: false,
       },
     },
-    /*redirect: {
-      login: '/api/login',
-      logout: '/',
-      callback: '/api/login',
-      home: '/'
-    }*/
-  },
-
-  // Axios module configuration: https://go.nuxtjs.dev/config-axios
-  axios: {
-    baseURL: process.env.API_URL,
   },
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa

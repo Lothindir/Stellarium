@@ -26,9 +26,8 @@ RUN mkdir /home/node/app
 
 WORKDIR /home/node/app
 
-COPY --chown=node:node --from=builder /home/node/app/node_modules ./node_modules
-COPY --chown=node:node --from=builder /home/node/app/build ./build
+COPY --chown=node:node --from=builder /home/node/app/build .
 
 EXPOSE 3333
 
-ENTRYPOINT ["node","build/server.js"]
+ENTRYPOINT ["node","server.js"]
