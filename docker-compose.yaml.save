@@ -29,11 +29,11 @@ services:
       - "traefik.http.routers.api.entrypoints=websecure"
       - "traefik.http.routers.api.tls.certresolver=stellarium-tls"
       - "traefik.http.routers.api.tls.domains[0].main=${BASE_HOSTNAME}"
-      - "traefik.http.routers.api.tls.domains[0].sans=traefik.${BASE_HOSTNAME},defi.${BASE_HOSTNAME}"
+      - "traefik.http.routers.api.tls.domains[0].sans=*.${BASE_HOSTNAME}"
       - "traefik.http.middlewares.auth.basicauth.users=stellarium:$$2y$$10$$Iwj88jGAUSaQMec0lSRxo.oLlyYReu6n5PGek1dcEuluD.W.VVl06"
     environment:
-      - CLOUDFLARE_EMAIL=${CF_API_EMAIL}
-      - CLOUDFLARE_API_KEY=${CF_API_KEY}
+      - C_EMAIL=${CLOUDFLARE_EMAIL}
+      - CLOUDFLARE_API_KEY=${CLOUDFLARE_API_KEY}
     restart: always
     ports:
       - 80:80
@@ -62,7 +62,7 @@ services:
       - "traefik.http.middlewares.web-redirecthttps.redirectscheme.permanent=true"
       # HTTP
       - "traefik.http.routers.web.rule=(Host(`${BASE_HOSTNAME}`) && PathPrefix(`/api`)) || Host(`defi.${BASE_HOSTNAME}`)"
-      #- "traefik.http.routers.web.middlewares=web-redirecthttps"
+      - "traefik.http.routers.web.middlewares=web-redirecthttps"
       - "traefik.http.routers.stellarium-web.entrypoints=web"
       # HTTPS
       - "traefik.http.routers.web-secure.rule=(Host(`${BASE_HOSTNAME}`) && PathPrefix(`/api`)) || Host(`defi.${BASE_HOSTNAME}`)"
@@ -112,7 +112,7 @@ services:
     environment: 
       - NUXT_HOST=0.0.0.0
       - NUXT_PORT=3000
-      - API_URL=api/#${API_URL}
+      - API_URL=web/api
       - NODE_ENV=production
     restart: unless-stopped
     networks: 

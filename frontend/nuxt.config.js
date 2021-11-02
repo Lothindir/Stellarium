@@ -63,14 +63,9 @@ export default {
   publicRuntimeConfig: {
     axios: {
       baseURL: process.env.API_URL,
+      browserBaseUrl: process.env.API_URL,
     },
   },
-
-  // privateRuntimeConfig: {
-  //   axios: {
-  //     baseURL: process.env.API_URL,
-  //   },
-  // },
 
   auth: {
     // Options

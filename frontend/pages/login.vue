@@ -44,7 +44,7 @@ export default {
   methods: {
     async login() {
       try {
-        let user = await this.$auth.loginWith('local', {
+        let user = await this.$auth.loginWith('cookie', {
           data: {
             email: this.email,
             password: this.password
