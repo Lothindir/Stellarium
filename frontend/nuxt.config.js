@@ -62,15 +62,15 @@ export default {
 
   publicRuntimeConfig: {
     axios: {
-      browserBaseURL: process.env.API_URL,
-    },
-  },
-
-  privateRuntimeConfig: {
-    axios: {
       baseURL: process.env.API_URL,
     },
   },
+
+  // privateRuntimeConfig: {
+  //   axios: {
+  //     baseURL: process.env.API_URL,
+  //   },
+  // },
 
   auth: {
     // Options
@@ -91,9 +91,9 @@ export default {
           name: 'adonis-session',
         },
         endpoints: {
-          login: { url: '/api/login', method: 'post' },
+          login: { url: 'login', method: 'post' },
           user: false, // We get the data directly in the login request
-          logout: { url: '/api/logout', method: 'post' },
+          logout: { url: 'logout', method: 'post' },
         },
         autoFetchUser: false,
       },
