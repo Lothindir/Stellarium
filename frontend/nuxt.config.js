@@ -57,6 +57,13 @@ export default {
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     baseURL: 'localhost',
+    https: true,
+  },
+
+  publicRuntimeConfig: {
+    axios: {
+      browserBaseURL: process.env.API_URL,
+    },
   },
 
   privateRuntimeConfig: {
@@ -84,9 +91,9 @@ export default {
           name: 'adonis-session',
         },
         endpoints: {
-          login: { url: '/login', method: 'post' },
+          login: { url: '/api/login', method: 'post' },
           user: false, // We get the data directly in the login request
-          logout: { url: '/logout', method: 'post' },
+          logout: { url: '/api/logout', method: 'post' },
         },
         autoFetchUser: false,
       },
