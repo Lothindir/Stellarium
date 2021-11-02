@@ -49,6 +49,20 @@
     </section>
     <section id="explorationContent" class="researchContent hidden">
       <h1>Exploration</h1>
+      <div class="level" id="level4">IV</div>
+      <div class="level" id="level3">III</div>
+      <div class="level" id="level2">II</div>
+      <div class="level" id="level1">I</div>
+      <div class="level" id="level0">Σ</div>
+      <button id=e0 class="validated">Aménagement<p>carburant max 10<br>recharge 10/j</p></button>
+      <button id=ea1 class="validated">Bidon rouillé<p>carburant max 25</p></button>
+      <button id=ea2 class="validable">Baignoire adaptée<p>carburant max 35</p></button>
+      <button id=ea3 class="inaccessible">Compresseur<p>carburant max 50</p></button>
+      <button id=ea4 class="inaccessible">Carburant quantique<p>carburant max 75</p></button>
+      <button id=eb1 class="validable">Alambique<p>recharge 25/j</p></button>
+      <button id=eb2 class="inaccessible">Recycleur<p>recharge 35/j</p></button>
+      <button id=eb3 class="inaccessible">Catalyseur<p>recharge 50/j</p></button>
+      <button id=eb4 class="inaccessible">Accélérateur de particules<p>recharge 75/j</p></button>
     </section>
     <section id="productionContent" class="researchContent hidden">
       <h1>Production</h1>
@@ -218,37 +232,37 @@ export default {
       grid-row: 2/3;
     }
 
-    #militaryContent{
+    #militaryContent,#explorationContent{
       grid-template-columns: 60px repeat(2, 1fr);
       grid-template-rows: 40px repeat(5,1fr);
     }
 
-    #m0{
+    #m0,#e0{
       grid-column: 2/4;
       grid-row: 6/7;
     }
 
-    #ma1,#ma2,#ma3,#ma4{
+    #ma1,#ma2,#ma3,#ma4,#ea1,#ea2,#ea3,#ea4{
       grid-column: 2/3;
     }
 
-    #mb1,#mb2,#mb3,#mb4{
+    #mb1,#mb2,#mb3,#mb4,#eb1,#eb2,#eb3,#eb4{
       grid-column: 3/4;
     }
 
-    #ma1,#mb1{
+    #ma1,#mb1,#ea1,#eb1{
       grid-row: 5/6;
     }
 
-    #ma2,#mb2{
+    #ma2,#mb2,#ea2,#eb2{
       grid-row: 4/5;
     }
 
-    #ma3,#mb3{
+    #ma3,#mb3,#ea3,#eb3{
       grid-row: 3/4;
     }
 
-    #ma4,#mb4{
+    #ma4,#mb4,#ea4,#eb4{
       grid-row: 2/3;
     }
 
