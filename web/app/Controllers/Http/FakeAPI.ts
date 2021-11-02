@@ -413,7 +413,7 @@ export default class FakeAPI {
             ],
           };
         }
-        case 'GetCrewInfos': {
+        case 'GetCrewInfo': {
           // Add ID to resources and research domains?
           const crewID = 1;
           const maxChallenges = 455;
@@ -423,7 +423,7 @@ export default class FakeAPI {
           const maxProduction = 21;
           const maxExploration = 9;
           return {
-            crewInfos: {
+            crewInfo: {
               crewID: crewID,
               resources: [
                 { name: 'biomass', amount: 45 },
@@ -435,6 +435,68 @@ export default class FakeAPI {
                 challenges: { done: 2, max: maxChallenges },
                 trials: { done: 43, max: maxTrials },
               },
+              challenges : [
+                { id: "CC0", isValidated: true, isValidable: false},
+                { id: "CC1", isValidated: true, isValidable: false},
+                { id: "CC2", isValidated: true, isValidable: true}, // Through federation
+                { id: "CC3", isValidated: false, isValidable: true},
+                { id: "CC4", isValidated: false, isValidable: true},
+                { id: "CC5", isValidated: false, isValidable: true},
+                { id: "CC6", isValidated: false, isValidable: false},
+                { id: "CC7", isValidated: false, isValidable: false},
+                { id: "CC8", isValidated: false, isValidable: false},
+                { id: "CC9", isValidated: false, isValidable: false},
+                { id: "CC10", isValidated: false, isValidable: false},
+                { id: "CC11", isValidated: false, isValidable: false},
+                { id: "CC12", isValidated: false, isValidable: false},
+                { id: "CC13", isValidated: false, isValidable: false},
+                { id: "CC14", isValidated: false, isValidable: false},
+                { id: "CC15", isValidated: false, isValidable: false},
+                { id: "CC16", isValidated: false, isValidable: false},
+                { id: "CC17", isValidated: false, isValidable: false},
+                { id: "CC18", isValidated: false, isValidable: false},
+                { id: "CC19", isValidated: false, isValidable: false},
+                { id: "CC20", isValidated: false, isValidable: false},
+                { id: "CE0", isValidated: true, isValidable: false},
+                { id: "CE1", isValidated: true, isValidable: false},
+                { id: "CE2", isValidated: true, isValidable: true}, // Through federation
+                { id: "CE3", isValidated: false, isValidable: true}, 
+                { id: "CE4", isValidated: false, isValidable: true},
+                { id: "CE5", isValidated: false, isValidable: false},
+                { id: "CE7", isValidated: false, isValidable: false},
+                { id: "CE8", isValidated: false, isValidable: false},
+                { id: "CE9", isValidated: false, isValidable: false},
+                { id: "CM0", isValidated: true, isValidable: false},
+                { id: "CM1", isValidated: true, isValidable: false},
+                { id: "CM2", isValidated: true, isValidable: true}, // Through federation
+                { id: "CM3", isValidated: false, isValidable: true}, 
+                { id: "CM4", isValidated: false, isValidable: true},
+                { id: "CM5", isValidated: false, isValidable: false},
+                { id: "CM7", isValidated: false, isValidable: false},
+                { id: "CM8", isValidated: false, isValidable: false},
+                { id: "CM9", isValidated: false, isValidable: false},
+                { id: "CP0", isValidated: true, isValidable: false},
+                { id: "CP1", isValidated: true, isValidable: false},
+                { id: "CP2", isValidated: true, isValidable: true}, // Through federation
+                { id: "CP3", isValidated: true, isValidable: true}, // Through federation
+                { id: "CP4", isValidated: false, isValidable: true},
+                { id: "CP5", isValidated: false, isValidable: true},
+                { id: "CP6", isValidated: false, isValidable: true},
+                { id: "CP7", isValidated: false, isValidable: false},
+                { id: "CP8", isValidated: false, isValidable: false},
+                { id: "CP9", isValidated: false, isValidable: false},
+                { id: "CP10", isValidated: false, isValidable: false},
+                { id: "CP11", isValidated: false, isValidable: false},
+                { id: "CP12", isValidated: false, isValidable: false},
+                { id: "CP13", isValidated: false, isValidable: false},
+                { id: "CP14", isValidated: false, isValidable: false},
+                { id: "CP15", isValidated: false, isValidable: false},
+                { id: "CP16", isValidated: false, isValidable: false},
+                { id: "CP17", isValidated: false, isValidable: false},
+                { id: "CP18", isValidated: false, isValidable: false},
+                { id: "CP19", isValidated: false, isValidable: false},
+                { id: "CP20", isValidated: false, isValidable: false}
+              ],
               research: [
                 { name: 'military', displayName: 'Militaire', numberDone: 4, max: maxMilitary },
                 {

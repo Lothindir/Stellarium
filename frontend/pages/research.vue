@@ -8,7 +8,8 @@
       <div class="level" id="level2">II</div>
       <div class="level" id="level1">I</div>
       <div class="level" id="level0">Σ</div>
-      <button id=c0 class="validated">Centre culturel</button>
+      <!--<button v-for="(planet, index) in crewInfo" :key="index">test</button> -->
+      <button id=CC0 class="validated" @click="showChallengeDescription('CC0')">Centre culturel</button>
       <button id=ca1 class="validated">Beaux-arts</button>
       <button id=ca2 class="validated">Esthétique</button>
       <button id=ca3 class="validable">Génie artistique</button>
@@ -100,14 +101,42 @@
 <script>
 export default {
   layout: 'research',
+  Data() {
+    tmpChallengesInfo: []
+  },
   methods: {
+    async showChallengeDescription(id) {
+      alert(id + "\n" + this.challengesInfo[id])
+      console.log(this.cultureChallenges[0])
+    },
+    getClassFromChallengeStatus(challenge) {
+      console.log(challenge.isValidated)
+      if (challenge.isValidated && !challenge.isValidable) {
+        return "validated"
+      } else if (challenge.isValidable) {
+        return "validable" // But already done in federation or not done at all
+      } else {
+        return "inaccessible"
+      }
+    }
   },
   // Fetch data (post) before rendering the page. No need of placeholder in the code, then.
   async asyncData({ params, $axios }) {
-    const crewInfos = await $axios
-      .post('/fakeAPI', { api: 'GetCrewInfos' })
-      .then((res) => res.data.crewInfos)
-    return { crewInfos }
+    const [crewInfo, tmpChallengesInfo] = await  Promise.all(
+      [$axios
+      .post('/fakeAPI', { api: 'GetCrewInfo' })
+      .then((res) => res.data.crewInfo),
+      $axios
+      .get('/challenges')
+      .then((res) => res.data),
+    ])
+    const challengesInfo = tmpChallengesInfo.reduce((a, v) => ({ ...a, [v.id]: v.description}), {}) 
+    const cultureChallenges =  crewInfo.challenges.filter(a => a.id.includes('CC'))
+    const explorationChallenges = crewInfo.challenges.filter(a => (a.id).includes('CE'))
+    const productionChallenges = crewInfo.challenges.filter(a => (a.id).includes('CP'))
+    const militaryChallenges = crewInfo.challenges.filter(a => (a.id).includes('CM'))
+    console.log(militaryChallenges)
+    return { cultureChallenges, explorationChallenges, productionChallenges, militaryChallenges, challengesInfo }
   },
 }
 </script>
@@ -212,7 +241,7 @@ export default {
       grid-template-rows: 40px repeat(6,1fr);
     }
 
-    #c0{
+    #CC0{
       grid-column: 2/7;
       grid-row: 7/8;
     }
