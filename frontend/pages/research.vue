@@ -110,14 +110,19 @@ export default {
       console.log(this.cultureChallenges[0])
     },
     getClassFromChallengeStatus(challenge) {
+      var challengeClass = ''
       console.log(challenge.isValidated)
-      if (challenge.isValidated && !challenge.isValidable) {
-        return "validated"
-      } else if (challenge.isValidable) {
-        return "validable" // But already done in federation or not done at all
+      if (challenge.isValidated && !challenge.isValidable) { // Done by crew, thus federation
+        challengeClass = "validated federation"
+      } else if (challenge.isValidable) { // Not done by crew
+        challengeClass = "validable"
+        if (challenge.isValidated) { // Done by federation
+          challengeClass += " federation"
+        }
       } else {
-        return "inaccessible"
+        challengeClass = "inaccessible"
       }
+      return challengeClass
     }
   },
   // Fetch data (post) before rendering the page. No need of placeholder in the code, then.
@@ -228,6 +233,10 @@ export default {
       border: 1px dashed #c0c0c0;
       color: #bbbbbb;
       opacity: 0.6;
+    }
+
+    button.federation{
+      border: 4px double #00bebe;
     }
 
     button>p{
