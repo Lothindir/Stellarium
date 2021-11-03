@@ -7,6 +7,8 @@ services:
       - "--log.level=ERROR"
       - "--api.dashboard=true"
       - "--accesslog=true"
+      - "--tracing.jaeger=true"
+      - "--metrics.prometheus=true"
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false"
       - "--providers.docker.network=main-network"
@@ -17,6 +19,9 @@ services:
       - "--entrypoints.neo4j-secure.address=:7473"
       - "--entrypoints.mongo.address=:27017"
       - "--entrypoints.mongo-express.address=:8081"
+      - "--entrypoints.jaeger.address=:16686"
+      - "--entrypoints.prometheus.address=:9090"
+      - "--entrypoints.grafana.address=:3456"
       - "--certificatesresolvers.stellarium-tls.acme.dnsChallenge=true"
       - "--certificatesresolvers.stellarium-tls.acme.dnsChallenge.provider=cloudflare"
       - "--certificatesresolvers.stellarium-tls.acme.email=lothindir@gmail.com"
@@ -43,6 +48,45 @@ services:
       - acme-cert:/letsencrypt
     networks:
       - main-network
+  jaeger:
+    image: jaegertracing/all-in-one:1.27
+    container_name: jaeger
+    depends_on:
+      - traefik
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.jaeger.rule=Host(`${BASE_HOSTNAME}`)"
+      - "traefik.http.routers.jaeger.entrypoints=jaeger"
+    ports:
+      - 5775:5775
+      - 6831:6831
+      - 5778:5778
+      - 16686:16686
+      - 14268:14268
+      - 14250:14250
+      - 9411:9411
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    depends_on:
+      - traefik
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.prometheus.rule=Host(`${BASE_HOSTNAME}`)"
+      - "traefik.http.routers.prometheus.entrypoints=prometheus"
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    depends_on:
+      - traefik
+      - jaeger
+      - prometheus
+    ports:
+      - 3456:3000
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.grafana.rule=Host(`${BASE_HOSTNAME}`)"
+      - "traefik.http.routers.grafana.entrypoints=grafana"
   web:
     build:
       context: ./web
@@ -63,7 +107,8 @@ services:
       # HTTP
       - "traefik.http.routers.web.rule=(Host(`${BASE_HOSTNAME}`) && PathPrefix(`/api`)) || Host(`defi.${BASE_HOSTNAME}`)"
       #- "traefik.http.routers.web.middlewares=web-redirecthttps"
-      - "traefik.http.routers.stellarium-web.entrypoints=web"
+      - "traefik.http.routers.web.middlewares=web-redirectregex,web-stripprefix"
+      - "traefik.http.routers.web.entrypoints=web"
       # HTTPS
       - "traefik.http.routers.web-secure.rule=(Host(`${BASE_HOSTNAME}`) && PathPrefix(`/api`)) || Host(`defi.${BASE_HOSTNAME}`)"
       - "traefik.http.routers.web-secure.middlewares=web-redirectregex,web-stripprefix"
@@ -104,7 +149,7 @@ services:
       # HTTP
       - "traefik.http.routers.frontend.rule=Host(`${BASE_HOSTNAME}`)"
       - "traefik.http.routers.frontend.entrypoints=web"
-      - "traefik.http.routers.frontend.middlewares=frontend-redirecthttps"
+      #- "traefik.http.routers.frontend.middlewares=frontend-redirecthttps"
       # HTTPS
       - "traefik.http.routers.frontend-secure.rule=Host(`${BASE_HOSTNAME}`)"
       - "traefik.http.routers.frontend-secure.entrypoints=websecure"
@@ -112,7 +157,7 @@ services:
     environment: 
       - NUXT_HOST=0.0.0.0
       - NUXT_PORT=3000
-      - API_URL=api/#${API_URL}
+      - API_URL=${API_URL}
       - NODE_ENV=production
     restart: unless-stopped
     networks: 

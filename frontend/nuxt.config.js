@@ -63,21 +63,21 @@ export default {
   publicRuntimeConfig: {
     axios: {
       baseURL: process.env.API_URL,
-      browserBaseUrl: process.env.API_URL,
+      browserBaseURL: process.env.API_URL,
     },
   },
 
   auth: {
     // Options
-    localStorage: false,
+    //localStorage: false,
     cookie: {
       options: {
-        secure: true,
+        secure: false,
       },
     },
     strategies: {
-      local: false,
-      cookie: {
+      //local: false,
+      local: {
         token: {
           required: false,
           type: false,
