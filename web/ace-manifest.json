@@ -1,8 +1,30 @@
 {
   "commands": {
+    "generate:stellarobjects": {
+      "settings": {
+        "loadApp": true,
+        "stayAlive": false
+      },
+      "commandPath": "./commands/GenerateStellarObjects",
+      "commandName": "generate:stellarobjects",
+      "description": "Generates and seeds the database with stellar objects",
+      "args": [
+        {
+          "type": "string",
+          "propertyName": "numberOfObjects",
+          "name": "Objects number",
+          "required": true,
+          "description": "The number of objects to generate. Must be greater than 10"
+        }
+      ],
+      "aliases": [
+        "generate:mongo"
+      ],
+      "flags": []
+    },
     "dump:rcfile": {
       "settings": {},
-      "commandPath": "@adonisjs/core/commands/DumpRc",
+      "commandPath": "@adonisjs/core/build/commands/DumpRc",
       "commandName": "dump:rcfile",
       "description": "Dump contents of .adonisrc.json file along with defaults",
       "args": [],
@@ -13,7 +35,7 @@
       "settings": {
         "loadApp": true
       },
-      "commandPath": "@adonisjs/core/commands/ListRoutes",
+      "commandPath": "@adonisjs/core/build/commands/ListRoutes",
       "commandName": "list:routes",
       "description": "List application routes",
       "args": [],
@@ -29,7 +51,7 @@
     },
     "generate:key": {
       "settings": {},
-      "commandPath": "@adonisjs/core/commands/GenerateKey",
+      "commandPath": "@adonisjs/core/build/commands/GenerateKey",
       "commandName": "generate:key",
       "description": "Generate a new APP_KEY secret",
       "args": [],
@@ -50,5 +72,7 @@
       "flags": []
     }
   },
-  "aliases": {}
+  "aliases": {
+    "generate:mongo": "generate:stellarobjects"
+  }
 }
