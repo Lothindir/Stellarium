@@ -38,7 +38,7 @@
     "@typegoose/typegoose": "^9.13.2",
     "axios": "^0.24.0",
     "luxon": "^2.5.2",
-    "mongoose": "^6.11.5",
+    "mongoose": "^6.11.3",
     "neo4j-driver": "^4.4.11",
     "neo4j-node-ogm": "^1.1.16",
     "pg": "^8.11.2",
