@@ -15,11 +15,11 @@
     "@nuxtjs/auth-next": "5.0.0-1624817847.21691f1",
     "@nuxtjs/axios": "^5.13.6",
     "@nuxtjs/pwa": "^3.3.5",
-    "core-js": "^3.32.0",
+    "core-js": "^3.33.1",
     "nuxt": "^2.17.1"
   },
   "devDependencies": {
-    "@babel/eslint-parser": "^7.22.10",
+    "@babel/eslint-parser": "^7.22.15",
     "@nuxt/types": "^2.17.1",
     "@nuxt/typescript-build": "^2.1.0",
     "@nuxtjs/eslint-config-typescript": "^6.0.1",
@@ -36,7 +36,9 @@
   "pnpm": {
     "overrides": {
       "glob-parent@<5.1.2": ">=5.1.2",
-      "semver@>=7.0.0 <7.5.2": ">=7.5.2"
+      "semver@>=7.0.0 <7.5.2": ">=7.5.2",
+      "postcss@<8.4.31": ">=8.4.31",
+      "@babel/traverse@<7.23.2": ">=7.23.2"
     }
   }
 }
